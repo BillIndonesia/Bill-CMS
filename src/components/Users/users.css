@@ -1,0 +1,28 @@
+.usertitle {
+    font-weight: 600 ;
+    font-size: 34px;
+    color: rgb(85, 85, 207);
+    text-align: center;
+}
+
+.user-action{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.users-main{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+    height: 370px;
+    
+}
+
+.users-form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}

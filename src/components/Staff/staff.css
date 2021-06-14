@@ -1,0 +1,26 @@
+.staff-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid black;
+    height: 90vh;
+}
+
+
+
+.staff-main{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+    height: 300px;
+    
+}
+
+.staff-form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+

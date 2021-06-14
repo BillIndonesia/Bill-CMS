@@ -1,0 +1,92 @@
+.navbarr{
+    box-sizing: border-box;
+    background-color:#7C7BAD;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 8px 30px;
+}
+
+.nav-dropdown{
+    list-style: none;
+    position: absolute;
+    display: none;
+    margin: 0;
+    padding: 0;
+    transition: all .3s;
+    background-color: rgb(174, 172, 248);
+    width: 170px;
+    padding-bottom: 4px;
+
+}
+
+.item-dropdown{
+    margin-top: 8px;
+    box-sizing: border-box;
+    display: block;
+}
+.item-dropdown .navlinkk:hover{
+    color: #4c4c4c;
+}
+
+
+.navbar-logoo{
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.navbar-bodyy{
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.navbar-listt {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.navbar-listt .navbar-itemm:nth-child(5):hover .nav-dropdown{
+    display: block;
+    
+}
+
+.navbar-itemm {
+    margin-right: 16px;
+    transition: all 0.3s;
+}
+
+.navbar-itemm:hover{
+    
+    transform: scale(1.1);
+    
+}
+
+.navlinkk{
+    text-decoration: none;
+    color: white;
+    font-weight: lighter;
+    
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.navlinkk:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-actionn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.navbar-actionn .button-option{
+    color: white;
+}

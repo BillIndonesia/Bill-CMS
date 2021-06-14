@@ -1,0 +1,58 @@
+.merchant{
+    width: 100%;
+    height: 100vh;
+}
+
+.merchant-title{
+    font-weight: 600 ;
+    font-size: 34px;
+    color: rgb(85, 85, 207);
+    text-align: center;
+    margin: 17px 0;
+}
+.merchant-action{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.merchant-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+
+.merchant-data{
+    width: 100%;
+    margin-top: 40px;
+    height: 500px;
+ 
+}
+.merchant-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    height: 100vh;
+}
+.merchant-main{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+    height: 370px;
+    
+}
+
+.merchant-form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+
+.merchant-input{
+    margin-bottom: 20px;
+}

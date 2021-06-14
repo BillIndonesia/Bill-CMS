@@ -1,0 +1,101 @@
+.login-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 0 10px;
+    box-sizing: border-box;
+    background-image: url('https://bill.co.id/bill_website/static/src/img/ilustrasi_cloud_bill.png');
+    background-repeat: no-repeat;
+
+}
+
+.login-container .login-body{
+    
+    width: 100%;
+    margin: -10px 0 0 0 ;
+
+
+}
+
+.login-container .login-body h4 {
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    text-align: center;
+
+}
+
+.gap{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.login-container .login-body .login-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+ .login-field{
+    width: 270px;
+    padding: 8px 8px;
+    letter-spacing: 1px;
+    border:  1px solid #ced4da ;
+    border-radius: 15px;
+    color: #495057;
+    margin: 8px 0;
+    
+    
+} 
+
+ .label-field{
+    font-size: 14px;
+    font-weight: bold;
+    
+}
+
+ .login-field:focus {
+    outline: none;
+    box-shadow: 0 0 5px 0.5pt #4f8fcf ;
+    outline-width: 0px;
+}
+
+.btn-login{
+    padding: 10px;
+    width: 100%;
+    color: white;
+    font-weight: lighter;
+    margin-top: 8px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color:  #0275d8;
+    border: none;
+    outline: none;
+}
+
+.login-action{
+    margin-top: 7px;
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+    color: rgb(48, 48, 219);
+    font-weight: small;
+    font-size: 11px;
+    border: none;
+    outline: none;
+}
+
+.err{
+    color: red;
+    font-size: 12px;
+    font-weight: 600;
+}

@@ -33,16 +33,7 @@ function Index(props) {
                     <li className={'navbar-itemm'}><Link to="/home/parent-vendor" className={'navlinkk'}>All Parent Vendors</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/users" className={'navlinkk'}>Users</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/admin-menu" className={'navlinkk'}>Admin Menu</Link></li>
-                    <li className={'navbar-itemm'}>
-                    <ul className={'nav-dropdown'}>
-                            <li className={'item-dropdown'}><Link to="/home/voucher" className={'navlinkk'}>Voucher</Link></li>
-                            <li className={'item-dropdown'}><Link to="" className={'navlinkk'}>Generate Voucher</Link></li>
-                    </ul>
-                        <Link to="/home/voucher" className={'navlinkk'}>Bill Voucher
-                    
-                    </Link>
-                        
-                    </li>
+                    <li className={'navbar-itemm'}><Link to="/home/voucher" className={'navlinkk'}>Bill Voucher</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/Staff" className={'navlinkk'}>Staff</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/cashout" className={'navlinkk'}>Cashout</Link></li>
                 </ul>

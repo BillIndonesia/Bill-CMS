@@ -3,7 +3,7 @@ import {Button } from 'react-bootstrap'
 import Modal from './GenerateVoucher'
 import { DataGrid } from '@material-ui/data-grid';
 import { Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core';
-import {Person, Create , List , Delete , Check} from '@material-ui/icons'
+import {Person , Delete , Check , Payment} from '@material-ui/icons'
 import './voucher.css'
 const columns = [
     { field: 'id', headerName: 'Voucher Code', flex : 1 },
@@ -36,11 +36,11 @@ function Index() {
         <div className={'voucher'}>
             <Modal show={show} handleClose={handleClose}/>
             <div>
-                <h2>Voucher</h2>
+                <h2 className="voucher-title">Voucher</h2>
                 
                 <div className={'voucher-action'}>
                     <div>
-                        <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
+                        <Button style={{marginLeft : 8 , backgroundColor : 'rgb(85, 85, 207)'}} size="sm" onClick={handleShow}> <Payment /> Generate Voucher</Button>
                         <Menu
                             id="admin-menu"
                             anchorEl={anchorEl}

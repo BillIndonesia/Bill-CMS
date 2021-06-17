@@ -14,27 +14,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './merchant.css'
 
 const columns = [
-  { field: 'id', headerName: 'ID', flex : 1 },
+  { field: 'id', headerName: 'ID', flex : 1 , hide : true },
   { field: 'username', headerName: 'Username', flex : 1 },
   { field: 'name', headerName: 'Name', flex : 1  },
+  { field: 'password' , headerName : 'Password' , flex : 1 , hide : true} ,
   { field: 'email' , headerName: 'Email', flex : 1  },
   { field: 'phone' , headerName: 'Phone', flex : 1  },
   { field: 'level' , headerName: 'Level', flex : 1  },
   { field: 'status' , headerName: 'Status', flex : 1  },
+  { field: 'saldo' , headerName: 'Saldo' , flex : 1 , type : 'number' }
   
 ];
 
 const rows = [
-  { id: 1, username: 'Snow', name: 'Jon', email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'verified' },
-  { id: 2, username: 'Lannister', name: 'Cersei', email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'verified'},
-  { id: 3, username: 'Lannister', name: 'Jaime', email: 'admin@gmail.com', phone : '2129131' , level : '1' , status : 'verified' },
-  { id: 4, username: 'Stark', name: 'Arya', email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not verified'},
-  { id: 5, username: 'Targaryen', name: 'Daenerys', email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not verified'},
-  { id: 6, username: 'Melisandre', name: 'Denish', email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'verified' },
-  { id: 7, username: 'Mesaslisandre', name: 'Denish', email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'verified'},
-  { id: 8, username: 'Targaryen', name: 'Daenerys', email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not verified'},
-  { id: 9, username: 'Maaaelisandre', name: 'Denish', email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'verified' },
-  { id: 10, username: 'Meliaaaasandre', name: 'Denish', email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'verified'},
+  { id: 1, username: 'Snow', name: 'Jon', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 10000},
+  { id: 2, username: 'Lannister', name: 'Cersei',  password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 91000},
+  { id: 3, username: 'Lannister', name: 'Jaime', password : '112' , email: 'admin@gmail.com', phone : '2129131' , level : '1' , status : 'Verified' , saldo : 90200 },
+  { id: 4, username: 'Stark', name: 'Arya', password : '112' ,  email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 50000},
+  { id: 5, username: 'Targaryen', name: 'Daenerys', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 92000},
+  { id: 6, username: 'Melisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 22000},
+  { id: 7, username: 'Mesaslisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 60000},
+  { id: 8, username: 'Targaryen', name: 'Daenerys', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 90000},
+  { id: 9, username: 'Maaaelisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified', saldo : 90500 },
+  { id: 10, username: 'Meliaaaasandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 20000},
 
   
 ];
@@ -60,55 +62,33 @@ function Index() {
       setOpenAdd(false)
     }
     
-    const handleCloseUpdateOne = () => {
-      setOpenUpdateOne(false)
-    }
+    const handleCloseUpdateOne = () => setOpenUpdateOne(false)
 
-    const handleCloseUpdateMany = () => {
-      setOpenUpdateMany(false)
-    }
-
-    const handleCloseDelete = () => {
-      setOpenDelete(false)
-    }
-
-    const handleOpenAdd = () => {
-      setOpenAdd(true)
-    }
-
+    const handleCloseUpdateMany = () => setOpenUpdateMany(false)
+    
+    const handleCloseDelete = () => setOpenDelete(false)
+    
+    const handleOpenAdd = () => setOpenAdd(true)
+  
     const handleOpenUpdateOne = () => {
       handleLogout()
       setOpenUpdateOne(true)
     }
 
-    // const handleOpenUpdateMany = () => {
+    const handleOpenDelete = () => setOpenDelete(true)
     
-    //   setOpen3(true)
-    // }
-
-    const handleOpenDelete = () => {
-      setOpenDelete(true)
-    }
-
     const handleVerif = () => setVerification(true)
 
-    const handleMenu = (event) => {
-      setAnchor(event.currentTarget)
-    }
-
-    const handleLogout = () => {
-      setAnchor(null)
-    }
+    const handleMenu = (event) => setAnchor(event.currentTarget)
+    
+    const handleLogout = () => setAnchor(null)
+    
 
     const handleCloseVerif = () => setVerification(false)
 
-    const sizeChange = (params) => {
-      setSizePage(params.pageSize)
-    }
+    const sizeChange = (params) => setSizePage(params.pageSize)
 
-    const editMerchant = (username , name , email , phone , level , status) => {
-      dispatch(EditMerchant({username , name , email , phone , level , status}))
-    }
+    const editMerchant = (data) => dispatch(EditMerchant(data))
 
     const handleOption = e => {
       const {value } = e.target 
@@ -123,14 +103,11 @@ function Index() {
         { openUpdateOne && <PopUpUpdate open={openUpdateOne} handleClose={handleCloseUpdateOne} /> }
         { openUpdateMany && <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option}/> }
         { openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete}/> }
-        { openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} handleLogout={handleLogout}/> }
+        
         <div>
           <h2 className={'merchant-title'}>Data Merchant</h2>
           <div className={'merchant-action'}>
-            {/* <div className={'merchant-button'}>
-              <Button variant="contained" style={{marginRight : 10}} color="primary" startIcon={<Add />} onClick={handleOpen}>Add Merchant</Button>
-              
-            </div> */}
+          { openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} handleLogout={handleLogout} data={selectionModel[0]}/> }
 
             <div>
                 <Button
@@ -165,6 +142,7 @@ function Index() {
                         </Typography>
                     </MenuItem>
 
+                    {selectionModel.length > 0 ?
                       <MenuItem onClick={handleOpenDelete} >
                         <ListItemIcon>
                             <Delete fontSize="small" />
@@ -172,7 +150,8 @@ function Index() {
                         <Typography variant="inherit">  
                             Delete
                         </Typography>
-                    </MenuItem>
+                    </MenuItem> : null 
+                    }
 
                     {selectionModel.length === 1 ? 
                       <MenuItem onClick={() => {
@@ -274,18 +253,12 @@ function Index() {
               onPageSizeChange={sizeChange}
               rowsPerPageOptions={[5 , 7 , 10 , 25]} 
                 onRowSelected={ item => {
-                  const {username , name , email , phone , level , status } = item.data
-                  editMerchant(username , name , email , phone , level , status)
+                  
+                  editMerchant(item.data)
                   
                 }} 
                
             /> 
-
-
-          
-          
-
-          
         </div>
           <h3>{Test.level }</h3>
           {selectionModel.map(val =><h1>{val}</h1>)}

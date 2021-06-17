@@ -4,48 +4,40 @@ import {Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui
 import {Person ,Delete , Check , List } from '@material-ui/icons'
 import PopUpAdd from './Add/UserAddDialog'
 import PopUpDelete from './Delete/DeleteUserDialog'
+import PopUpVerification from './Verifikasi'
 import './users.css'
 
 function Index() {
      
     const [open , setOpen ] = useState(false)
     const [openDelete , setOpenDelete ] = useState(false)
+    const [openVerification , setVerification] = useState(false)
     const [ anchorEl , setAnchor ] = useState(null)
     const [sizePage , setSizePage] = useState(5)
     const [selectionModel, setSelectionModel] = React.useState([]);
 
-      const handleMenu = (event) => {
-        setAnchor(event.currentTarget)
-      }
-
-      const handleClose = () => {
-        setOpen(false)
-      }
-
-      const handleOpen = () => {
-        setOpen(true)
-      }
-
+      const handleMenu = (event) => setAnchor(event.currentTarget)
       
 
-      const handleOpenDelete = () => {
-        setOpenDelete(true)
-      }
+      const handleClose = () =>  setOpen(false)
+      
+
+      const handleOpen = () => setOpen(true)
+      
+
+      const handleVerif = () => setVerification(true)
+
+      const handleOpenDelete = () => setOpenDelete(true)
+      
   
-      const handleLogout = () => {
-        setAnchor(null)
-      }
+      const handleCloseVerif = () => setVerification(false)
 
-    
-
+      const handleLogout = () =>  setAnchor(null)
       
-      const handleCloseDelete = () => {
-        setOpenDelete(false)
-      }
-
-      const sizeChange = (params) => {
-          setSizePage(params.pageSize)
-      }
+      const handleCloseDelete = () =>  setOpenDelete(false)
+    
+      const sizeChange = (params) => setSizePage(params.pageSize)
+      
 
 
       
@@ -77,9 +69,9 @@ function Index() {
 
     return (
         <div>
-            <PopUpAdd open={open} handleClose={handleClose} />
-            <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} />
-            
+            {open && <PopUpAdd open={open} handleClose={handleClose} /> }
+            {openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} /> }
+            {openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} data={selectionModel[0]}/> }
             <h2 className={'usertitle'}>Data Users</h2>
             <div className={'user-action'}>
 
@@ -112,10 +104,11 @@ function Index() {
                             <Person fontSize="small" />
                         </ListItemIcon>
                         <Typography variant="inherit">  
-                            Add Merchant
+                            Add User
                         </Typography>
                     </MenuItem>
-
+                    
+                    {selectionModel.length > 0 ? 
                     <MenuItem onClick={() => {
                         handleOpenDelete()
                     }}>
@@ -125,16 +118,22 @@ function Index() {
                         <Typography variant="inherit">  
                             Delete
                         </Typography>
-                    </MenuItem>
+                    </MenuItem> : null 
+                    }
 
-                    <MenuItem>
+                    {selectionModel.length === 1 ? 
+                    <MenuItem onClick={() => {
+                        handleLogout()
+                        handleVerif()
+                    }}>
                         <ListItemIcon>
                             <Check fontSize="small" />
                         </ListItemIcon>
                         <Typography variant="inherit">  
                             Verify
                         </Typography>
-                    </MenuItem>
+                    </MenuItem> : null 
+                        }
     
                     </Menu>
                 </div>

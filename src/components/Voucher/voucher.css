@@ -1,3 +1,11 @@
+.voucher-title{
+    text-align: center;
+    font-weight: 600;
+    font-size: 34px;
+    color: rgb(85, 85, 207);
+    margin: 20px 0;
+}
+
 .voucher-data{
     width: 100%;
     margin-top: 40px;

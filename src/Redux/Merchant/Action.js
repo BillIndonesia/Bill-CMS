@@ -4,12 +4,15 @@ const EditMerchant = (data) => {
     return {
         type : "EDIT MERCHANT" , 
         payload : {
+            id : data.id ,
             username : data.username ,
             name : data.name ,
+            password : data.password ,
             email : data.email ,
             level : data.level ,
             phone : data.phone ,
-            status : data.status
+            status : data.status ,
+            saldo : data.saldo
         }
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as Router , Route , Switch} from 'react-router-dom'
+import {BrowserRouter as Router , Redirect, Route , Switch} from 'react-router-dom'
 import {Merchant , Header, parentVendor , Users , Vendors , Voucher , Staff , Cashout} from '../index'
 function Index(props) {
     return (

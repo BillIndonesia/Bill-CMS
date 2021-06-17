@@ -2,6 +2,7 @@ import React , {useState} from 'react'
 import PopUpUpdate from './EditOne/StaffDialog'
 import PopUpUpdateMany from './EditMany/StaffDialog'
 import PopUpDelete from './Delete/DeleteDialog'
+import PopUpVerification from './Verifikasi'
 import { Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
 import {DataGrid } from '@material-ui/data-grid'
 import {Person, Create , List , Delete , Check} from '@material-ui/icons'
@@ -14,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './staff.css'
 
 const columns = [
-  { field: 'id', headerName: 'ID', flex : 1 },
+  { field: 'id', headerName: 'ID', flex : 1 , hide : true },
   { field: 'username', headerName: 'Username', flex : 1 },
   { field: 'name', headerName: 'Name', flex : 1  },
   { field: 'password', headerName: 'Password', flex : 1 , hide : true },
@@ -47,6 +48,7 @@ function Index() {
     const [openUpdateOne , setOpenUpdateOne ] = useState(false)
     const [openUpdateMany , setOpenUpdateMany ] = useState(false)
     const [openDelete , setOpenDelete ] = useState(false)
+    const [openVerification ,setVerif ] = useState(null)
     const [ dropdown , setDropdown ] = useState(false)
     const [ anchorEl , setAnchor ] = useState(null)
     const [selectionModel, setSelectionModel] = React.useState([]);
@@ -56,85 +58,56 @@ function Index() {
     const dispatch = useDispatch()
     const [ Option , setOption ] = useState(null)
 
-    const handleCloseAdd = () => {
-      setOpenAdd(false)
-    }
+    const handleCloseAdd = () => setOpenAdd(false)
     
-    const handleCloseUpdateOne = () => {
-      setOpenUpdateOne(false)
-    }
-
-    const handleCloseUpdateMany = () => {
-      setOpenUpdateMany(false)
-    }
-
-    const handleCloseDelete = () => {
-      setOpenDelete(false)
-    }
-
-    const handleOpenAdd = () => {
-      setOpenAdd(true)
-    }
-
+    const handleCloseUpdateOne = () => setOpenUpdateOne(false)
+    
+    const handleCloseUpdateMany = () => setOpenUpdateMany(false)
+    
+    const handleCloseDelete = () => setOpenDelete(false)
+    
+    const handleOpenAdd = () => setOpenAdd(true)
+    
     const handleOpenUpdateOne = () => {
       handleLogout()
       setOpenUpdateOne(true)
     }
 
-    // const handleOpenUpdateMany = () => {
+    const handleOpenDelete = () => setOpenDelete(true)
+
+    const handleCloseVerif = () => setVerif(false)
+
+    const handleMenu = (event) => setAnchor(event.currentTarget)
+
+    const handleLogout = () => setAnchor(null)
+
+    const sizeChange = (params) => setSizePage(params.pageSize)
     
-    //   setOpen3(true)
-    // }
-
-    const handleOpenDelete = () => {
-      setOpenDelete(true)
-    }
-
-    const handleMenu = (event) => {
-      setAnchor(event.currentTarget)
-    }
-
-    const handleLogout = () => {
-      setAnchor(null)
-    }
-
-    const sizeChange = (params) => {
-      setSizePage(params.pageSize)
-    }
-
-
     const handleOption = e => {
       const {value } = e.target 
-
-      setOption(value)
-      
+      setOption(value)  
     }
 
-    const editStaff = (data) => {
-      dispatch(EditStaff(data))
-    }
+    const editStaff = (data) => dispatch(EditStaff(data))
 
     return(
       <div className={'merchant'}>
-        <PopUp open={openAdd} handleClose={handleCloseAdd} handleOpen={handleOpenAdd} />
-        <PopUpUpdate open={openUpdateOne} handleClose={handleCloseUpdateOne} />
-        <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option}/>
-        <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} />
+        {openAdd && <PopUp open={openAdd} handleClose={handleCloseAdd} handleOpen={handleOpenAdd} /> }
+        {openUpdateOne && <PopUpUpdate open={openUpdateOne} handleClose={handleCloseUpdateOne} /> }
+        {openUpdateMany && <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option}/> }
+        {openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} /> }
+        {openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} data={selectionModel[0]} />}
         <div>
           <h2 className={'merchant-title'}>Data Staff</h2>
           <div className={'merchant-action'}>
-            {/* <div className={'merchant-button'}>
-              <Button variant="contained" style={{marginRight : 10}} color="primary" startIcon={<Add />} onClick={handleOpen}>Add Merchant</Button>
-              
-            </div> */}
-
             <div>
                 <Button
                   variant="contained" 
-                  style={{marginLeft : 10}}
+                  style={{marginLeft : 10 , backgroundColor : 'rgb(85, 85, 207)'}}
                   aria-controls="admin-menu" 
                   aria-haspopup="true"
                   onClick={handleMenu}
+                  size="sm"
                   endIcon={<List />}
                  >
                   Action  
@@ -161,6 +134,7 @@ function Index() {
                         </Typography>
                     </MenuItem>
 
+                    {selectionModel.length > 0 ? 
                       <MenuItem onClick={handleOpenDelete} >
                         <ListItemIcon>
                             <Delete fontSize="small" />
@@ -168,16 +142,22 @@ function Index() {
                         <Typography variant="inherit">  
                             Delete
                         </Typography>
-                    </MenuItem>
-
-                    <MenuItem onClick={handleOpenUpdateOne} >
+                    </MenuItem> : null 
+                    }
+                    
+                    {selectionModel.length === 1 ? 
+                    <MenuItem onClick={() => {
+                      handleLogout()
+                      setVerif(true)
+                    }} >
                         <ListItemIcon>
                             <Check fontSize="small" />
                         </ListItemIcon>
                         <Typography variant="inherit">  
                             Verify
                         </Typography>
-                    </MenuItem>
+                    </MenuItem> : null 
+                    }
                    
                     {selectionModel.length === 0 ? null :
                       selectionModel.length > 1 ? null :

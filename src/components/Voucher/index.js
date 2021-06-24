@@ -8,17 +8,18 @@ import './voucher.css'
 const columns = [
     { field: 'id', headerName: 'Voucher Code', flex : 1 },
     { field: 'date', headerName: 'Create Date', flex : 1 , type : 'date'},
+    { field: 'by', headerName: 'CreateBy', flex : 1 },
     { field: 'nominal', headerName: 'Nominal', flex : 1  , type : 'number'},
 ]
 
 const rows = [
-  {id : 'adks11ki' , date : '12/02/2019' , nominal : 90000} ,
-  {id : 'a88s11ki' , date : '22/04/2019' , nominal : 90000} ,
-  {id : 'adjj11ki' , date : '11/01/2019' , nominal : 90000} ,
-  {id : 'adis91ki' , date : '09/08/2019' , nominal : 90000} ,
-  {id : 'adksddki' , date : '02/07/2019' , nominal : 90000} ,
-  {id : 'adks00ki' , date : '24/05/2019' , nominal : 90000} ,
-  {id : 'a2ls11ki' , date : '21/02/2019' , nominal : 90000} ,
+  {id : 'adks11ki' , by : 'agus3' , date : '12/02/2019' , nominal : 90000} ,
+  {id : 'a88s11ki' , by : 'agus2' , date : '22/04/2019' , nominal : 90000} ,
+  {id : 'adjj11ki' , by : 'agus1' , date : '11/01/2019' , nominal : 90000} ,
+  {id : 'adis91ki' , by : 'agus4' , date : '09/08/2019' , nominal : 90000} ,
+  {id : 'adksddki' , by : 'agus6' , date : '02/07/2019' , nominal : 90000} ,
+  {id : 'adks00ki' , by : 'agus7' , date : '24/05/2019' , nominal : 90000} ,
+  {id : 'a2ls11ki' , by : 'agus8' , date : '21/02/2019' , nominal : 90000} ,
 ]  
 
 function Index() {

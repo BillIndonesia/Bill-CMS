@@ -9,4 +9,24 @@ import Merchant from './Merchant'
 import Main from './Main'
 import Staff from './Staff'
 import Cashout from './Cashout'
-export {Header , Home , Login , parentVendor , Users , Vendors , Voucher , Merchant , Main , Staff , Cashout }
+import Request from './Request'
+import PageNotFound from './PageNotFound'
+import {VoucherRequest , MerchantRequest , CashoutRequest} from './Verification'
+export {
+    Header , 
+    Home , 
+    Login ,
+    parentVendor , 
+    Users , 
+    Vendors , 
+    Voucher , 
+    Merchant , 
+    Main , 
+    Staff , 
+    Cashout , 
+    Request , 
+    CashoutRequest , 
+    MerchantRequest , 
+    VoucherRequest ,
+    PageNotFound
+}

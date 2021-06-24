@@ -29,4 +29,4 @@ function MerchantDialogUpdate(props) {
     )
 }
 
-export default MerchantDialogUpdate
+export default React.memo(MerchantDialogUpdate)

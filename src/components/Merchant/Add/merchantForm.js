@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import '../merchant.css'
 
 const initialValue = {
+    type : '' ,
     name : '' ,
     username : '' ,
     email : '' ,
@@ -16,7 +17,7 @@ const initialValue = {
 }
 
 const validationSchema = Yup.object().shape({
-
+    type     : Yup.string().required('Field Name Should be Not Empty') ,
     name     : Yup.string().required('Field Name Should be Not Empty') ,
     username : Yup.string().required('Field Username Should be Not Empty') ,
     email    : Yup.string().required('Field Email Should be Not Empty').email('Must Valid Email') ,
@@ -28,7 +29,7 @@ const validationSchema = Yup.object().shape({
 
 })
 
-function MerchantForm() {
+function MerchantForm(props) {
 
     const formik = useFormik({
         initialValues : initialValue ,
@@ -42,8 +43,27 @@ function MerchantForm() {
         <>
         <form onSubmit={formik.handleSubmit}>
         <div className={'merchant-main'}>
+                    
             
                  <div className={'merchant-form'}>
+                 <TextField 
+                        select 
+                        id="type" 
+                        name="type" 
+                        label="Type" 
+                        variant="outlined" 
+                        style={{marginBottom : 18}}
+                        value={formik.values.type}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.type && Boolean(formik.errors.type)}
+                        helperText={formik.touched.type && formik.errors.type}
+                        >
+
+                         <MenuItem value="Kwk">Kwk</MenuItem>
+                         <MenuItem value="Merchant">Merchant</MenuItem>
+                     </TextField>
+
                      <TextField 
                         id="name"
                         name="name"
@@ -162,12 +182,17 @@ function MerchantForm() {
                         error={formik.touched.saldo && Boolean(formik.errors.saldo)}
                         helperText={formik.touched.saldo && formik.errors.saldo}
                         />
-                     {<p>{formik.values.status}</p>}
+                     
                                       
                 </div>
              </div>
-             <button type="submit">Submit</button>
+             
+             
              </form>
+             <div>
+             <button onClick={() => formik.handleSubmit()} className="merchant-submit"> Submit </button>
+             <button onClick={() => props.handleClose()} className="merchant-cancel"> Cancel </button>
+            </div>
              </>
     )
 }

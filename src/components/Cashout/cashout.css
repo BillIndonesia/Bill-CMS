@@ -5,3 +5,37 @@
     text-align: center;
     margin: 25px 0;
 }
+
+.list-merchant{
+    padding: 16px 10px;
+    width: 100%;
+    border: 1px solid #cecece;
+    margin-bottom:  15px;
+}
+
+.cashout-submit{
+    background-color: #3f51b5;
+    padding: 10px;
+    border: transparent;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    font-family: sans-serif;
+    float: right;
+}
+
+.cashout-cancel{
+    background-color: transparent;
+    padding: 10px;
+    border: transparent;
+    border-radius: 6px;
+    color: #3f51b5;
+    font-weight: 500;
+    font-family: sans-serif;
+    float: right;
+    margin-right: 8px;
+}
+
+.cashout-cancel:hover{
+    background-color: #f3f3f3;
+}

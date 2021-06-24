@@ -1,0 +1,10 @@
+.request-title{
+    margin-top: 30px;
+    color: #3f51b5;
+    text-align: center;
+}
+
+.request-body{
+    height : 400px ;
+    margin-top: 20px ;
+}

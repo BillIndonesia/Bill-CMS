@@ -5,13 +5,11 @@ import {useFormik} from 'formik'
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-    nominal : Yup.string().required('Should Not Empty') ,
-    count   : Yup.string().required('Should Not Empty')
+    nominal : Yup.string().required('Should Not Empty') 
 })
 
 const initialValue = {
-    nominal : '' ,
-    count   : ''
+    nominal : '' 
 }
 
 function GenerateVoucher(props) {
@@ -20,9 +18,7 @@ function GenerateVoucher(props) {
         initialValues : initialValue ,
         validationSchema : validationSchema ,
         onSubmit : (values , action ) => {
-
             console.log(values)
-            action.resetForm()
         }
     })
 
@@ -34,12 +30,12 @@ function GenerateVoucher(props) {
             >
                 
                 <Modal.Header closeButton>
-                <Modal.Title>Generate Voucher</Modal.Title>
+                <Modal.Title>Cashout</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <diV>
                         <form onSubmit={formik.handleSubmit}>
-                            
+                            <h4>Salman</h4>
                             <TextField 
                                 variant="outlined"
                                 label="Voucher Nominal"
@@ -53,21 +49,6 @@ function GenerateVoucher(props) {
                                 helperText={formik.touched.nominal  && formik.errors.nominal }
 
                             />
-
-                            <TextField 
-                                variant="outlined"
-                                label="Voucher Count"
-                                type="number"
-                                name="count"
-                                value={formik.values.count}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.count && Boolean(formik.errors.count)}
-                                helperText={formik.touched.count  && formik.errors.count }
-
-                            />
-
-
                         </form>
                     </diV>
 
@@ -77,7 +58,7 @@ function GenerateVoucher(props) {
                         Close
                 </Button>
                 
-                <Button size="sm"  onClick={() => formik.handleSubmit()}>
+                <Button size="sm" style={{backgroundColor : 'rgb(85, 85, 207)'}} onClick={props.handleClose}>
                         Process
                 </Button>
                 </Modal.Footer>

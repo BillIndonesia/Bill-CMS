@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button , Dialog , DialogActions , DialogContent , DialogTitle } from '@material-ui/core'
+import { Dialog  , DialogContent , DialogTitle } from '@material-ui/core'
 import MerchantForm from './merchantForm'
 function merchantDialog(props) {
     return (
@@ -7,17 +7,10 @@ function merchantDialog(props) {
         <DialogTitle id="form-dialog-title" style={{color:'rgb(85, 85, 207)'}}>Data Merchant</DialogTitle>
             <DialogContent>
             
-                <MerchantForm />
+                <MerchantForm handleClose={props.handleClose} />
             </DialogContent>
 
-        <DialogActions>
-          <Button onClick={props.handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={props.handleClose} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
+        
       </Dialog>
     )
 }

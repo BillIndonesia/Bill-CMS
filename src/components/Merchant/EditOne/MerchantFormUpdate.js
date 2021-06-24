@@ -19,7 +19,7 @@ import '../merchant.css'
     
     })
 
-function MerchantFormUpdate() {
+function MerchantFormUpdate(props) {
     
     const Data = useSelector(state => state.Merchant)
     const formik = useFormik({
@@ -170,12 +170,15 @@ function MerchantFormUpdate() {
                         />
                  
                 </div>
-             </div>  
-             <p>{Data.password}</p>
-             <button type="submit"> Submit</button>
+             </div> 
              </form>
+
+             <div>
+                <button onClick={() => formik.handleSubmit()} className="merchant-submit"> Submit </button>
+                <button onClick={() => props.handleClose()} className="merchant-cancel"> Cancel </button>
+             </div>
              </>
     )
 }
 
-export default MerchantFormUpdate
+export default React.memo( MerchantFormUpdate )

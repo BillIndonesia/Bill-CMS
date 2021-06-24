@@ -1,0 +1,11 @@
+.missing{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.missing h2{
+    color: #7C7BAD;
+}

@@ -1,28 +1,51 @@
 import React , {useState} from 'react'
 import {Formik , Form , Field , ErrorMessage} from 'formik'
-import {Alert} from 'react-bootstrap'
+import axios from 'axios'
 import * as Yup from 'yup'
 import './login.css'
 
 const validationSchema = Yup.object().shape({
-    phone : Yup.string().required("Please Input Your Phone") ,
-    pin   : Yup.string().required("Please Input Your Pin") 
+    staff_username : Yup.string().required("Please Input Your Phone") ,
+    staff_password : Yup.string().required("Please Input Your Pin") 
 })
 
-const initialValues = { phone : '' , pin : ''}
+const initialValues = { staff_username : '' , staff_password : '' }
 
 function Index(props) {
 
-    const [show , setShow] = useState(false)
-
+    const [err , setErr ] = useState(true)
     const onSubmit = (values , action ) => {
-        
-       if(values.phone === '111' && values.pin === '111'){
-           localStorage.setItem('users' , 'admin')
-           props.change()
-       }
 
-       setShow(true)
+        console.log(values)
+
+        axios.post('https://dev.bill-indonesia.com/api/employee/login/' , values)
+                .then( result => {
+                    if(result.status === 200){
+                        props.change()
+                    }else if(result.status !== 200){
+                        props.change()
+                    }
+                })
+                .catch( err => {
+                    props.change()
+                })
+
+    //    if(values.staff_username === '111' && values.staff_password === '111')
+    //    {
+    //        localStorage.setItem('users' , 'verif')
+    //        localStorage.setItem('level' , '3')
+    //        props.change()
+    //        return null
+    //    }
+
+    //    else if(values.staff_username === '222' && values.staff_password === '222')
+    //    {
+    //     localStorage.setItem('users' , 'staff')
+    //     localStorage.setItem('level' , '2')
+    //     props.change()
+    //     }
+
+      
 
     }
     return (
@@ -38,27 +61,34 @@ function Index(props) {
                 >
                 <Form>
                     <div className={'gap'}>
-                        <label className={'label-field'}>No. Telp</label>
-                        <Field type="text" name="phone" className={'login-field'} placeholder="No.Telp" /> 
-                        <ErrorMessage name="phone" className={'login-err'}>
+                        <label className={'label-field'}>Username</label>
+                        <Field 
+                            type="text" 
+                            name="staff_username" 
+                            className={"login-field " + (err ? 'errors' : null)} 
+                            placeholder="Username"
+                         /> 
+                        
+                        <ErrorMessage name="staff_username" className={'login-err'}>
                             { msg => <span className={'err'}>{msg}</span>}
                         </ErrorMessage>
                     </div>
 
                     <div className={'gap'}>
-                        <label className={'label-field'}>Pin</label>
-                        <Field type="password" name="pin" className={'login-field'} placeholder="Pin"/> 
-                        <ErrorMessage name="pin" className={'login-err'}>
+                        <label className={'label-field'}>Password</label>
+                        <Field 
+                            type="password" 
+                            name="staff_password" 
+                            className={"login-field " + (err ? 'errors' : null)} 
+                            placeholder="Password"
+                        />
+
+                        <ErrorMessage name="staff_password" className={'login-err'}>
                             { msg => <span className={'err'}>{msg}</span>}
                         </ErrorMessage>
                     </div>
 
-                    <div className={'gap'}>
-                        { show && <Alert size="sm" variant="danger">
-                        Mohon Maaf No Telp / PIN Anda Salah , Silahkan Coba Kembali
-                        </Alert>
-                            }
-                    </div>
+                    
 
                     <div className={'gap'}>
                         <button type="submit" className={'btn-login'}>Log In</button>

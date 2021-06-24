@@ -13,7 +13,8 @@ function Index() {
 
     const hasLogin = localStorage.getItem('users')
 
-  return  ( hasLogin === "admin" ? <Main change={changeData} /> : <Login change={changeData} /> )
+  return  ( hasLogin === "verif" ||  hasLogin === "staff" ? 
+  <Main change={changeData} /> : <Login change={changeData} /> )
     
 }
 

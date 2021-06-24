@@ -22,7 +22,7 @@ const initialValue = {
     level : ''
     
 }
-function StaffForm() {
+function StaffForm(props) {
     const formik = useFormik({
         initialValues : initialValue ,
         validationSchema : validationSchema ,
@@ -122,8 +122,12 @@ function StaffForm() {
                                       
                 </div>
              </div>
-               <button type="submit">Submit</button>
              </form>
+
+             <div>
+                <button onClick={() => formik.handleSubmit()} className="staff-submit"> Submit </button>
+                <button onClick={() => props.handleClose()} className="staff-cancel"> Cancel </button>
+             </div>
 
              </>
     )

@@ -24,3 +24,29 @@
 
 }
 
+.staff-submit{
+    background-color: #3f51b5;
+    padding: 10px;
+    border: transparent;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    font-family: sans-serif;
+    float: right;
+}
+
+.staff-cancel{
+    background-color: transparent;
+    padding: 10px;
+    border: transparent;
+    border-radius: 6px;
+    color: #3f51b5;
+    font-weight: 500;
+    font-family: sans-serif;
+    float: right;
+    margin-right: 8px;
+}
+
+.staff-cancel:hover{
+    background-color: #f3f3f3;
+}

@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
     level    : Yup.string().required('Should Not be Empty') ,
 })
 
-function MerchantFormUpdate() {
+function StaffFormUpdate(props) {
     const Data = useSelector(state => state.Staff )
 
     const initialValue = {
@@ -139,10 +139,14 @@ function MerchantFormUpdate() {
                  
                 </div>
              </div> 
-             <button type="submit">Submit</button> 
              </form>
+
+             <div>
+                <button onClick={() => formik.handleSubmit()} className="staff-submit"> Submit </button>
+                <button onClick={() => props.handleClose()} className="staff-cancel"> Cancel </button>
+             </div>
              </>
     )
 }
 
-export default MerchantFormUpdate
+export default React.memo(StaffFormUpdate)

@@ -6,10 +6,15 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import Exit from '@material-ui/icons/ExitToApp'
 import './header.css'
 function Index(props) {
+    const users = localStorage.getItem('users')
+    const level = localStorage.getItem('level')
+
     const history = useHistory()
     const [ anchorEl , setAnchor ] = useState(null)
+
     const handleLogout = () => {
         localStorage.removeItem('users')
+        localStorage.removeItem('level')
         history.replace('/home')
         props.change()
     }
@@ -27,7 +32,7 @@ function Index(props) {
     return (
         <div className={'navbarr'}>
             <div className={'navbar-bodyy'}>
-                <h3 className={'navbar-logoo'}><Link to="/home" className={'navlinkk'} >Users</Link></h3>
+                
                 <ul className={'navbar-listt'}>
                     <li className={'navbar-itemm'}><Link to="/home/vendor" className={'navlinkk'}>Vendors</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/parent-vendor" className={'navlinkk'}>All Parent Vendors</Link></li>
@@ -36,6 +41,16 @@ function Index(props) {
                     <li className={'navbar-itemm'}><Link to="/home/voucher" className={'navlinkk'}>Bill Voucher</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/Staff" className={'navlinkk'}>Staff</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/cashout" className={'navlinkk'}>Cashout</Link></li>
+                    <li className={'navbar-itemm'}><Link to="/home/request" className={'navlinkk'}>Request</Link></li>
+                    { users === "verif" && level === "3" ? 
+                    <li className={'navbar-itemm navlinkk'}>Verification
+                        <ul className={'nav-dropdown'}>
+                            <li className={'item-dropdown'}><Link to="/home/voucher-request" className={'navlinkk'}>Voucher</Link></li>
+                            <li className={'item-dropdown'}><Link to="/home/merchant-request" className={'navlinkk'}>Merchant</Link></li>
+                            <li className={'item-dropdown'}><Link to="/home/cashout-request" className={'navlinkk'}>Cashout</Link></li>
+                        </ul>
+                    </li> : null
+                }
                 </ul>
             </div>
 

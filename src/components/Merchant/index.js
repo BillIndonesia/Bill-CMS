@@ -1,13 +1,12 @@
 import React , {useState} from 'react'
 import { Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
 import {DataGrid } from '@material-ui/data-grid'
-import {Person, Create , List , Delete , Check} from '@material-ui/icons'
+import {Person, Create , List , Delete } from '@material-ui/icons'
 import PopUp from './Add/merchantDialog'
 import  { ListGroup , Form} from 'react-bootstrap'
 import PopUpUpdate from './EditOne/MerchantDialog'
 import PopUpUpdateMany from './EditMany/MerchantDialog'
 import PopUpDelete from './Delete/MerchantDialog'
-import PopUpVerification from './Verifikasi'
 import {useDispatch , useSelector} from 'react-redux'
 import {EditMerchant} from '../../Redux/Merchant/Action'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -48,7 +47,6 @@ function Index() {
     const [openUpdateOne , setOpenUpdateOne ] = useState(false)
     const [openUpdateMany , setOpenUpdateMany ] = useState(false)
     const [openDelete , setOpenDelete ] = useState(false)
-    const [openVerification , setVerification ] = useState(false)
     const [ dropdown , setDropdown ] = useState(false)
     const [ anchorEl , setAnchor ] = useState(null)
     const [selectionModel, setSelectionModel] = React.useState([]);
@@ -76,15 +74,10 @@ function Index() {
     }
 
     const handleOpenDelete = () => setOpenDelete(true)
-    
-    const handleVerif = () => setVerification(true)
 
     const handleMenu = (event) => setAnchor(event.currentTarget)
     
     const handleLogout = () => setAnchor(null)
-    
-
-    const handleCloseVerif = () => setVerification(false)
 
     const sizeChange = (params) => setSizePage(params.pageSize)
 
@@ -107,8 +100,7 @@ function Index() {
         <div>
           <h2 className={'merchant-title'}>Data Merchant</h2>
           <div className={'merchant-action'}>
-          { openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} handleLogout={handleLogout} data={selectionModel[0]}/> }
-
+        
             <div>
                 <Button
                   variant="contained" 
@@ -151,21 +143,6 @@ function Index() {
                             Delete
                         </Typography>
                     </MenuItem> : null 
-                    }
-
-                    {selectionModel.length === 1 ? 
-                      <MenuItem onClick={() => {
-                        handleLogout()
-                        handleVerif()
-
-                      }} >
-                          <ListItemIcon>
-                              <Check fontSize="small" />
-                          </ListItemIcon>
-                          <Typography variant="inherit">  
-                              Verify
-                          </Typography>
-                      </MenuItem> : null 
                     }
                    
                     {selectionModel.length === 0 ? null :

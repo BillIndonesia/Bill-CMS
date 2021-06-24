@@ -103,7 +103,7 @@ function Index() {
             <div>
                 <Button
                   variant="contained" 
-                  style={{marginLeft : 10 , backgroundColor : 'rgb(85, 85, 207)'}}
+                  style={{marginLeft : 10 }}
                   aria-controls="admin-menu" 
                   aria-haspopup="true"
                   onClick={handleMenu}
@@ -260,10 +260,6 @@ function Index() {
 
           
         </div>
-          
-          {selectionModel.map(val =><h1>{val}</h1>)}
-        <h1>{Option}</h1>
-        <p>{Data.name}</p>
       </div>
     )
    

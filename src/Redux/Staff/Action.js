@@ -1,3 +1,5 @@
+import axios from "axios"
+
 const EditStaff = (data) => {
     return {
         type : "EDIT STAFF" ,
@@ -21,4 +23,22 @@ const DeleteStaff = (data) => {
     }
 }
 
-export {EditStaff , DeleteStaff}
+const SaveDataStaff = (data) => {
+
+    return {
+        type : "SAVE STAFF" ,
+        payload : {
+            data : data
+        }
+    }
+}
+
+const GetStaff = () => {
+   return (dispatch) => {
+    axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
+    .then( result => dispatch( SaveDataStaff(result.data) ) )
+    .catch( err => console.error(err.message ))
+    }
+   }
+
+export {EditStaff , DeleteStaff , GetStaff}

@@ -2,24 +2,25 @@ import React from 'react'
 import {TextField , MenuItem} from '@material-ui/core'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import axios from 'axios'
 
 const validationSchema = Yup.object().shape({
   
-    name : Yup.string().required('Should Not be Empty') ,
-    username : Yup.string().required('Should Not be Empty') ,
-    password : Yup.string().required('Should Not be Empty') ,
-    email : Yup.string().required('Should Not be Empty').email('Please Input Valid Email'),
-    phone : Yup.string().required('Should Not be Empty') ,
-    level : Yup.string().required('Should Not be Empty') ,
+    staff_name : Yup.string().required('Should Not be Empty') ,
+    staff_username : Yup.string().required('Should Not be Empty') ,
+    staff_password : Yup.string().required('Should Not be Empty') ,
+    staff_email : Yup.string().required('Should Not be Empty').email('Please Input Valid Email'),
+    staff_phone : Yup.string().required('Should Not be Empty') ,
+    staff_level : Yup.string().required('Should Not be Empty') ,
 })
 
 const initialValue = {
-    name : '' ,
-    username : '',
-    password : '',
-    email : '' ,
-    phone : '' ,
-    level : ''
+    staff_name : '' ,
+    staff_username : '',
+    staff_password : '',
+    staff_email : '' ,
+    staff_phone : '' ,
+    staff_level : ''
     
 }
 function StaffForm(props) {
@@ -27,7 +28,17 @@ function StaffForm(props) {
         initialValues : initialValue ,
         validationSchema : validationSchema ,
         onSubmit : (values , action ) => {
-            console.log(values)
+            axios.post('https://dev.bill-indonesia.com/api/employee/register/', values)
+            .then( result => {
+                if(result.status === 201) {
+                    console.log(result.data)
+                }
+            })
+            .catch( err => {
+                console.log(err.message)
+            })
+
+            action.resetForm()
         }
     })
     return (
@@ -41,11 +52,11 @@ function StaffForm(props) {
                         label="Name"
                         style={{marginBottom : 18}}
                         value={formik.values.name}
-                        name="name" 
+                        name="staff_name" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.name && Boolean(formik.errors.name)}
-                        helperText={formik.touched.name && formik.errors.name}
+                        error={formik.touched.staff_name && Boolean(formik.errors.staff_name)}
+                        helperText={formik.touched.staff_name && formik.errors.staff_name}
                         />
 
                      <TextField 
@@ -54,11 +65,11 @@ function StaffForm(props) {
                         label="Username" 
                         style={{marginBottom : 18}}
                         value={formik.values.name}
-                        name="username" 
+                        name="staff_username" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.username && Boolean(formik.errors.username)}
-                        helperText={formik.touched.username && formik.errors.username}
+                        error={formik.touched.staff_username && Boolean(formik.errors.staff_username)}
+                        helperText={formik.touched.staff_username && formik.errors.staff_username}
                         />
 
                      <TextField 
@@ -67,12 +78,12 @@ function StaffForm(props) {
                         variant="outlined" 
                         label="Password" 
                         style={{marginBottom : 18}}
-                        value={formik.values.password}
-                        name="password" 
+                        value={formik.values.staff_password}
+                        name="staff_password" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
+                        error={formik.touched.staff_password && Boolean(formik.errors.staff_password)}
+                        helperText={formik.touched.staff_password && formik.errors.staff_password}
                         />
                  </div>
 
@@ -82,12 +93,12 @@ function StaffForm(props) {
                         variant="outlined" 
                         label="Email" 
                         style={{marginBottom : 18}}
-                        value={formik.values.email}
-                        name="email" 
+                        value={formik.values.staff_email}
+                        name="staff_email" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
-                        helperText={formik.touched.email && formik.errors.email}
+                        error={formik.touched.staff_email && Boolean(formik.errors.staff_email)}
+                        helperText={formik.touched.staff_email && formik.errors.staff_email}
                         />
 
                      <TextField 
@@ -95,12 +106,12 @@ function StaffForm(props) {
                         variant="outlined" 
                         label="Phone" 
                         style={{marginBottom : 18}}
-                        value={formik.values.phone}
-                        name="phone" 
+                        value={formik.values.staff_phone}
+                        name="staff_phone" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.phone && Boolean(formik.errors.phone)}
-                        helperText={formik.touched.phone && formik.errors.phone}
+                        error={formik.touched.staff_phone && Boolean(formik.errors.staff_phone)}
+                        helperText={formik.touched.staff_phone && formik.errors.staff_phone}
                         />
                      <TextField 
                         id="Level" 
@@ -108,12 +119,12 @@ function StaffForm(props) {
                         variant="outlined" 
                         label="Level" 
                         style={{marginBottom : 18}}
-                        value={formik.values.level}
-                        name="level" 
+                        value={formik.values.staff_level}
+                        name="staff_level" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.level && Boolean(formik.errors.level)}
-                        helperText={formik.touched.level && formik.errors.level}
+                        error={formik.touched.staff_level && Boolean(formik.errors.staff_level)}
+                        helperText={formik.touched.staff_level && formik.errors.staff_level}
                         >
                          <MenuItem value="1">1</MenuItem>
                          <MenuItem value="2">2</MenuItem>

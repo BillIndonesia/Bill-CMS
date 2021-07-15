@@ -25,4 +25,22 @@ const DeleteMerchant = () => {
     }
 }
 
-export {EditMerchant , DeleteMerchant}
+
+const saveDataMerchants = (data) => {
+    return {
+        type : "SAVE MERCHANTS" ,
+        payload : {
+            data : data 
+        }
+    }
+}
+
+const GetMerchants = () => {
+    return (dispatch) => {
+        axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-list/').then(
+            result => dispatch(saveDataMerchants(result.data))
+        )
+    } 
+}
+
+export {EditMerchant , DeleteMerchant , GetMerchants}

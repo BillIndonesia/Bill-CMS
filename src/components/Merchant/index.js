@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import { Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
 import {DataGrid } from '@material-ui/data-grid'
 import {Person, Create , List , Delete } from '@material-ui/icons'
@@ -8,7 +8,7 @@ import PopUpUpdate from './EditOne/MerchantDialog'
 import PopUpUpdateMany from './EditMany/MerchantDialog'
 import PopUpDelete from './Delete/MerchantDialog'
 import {useDispatch , useSelector} from 'react-redux'
-import {EditMerchant} from '../../Redux/Merchant/Action'
+import {EditMerchant , GetMerchants} from '../../Redux/Merchant/Action'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './merchant.css'
 
@@ -26,23 +26,24 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, username: 'Snow', name: 'Jon', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 10000},
-  { id: 2, username: 'Lannister', name: 'Cersei',  password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 91000},
-  { id: 3, username: 'Lannister', name: 'Jaime', password : '112' , email: 'admin@gmail.com', phone : '2129131' , level : '1' , status : 'Verified' , saldo : 90200 },
-  { id: 4, username: 'Stark', name: 'Arya', password : '112' ,  email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 50000},
-  { id: 5, username: 'Targaryen', name: 'Daenerys', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 92000},
-  { id: 6, username: 'Melisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 22000},
-  { id: 7, username: 'Mesaslisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 60000},
-  { id: 8, username: 'Targaryen', name: 'Daenerys', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 90000},
-  { id: 9, username: 'Maaaelisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified', saldo : 90500 },
-  { id: 10, username: 'Meliaaaasandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 20000},
+  { id: 'kwk001', username: 'kwk001', name: 'Jon', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 10000},
+  { id: 'Snow', username: 'Snow', name: 'Jon', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 10000},
+  { id: 'Lannister', username: 'Lannister', name: 'Cersei',  password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Verified' , saldo : 91000},
+  { id: 'Lannister', username: 'Lannister', name: 'Jaime', password : '112' , email: 'admin@gmail.com', phone : '2129131' , level : '1' , status : 'Verified' , saldo : 90200 },
+  { id: 'Stark', username: 'Stark', name: 'Arya', password : '112' ,  email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 50000},
+  { id: 'Targaryen', username: 'Targaryen', name: 'Daenerys', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 92000},
+  { id: 'Melisandre', username: 'Melisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 22000},
+  { id: 'Mesaslisandre', username: 'Mesaslisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 60000},
+  { id: 'Targaryen', username: 'Targaryen', name: 'Daenerys', password : '112' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' , status : 'Not Verified' , saldo : 90000},
+  { id: 'Maaaelisandre', username: 'Maaaelisandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified', saldo : 90500 },
+  { id:  'Meliaaaasandre', username: 'Meliaaaasandre', name: 'Denish', password : '112' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' , status : 'Verified' , saldo : 20000},
 
   
 ];
 
 function Index() {
     const dispatch = useDispatch()
-    const Test = useSelector(state => state.Merchant)
+    const Data = useSelector(state => state.MerchantList.data)
     const [openAdd , setOpenAdd ] = useState(false)
     const [openUpdateOne , setOpenUpdateOne ] = useState(false)
     const [openUpdateMany , setOpenUpdateMany ] = useState(false)
@@ -90,12 +91,40 @@ function Index() {
       
     }
 
+    useEffect( () => {
+      dispatch(GetMerchants())
+    })
+
+    
+
+    if(Data.length == 0 ) return null 
+    
     return(
       <div className={'merchant'}>
-        { openAdd && <PopUp open={openAdd} handleClose={handleCloseAdd} handleOpen={handleOpenAdd} />  }
-        { openUpdateOne && <PopUpUpdate open={openUpdateOne} handleClose={handleCloseUpdateOne} /> }
-        { openUpdateMany && <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option}/> }
-        { openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete}/> }
+        { openAdd && 
+          <PopUp 
+            open={openAdd} 
+            handleClose={handleCloseAdd} 
+            handleOpen={handleOpenAdd} />  }
+
+        { openUpdateOne && 
+           <PopUpUpdate 
+            open={openUpdateOne} 
+            handleClose={handleCloseUpdateOne} /> }
+
+        { openUpdateMany && 
+          <PopUpUpdateMany 
+            open={openUpdateMany} 
+            handleClose={handleCloseUpdateMany} 
+            item={Option} 
+            data={selectionModel} /> }
+
+        { openDelete && 
+          <PopUpDelete 
+            open={openDelete} 
+            handleClose={handleCloseDelete}
+            data={selectionModel}
+            /> }
         
         <div>
           <h2 className={'merchant-title'}>Data Merchant</h2>
@@ -169,11 +198,7 @@ function Index() {
 
                   }
 
-                  {/* { selectionModel.length === 0 || selectionModel.length < 2 ? null : <DropdownButton show={dropdown} style={{width : 210}} variant="default" onClick={() => setDropdown(!dropdown)} >
-                        <Dropdown.Item onClick={() => console.log('ok3')}><Form.Check label="Action"/></Dropdown.Item>
-                        <Dropdown.Item ><Form.Check onch label="Action2"/></Dropdown.Item>
-                        <Dropdown.Item ><Form.Check label="Action3"/></Dropdown.Item>
-                      </DropdownButton>  } */}
+                 
                     { dropdown && <ListGroup>
                      
                       <ListGroup.Item> 
@@ -218,8 +243,8 @@ function Index() {
 
         <div className={'merchant-data'}>
           
-            <DataGrid 
-              rows={rows} 
+             <DataGrid 
+              rows={Data} 
               columns={columns}  
               checkboxSelection ={true}
               onSelectionModelChange={(newSelection) => {
@@ -237,8 +262,8 @@ function Index() {
                
             /> 
         </div>
-          <h3>{Test.level }</h3>
-          {selectionModel.map(val =><h1>{val}</h1>)}
+          
+          
         <h1>{Option}</h1>
       </div>
     )

@@ -13,41 +13,32 @@ const initialValues = { staff_username : '' , staff_password : '' }
 
 function Index(props) {
 
-    const [err , setErr ] = useState(true)
+    const [err , setErr ] = useState(false)
+
     const onSubmit = (values , action ) => {
-
-        console.log(values)
-
+        
         axios.post('https://dev.bill-indonesia.com/api/employee/login/' , values)
-                .then( result => {
-                    if(result.status === 200){
+                .then(result => {
+
+                    if(result.status === 200)
+                    {
+                        localStorage.setItem('users' , 'verif')
+                        localStorage.setItem('level' , '3')
+                        localStorage.setItem('name' , result.data.staff_name)
                         props.change()
-                    }else if(result.status !== 200){
-                        props.change()
+                        return null
                     }
+                   
                 })
                 .catch( err => {
-                    props.change()
+                    if(err.response.status === 401){
+                        setErr(true)
+                    }
                 })
 
-    //    if(values.staff_username === '111' && values.staff_password === '111')
-    //    {
-    //        localStorage.setItem('users' , 'verif')
-    //        localStorage.setItem('level' , '3')
-    //        props.change()
-    //        return null
-    //    }
-
-    //    else if(values.staff_username === '222' && values.staff_password === '222')
-    //    {
-    //     localStorage.setItem('users' , 'staff')
-    //     localStorage.setItem('level' , '2')
-    //     props.change()
-    //     }
-
-      
-
     }
+
+    
     return (
         <div className={'login-container'}>
           

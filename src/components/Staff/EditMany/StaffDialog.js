@@ -8,7 +8,7 @@ function MerchantDialogUpdate(props) {
         <DialogTitle id="form-dialog-title" style={{color:'rgb(85, 85, 207)'}}>Update Selected Data</DialogTitle>
             <DialogContent>
             
-                <StaffForm item={props.item} handleClose={props.handleClose}/>
+                <StaffForm item={props.item} handleClose={props.handleClose} data={props.data}/>
             </DialogContent>
       </Dialog>
     )

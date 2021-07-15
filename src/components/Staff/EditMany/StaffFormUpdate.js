@@ -17,7 +17,9 @@ function MerchantFormUpdate(props) {
     const formik = useFormik({
         initialValues : {
             item : props.item ,
-            data : ''
+            data : '' ,
+            type : 'many' ,
+            dataList : props.data
         } ,
 
         validationSchema : validationSchema ,
@@ -115,12 +117,13 @@ function MerchantFormUpdate(props) {
                         
                     </div>  
 
+                    
+
+             </form>
                     <div>
                         <button onClick={() => formik.handleSubmit()} type="submit" className="staff-submit"> Submit </button>
                         <button onClick={() => props.handleClose()} className="staff-cancel"> Cancel </button>
                     </div>
-
-             </form>
              </>
     )
 }

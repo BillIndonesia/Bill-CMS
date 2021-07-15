@@ -1,9 +1,12 @@
 import React ,{useState , useEffect} from 'react'
+import axios from 'axios'
+import {useDispatch , useSelector} from 'react-redux'
 import {DataGrid} from '@material-ui/data-grid'
 import PopUpCashout from './GenerateCashout' 
-import axios from 'axios'
+
 import {Button} from '@material-ui/core'
 import {Payment} from '@material-ui/icons'
+import {getHistoryCashout} from '../../Redux/Cashout/Action'
 import './cashout.css'
 
 
@@ -17,12 +20,12 @@ const columns = [
   
 ];
 
-const row = [
-  { id: 1, date : '12/09/2021' , destination : 'Vikral 1', pic : 'Yola3' , ammount : 50000 },
-  { id: 2, date : '14/01/2021',  destination : 'Vikral 2', pic : 'Yola2' ,  ammount : 26000 },
-  { id: 3, date : '09/09/2011',  destination : 'Vikral 5', pic : 'Yola1' , ammount : 100000 },
-  { id: 4, date : '12/05/2021' ,  destination : 'Vikral 6', pic : 'Yola6' ,  ammount : 50200 },
-]
+// const row = [
+//   { id: 1, date : new Date("2021-07-08T20:51:59.976795+07:00").getFullYear() , destination : 'Vikral 1', pic : 'Yola3' , ammount : 50000 },
+//   { id: 2, date : '14/01/2021',  destination : 'Vikral 2', pic : 'Yola2' ,  ammount : 26000 },
+//   { id: 3, date : '09/09/2011',  destination : 'Vikral 5', pic : 'Yola1' , ammount : 100000 },
+//   { id: 4, date : '12/05/2021' ,  destination : 'Vikral 6', pic : 'Yola6' ,  ammount : 50200 },
+// ]
 
 function Index() {
   const [change, setChange] = useState(false)
@@ -34,9 +37,13 @@ function Index() {
   const handleProces = () => setChange(!change)
   const handleDialog = () => setShowDialog(!showDialog)
 
+  const dispatch = useDispatch() 
+  const Data = useSelector(state => state.CashoutH.data)
+  
   useEffect( () => {
-    axios.get('https://jsonplaceholder.typicode.com/users/1').then(result => console.log(result))
-  } , [change])
+    dispatch( getHistoryCashout( 1 , 1))  
+
+  } , [])
  
     return (
         <div style={{ height : 600}}>
@@ -63,14 +70,14 @@ function Index() {
               Creare Cashout
             </Button>
 
-            <DataGrid  
-              rows={row} 
+            { Data && <DataGrid  
+              rows={Data} 
               columns={columns}
               rowsPerPageOptions={[5 , 15 ,25]} 
               pageSize={sizePage}
               onPageSizeChange={params => setSizePage(params.pageSize)}
              
-            />
+            /> }
         </div>
     )
 }

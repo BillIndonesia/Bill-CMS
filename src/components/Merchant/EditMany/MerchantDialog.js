@@ -7,7 +7,7 @@ function MerchantDialogUpdate(props) {
         <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" >
         <DialogTitle id="form-dialog-title" style={{color:'rgb(85, 85, 207)'}}>Update Selected Data</DialogTitle>
             <DialogContent>
-                <MerchantForm item={props.item} handleClose={props.handleClose}/>
+                <MerchantForm item={props.item} handleClose={props.handleClose} data={props.data}/>
             </DialogContent>
       </Dialog>
     )

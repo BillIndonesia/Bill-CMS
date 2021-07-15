@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import PopUpUpdate from './EditOne/StaffDialog'
 import PopUpUpdateMany from './EditMany/StaffDialog'
 import PopUpDelete from './Delete/DeleteDialog'
@@ -9,7 +9,7 @@ import {Person, Create , List , Delete , Check} from '@material-ui/icons'
 import {useDispatch ,useSelector} from 'react-redux'
 import PopUp from './Add/StaffAddDialog'
 import  { ListGroup , Form} from 'react-bootstrap'
-import {EditStaff} from '../../Redux/Staff/Action'
+import {EditStaff , GetStaff} from '../../Redux/Staff/Action'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './staff.css'
@@ -54,8 +54,7 @@ function Index() {
     const [selectionModel, setSelectionModel] = React.useState([]);
     const [sizePage , setSizePage] = useState(5)
 
-    const Data = useSelector(state => state.Staff)
-    const dispatch = useDispatch()
+    
     const [ Option , setOption ] = useState(null)
 
     const handleCloseAdd = () => setOpenAdd(false)
@@ -90,11 +89,21 @@ function Index() {
 
     const editStaff = (data) => dispatch(EditStaff(data))
 
+    const Data = useSelector(state => state.StaffList.data)
+    const dispatch = useDispatch()
+
+    useEffect( () => {
+      dispatch(GetStaff())
+    },[])
+
+    if(Data.length == 0 ) return null
+
+
     return(
       <div className={'merchant'}>
         {openAdd && <PopUp open={openAdd} handleClose={handleCloseAdd} handleOpen={handleOpenAdd} /> }
         {openUpdateOne && <PopUpUpdate open={openUpdateOne} handleClose={handleCloseUpdateOne} /> }
-        {openUpdateMany && <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option}/> }
+        {openUpdateMany && <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option} data={selectionModel} /> }
         {openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} /> }
         {openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} data={selectionModel[0]} />}
         <div>
@@ -130,7 +139,7 @@ function Index() {
                             <Person fontSize="small" />
                         </ListItemIcon>
                         <Typography variant="inherit">  
-                            Add Merchant
+                            Add Staff
                         </Typography>
                     </MenuItem>
 
@@ -238,7 +247,7 @@ function Index() {
         <div className={'merchant-data'}>
           
             <DataGrid 
-              rows={rows} 
+              rows={Data} 
               columns={columns}  
               checkboxSelection ={true}
               onSelectionModelChange={(newSelection) => {

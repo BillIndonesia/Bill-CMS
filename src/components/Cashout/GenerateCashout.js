@@ -3,18 +3,22 @@ import {Modal } from 'react-bootstrap'
 import {TextField , MenuItem} from '@material-ui/core'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import axios from 'axios'
 import './cashout.css'
 
 const validationSchema = Yup.object().shape({
-    nominal : Yup.string().required('Should Not Empty') , 
-    destination : Yup.string().required('Should Not Empty') ,
-    pic : Yup.string().required('Should Not Empty')
+    cashout_amount : Yup.string().required('Should Not Empty') , 
+    merchants : Yup.string().required('Should Not Empty') ,
+    create_by : Yup.string().required('Should Not Empty') ,
+    cashout_by : Yup.string().required('Should Not Empty')
 })
 
 const initialValue = {
-    nominal : '' ,
-    destination : '' ,
-    pic : ''
+    cashout_amount : '' ,
+    merchants : '' ,
+    create_by : '' ,
+    cashout_by : ''
+
 }
 
 function GenerateVoucher(props) {
@@ -25,8 +29,16 @@ function GenerateVoucher(props) {
         validationSchema : validationSchema ,
         onSubmit : (values , action ) => {
             console.log(values)
+            axios.post('https://dev.bill-indonesia.com/api/cashout/request-cashout/' , values)
+                    .then( result => {
+                        console.log(result.data)
+                        setShow(true)
+                    })
+                    .catch( err => {
+                        console.log(err)
+                    })
+
             action.resetForm()
-            setShow(false)
             props.handleProcess()
         }
     })
@@ -52,12 +64,12 @@ function GenerateVoucher(props) {
                                 label="PIC"
                                 select
                                 style={{marginBottom : 15 , width : '100%'}}
-                                name="pic"
-                                value={formik.values.pic}
+                                name="create_by"
+                                value={formik.values.create_by}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.pic && Boolean(formik.errors.pic)}
-                                helperText={formik.touched.pic  && formik.errors.pic }
+                                error={formik.touched.create_by && Boolean(formik.errors.create_by)}
+                                helperText={formik.touched.create_by  && formik.errors.create_by }
 
                             >
                                 <MenuItem value="Admin 1">Admin 1</MenuItem>
@@ -65,10 +77,23 @@ function GenerateVoucher(props) {
                                 <MenuItem value="Admin 3">Admin 3</MenuItem>
                             </TextField>
 
+                            <TextField 
+                                variant="outlined"
+                                label="Cashout By"
+                                style={{marginBottom : 15 , width : '100%'}}
+                                name="cashout_by"
+                                value={formik.values.cashout_by}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.cashout_by && Boolean(formik.errors.cashout_by)}
+                                helperText={formik.touched.cashout_by  && formik.errors.cashout_by }
+
+                            />
+
                             <input onBlur={e =>
-                                { formik.values.destination = e.target.value
+                                { formik.values.merchants = e.target.value
                                   setShow(false)
-                                }} name="destination" list="browsers" className="list-merchant" placeholder="Destination" />
+                                }} name="merchants" list="browsers" className="list-merchant" placeholder="Merchants" />
                            
                             <datalist style={{width : 400}} id="browsers">
                                 <option value="Edge" />
@@ -84,12 +109,12 @@ function GenerateVoucher(props) {
                                 label="Voucher Nominal"
                                 type="number"
                                 style={{marginBottom : 15 , width : '100%'}}
-                                name="nominal"
-                                value={formik.values.nominal}
+                                name="cashout_amount"
+                                value={formik.values.cashout_amount}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.nominal && Boolean(formik.errors.nominal)}
-                                helperText={formik.touched.nominal  && formik.errors.nominal }
+                                error={formik.touched.cashout_amount && Boolean(formik.errors.cashout_amount)}
+                                helperText={formik.touched.cashout_amount  && formik.errors.cashout_amount }
                                 disabled={show}
 
                             />

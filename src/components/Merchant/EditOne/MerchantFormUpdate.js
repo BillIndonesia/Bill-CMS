@@ -32,7 +32,8 @@ function MerchantFormUpdate(props) {
             phone : Data.phone ,
             level : Data.level ,
             status : Data.status ,
-            saldo : Data.saldo
+            saldo : Data.saldo ,
+            type : 'one'
         } ,
 
         validationSchema : validationSchema ,
@@ -96,6 +97,7 @@ function MerchantFormUpdate(props) {
                      <TextField 
                         id="Password"
                         value={formik.values.password}
+                        type="password"
                         name="password" 
                         variant="outlined" 
                         label="Password" 

@@ -91,4 +91,4 @@ function Index(props) {
     )
 }
 
-export default Index
+export default React.memo(Index)

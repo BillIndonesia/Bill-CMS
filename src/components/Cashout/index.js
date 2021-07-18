@@ -45,6 +45,8 @@ function Index() {
 
   } , [])
  
+  if(Data.length == 0) return null 
+
     return (
         <div style={{ height : 600}}>
            

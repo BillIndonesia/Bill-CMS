@@ -26,9 +26,6 @@ const Reducer = ( state = initialValues , action ) => {
     
     switch( action.type ){
         case "SAVE MERCHANTS" :
-            
-            
-
             return {
                 data : List(action.payload.data)
             }

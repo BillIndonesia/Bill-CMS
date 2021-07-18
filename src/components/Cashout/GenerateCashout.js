@@ -106,7 +106,7 @@ function GenerateVoucher(props) {
                            
                            <TextField 
                                 variant="outlined"
-                                label="Voucher Nominal"
+                                label="Nominal"
                                 type="number"
                                 style={{marginBottom : 15 , width : '100%'}}
                                 name="cashout_amount"

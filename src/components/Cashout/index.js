@@ -67,7 +67,7 @@ function Index() {
               variant="contained"
               startIcon={<Payment />}
               >
-              Creare Cashout
+              Create Cashout
             </Button>
 
             { Data && <DataGrid  
@@ -76,6 +76,7 @@ function Index() {
               rowsPerPageOptions={[5 , 15 ,25]} 
               pageSize={sizePage}
               onPageSizeChange={params => setSizePage(params.pageSize)}
+              
              
             /> }
         </div>

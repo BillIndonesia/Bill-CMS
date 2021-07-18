@@ -27,7 +27,7 @@ function GenerateVoucher(props) {
         validationSchema : validationSchema ,
 
         onSubmit : (values , action ) => {
-
+            console.log(values)
             axios.post('https://dev.bill-indonesia.com/api/voucher/generate-vouchers/' , values)
                     .then( result => console.log(result.data))
                     .catch( err => {

@@ -1,5 +1,16 @@
 import axios from "axios"
 
+//global confirmation 
+
+const Loading = () => { return { type : "LOADING-REQ" } }
+
+const Success = () => { return { type : "REQ-SUCCESS" } }
+
+const Failure = () => { return { type : "REQ-FAILURE" } }
+
+
+//edit staff
+
 const EditStaff = (data) => {
     return {
         type : "EDIT STAFF" ,
@@ -23,6 +34,8 @@ const DeleteStaff = (data) => {
     }
 }
 
+//get list staff data
+
 const SaveDataStaff = (data) => {
 
     return {
@@ -41,4 +54,26 @@ const GetStaff = () => {
     }
    }
 
-export {EditStaff , DeleteStaff , GetStaff}
+
+//create staff 
+
+const ReqStaff = (data) => {
+    return(dispatch) => {
+        dispatch( Loading() )
+
+        axios.post('https://dev.bill-indonesia.com/api/employee/register/' , data)
+                .then( () => 
+                {
+                    dispatch( Success() )
+
+                    setTimeout( () => {
+                        dispatch({ type : "RESET-REQ" })
+                        dispatch(GetStaff())
+                    } , 3000)
+                })
+                
+                .catch( () => dispatch( Failure() ))
+    }
+}
+
+export {EditStaff , DeleteStaff , GetStaff , ReqStaff}

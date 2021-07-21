@@ -1,5 +1,5 @@
 import React , {useState , useEffect} from 'react'
-import { Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
+import { Button , Menu , MenuItem , ListItemIcon , Typography , LinearProgress} from '@material-ui/core'
 import {DataGrid } from '@material-ui/data-grid'
 import {Person, Create , List , Delete } from '@material-ui/icons'
 import PopUp from './Add/merchantDialog'
@@ -71,10 +71,11 @@ function Index() {
 
     const handleOption = e => {
       const {value } = e.target 
-
       setOption(value)
-      
     }
+
+    const Reset = () => setSelectionModel([])
+    
 
     useEffect( () => {
       dispatch(GetMerchants())
@@ -82,7 +83,7 @@ function Index() {
 
     
 
-    if(Data.length == 0 ) return null 
+   
     
     return(
       <div className={'merchant'}>
@@ -109,6 +110,7 @@ function Index() {
             open={openDelete} 
             handleClose={handleCloseDelete}
             data={selectionModel}
+            change={Reset}
             /> }
         
         <div>
@@ -228,28 +230,28 @@ function Index() {
 
         <div className={'merchant-data'}>
           
-             <DataGrid 
-              rows={Data} 
-              columns={columns}  
-              checkboxSelection ={true}
-              onSelectionModelChange={(newSelection) => {
-                setSelectionModel(newSelection.selectionModel)
-             }}
-              selectionModel={selectionModel}
-              pageSize={sizePage} 
-              onPageSizeChange={sizeChange}
-              rowsPerPageOptions={[5 , 7 , 10 , 25]} 
-                onRowSelected={ item => {
-                  
-                  editMerchant(item.data)
-                  
-                }} 
-               
-            /> 
+          {Data.length === 0 ? 
+          <LinearProgress />  :
+              <DataGrid 
+                rows={Data} 
+                columns={columns}  
+                checkboxSelection ={true}
+                onSelectionModelChange={(newSelection) => {
+                  setSelectionModel(newSelection.selectionModel)
+                 }}
+                selectionModel={selectionModel}
+                pageSize={sizePage} 
+                onPageSizeChange={sizeChange}
+                rowsPerPageOptions={[5 , 7 , 10 , 25]} 
+                  onRowSelected={ item => {
+                    
+                    editMerchant(item.data)
+                    
+                  }} 
+                
+              /> 
+              }
         </div>
-          
-          
-        <h1>{Option}</h1>
       </div>
     )
    

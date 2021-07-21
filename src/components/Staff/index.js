@@ -3,14 +3,13 @@ import PopUpUpdate from './EditOne/StaffDialog'
 import PopUpUpdateMany from './EditMany/StaffDialog'
 import PopUpDelete from './Delete/DeleteDialog'
 import PopUpVerification from './Verifikasi'
-import { Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
+import { Button , Menu , MenuItem , ListItemIcon , Typography , LinearProgress} from '@material-ui/core'
 import {DataGrid } from '@material-ui/data-grid'
 import {Person, Create , List , Delete , Check} from '@material-ui/icons'
 import {useDispatch ,useSelector} from 'react-redux'
 import PopUp from './Add/StaffAddDialog'
 import  { ListGroup , Form} from 'react-bootstrap'
 import {EditStaff , GetStaff} from '../../Redux/Staff/Action'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './staff.css'
 
@@ -22,24 +21,9 @@ const columns = [
   { field: 'email' , headerName: 'Email', flex : 1  },
   { field: 'phone' , headerName: 'Phone', flex : 1  },
   { field: 'level' , headerName: 'Level', flex : 1  },
- 
   
 ];
 
-const rows = [
-  { id: 1, username: 'Snow', name: 'Jon', password : 'test111' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' },
-  { id: 2, username: 'Lannister', name: 'Cersei', password : 'test212' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' },
-  { id: 3, username: 'Lannister', name: 'Jaime', password : 'test101' , email: 'admin@gmail.com', phone : '2129131' , level : '1' },
-  { id: 4, username: 'Stark', name: 'Arya', password : 'test10122' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' },
-  { id: 5, username: 'Targaryen', name: 'Daenerys', password : 'test101' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' },
-  { id: 6, username: 'Melisandre', name: 'Denish', password : 'test171' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' },
-  { id: 7, username: 'Mesaslisandre', name: 'Denish', password : 'test1022' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' },
-  { id: 8, username: 'Targaryen', name: 'Daenerys', password : 'test101111' , email: 'admin@gmail.com' , phone : '2129131' , level : '1' },
-  { id: 9, username: 'Maaaelisandre', name: 'Denish', password : 'test1441' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1'  },
-  { id: 10, username: 'Meliaaaasandre', name: 'Denish', password : 'test144441' , email: 'admin@gmail.com' , phone : '2129131' ,  level : '1' },
-
-  
-];
 
 function Index() {
    
@@ -95,8 +79,6 @@ function Index() {
     useEffect( () => {
       dispatch(GetStaff())
     },[])
-
-    if(Data.length == 0 ) return null
 
 
     return(
@@ -246,28 +228,25 @@ function Index() {
 
         <div className={'merchant-data'}>
           
-            <DataGrid 
-              rows={Data} 
-              columns={columns}  
-              checkboxSelection ={true}
-              onSelectionModelChange={(newSelection) => {
-                setSelectionModel(newSelection.selectionModel)
-              }}
-              onRowSelected={ item => {
-                editStaff(item.data)
-              }}
-              selectionModel={selectionModel}
-              pageSize={sizePage} 
-              onPageSizeChange={sizeChange}
-              rowsPerPageOptions={[5 , 7 , 10 , 25]} 
-               
-            /> 
-
-
-          
-          
-
-          
+          { Data.length === 0 ? 
+             <LinearProgress /> :
+                <DataGrid 
+                  rows={Data} 
+                  columns={columns}  
+                  checkboxSelection ={true}
+                  onSelectionModelChange={(newSelection) => {
+                    setSelectionModel(newSelection.selectionModel)
+                  }}
+                  onRowSelected={ item => {
+                    editStaff(item.data)
+                  }}
+                  selectionModel={selectionModel}
+                  pageSize={sizePage} 
+                  onPageSizeChange={sizeChange}
+                  rowsPerPageOptions={[5 , 7 , 10 , 25]} 
+                  
+                /> 
+            }
         </div>
       </div>
     )

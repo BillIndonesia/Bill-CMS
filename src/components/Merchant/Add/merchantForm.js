@@ -1,8 +1,9 @@
 import React from 'react'
 import {TextField , MenuItem} from '@material-ui/core'
 import {useFormik} from 'formik'
+import { useDispatch } from 'react-redux'
+import {RequestMerchant} from '../../../Redux/Merchant/Action'
 import * as Yup from 'yup'
-import axios from 'axios'
 import '../merchant.css'
 
 const initialValue = {
@@ -36,19 +37,14 @@ const validationSchema = Yup.object().shape({
 
 function MerchantForm(props) {
 
+    const dispatch = useDispatch()
+
     const formik = useFormik({
         initialValues : initialValue ,
         validationSchema : validationSchema ,
         onSubmit : (values , action) => {
-            axios.post('https://dev.bill-indonesia.com/api/merchant/register/' , values)
-                 .then(result => {
-                     if(result.status === 201 ){
-                         console.log(result.data)
-                     }
-                 })
-                 .catch( err => {
-                     console.log(err.message)
-                 })
+            dispatch( RequestMerchant(values))
+            action.resetForm()
         }
     })
     
@@ -237,4 +233,4 @@ function MerchantForm(props) {
     )
 }
 
-export default MerchantForm
+export default React.memo(MerchantForm)

@@ -7,25 +7,25 @@ const initialValue = {
 
 const Reducer = (state = initialValue , action) => {
     switch(action.type){
-        case "CASHOUT_SUCCESS" :
-            return {
-                   loading : false ,
-                   success : true 
+        case "VOUCHER_SUCCESS" :
+            return { 
+                   success : true  ,
+                  
             }
             
-        case "LOADING_CASHOUT" :
+        case "LOADING_VOUCHER" :
             return {
                 ...state ,
                 loading : true
             }
         
-        case "CASHOUT_FAILURE" :
+        case "VOUCHER_FAILURE" :
             return {
                 ...state ,
                 failure : true 
             }
             
-        case "RESET" :
+        case "RESET_VOUCHER" :
             return{ 
                 loading : false ,
                 success : false ,

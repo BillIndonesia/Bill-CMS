@@ -1,12 +1,10 @@
 import React ,{useState , useEffect} from 'react'
-import axios from 'axios'
 import {useDispatch , useSelector} from 'react-redux'
 import {DataGrid} from '@material-ui/data-grid'
 import PopUpCashout from './GenerateCashout' 
-
 import {Button} from '@material-ui/core'
 import {Payment} from '@material-ui/icons'
-import {getHistoryCashout} from '../../Redux/Cashout/Action'
+import {getHistoryCashout , getNextHistori} from '../../Redux/Cashout/Action'
 import './cashout.css'
 
 
@@ -31,21 +29,18 @@ function Index() {
   const [change, setChange] = useState(false)
   const [show , setShow] = useState(false)
   const [showDialog , setShowDialog] = useState(false)
-  const [sizePage , setSizePage] = useState(5)
   const handleClose = () => setShow(false)
   
   const handleProces = () => setChange(!change)
   const handleDialog = () => setShowDialog(!showDialog)
 
   const dispatch = useDispatch() 
-  const Data = useSelector(state => state.CashoutH.data)
+  const Data = useSelector(state => state.CashoutH)
   
   useEffect( () => {
-    dispatch( getHistoryCashout( 1 , 1))  
+    dispatch( getHistoryCashout())  
 
-  } , [])
- 
-  if(Data.length == 0) return null 
+  } ,[])
 
     return (
         <div style={{ height : 600}}>
@@ -72,14 +67,19 @@ function Index() {
               Creare Cashout
             </Button>
 
-            { Data && <DataGrid  
-              rows={Data} 
-              columns={columns}
-              rowsPerPageOptions={[5 , 15 ,25]} 
-              pageSize={sizePage}
-              onPageSizeChange={params => setSizePage(params.pageSize)}
-             
-            /> }
+            
+              <DataGrid  
+                rows={Data.data} 
+                columns={columns}
+                rowsPerPageOptions={[5 , 15 ,25]} 
+                pageSize={10}
+                onPageChange={ params => dispatch(getNextHistori(params.page + 1))}
+                rowCount={1000}
+                loading={Data.loading}
+                paginationMode="server"
+              /> 
+
+            
         </div>
     )
 }

@@ -1,5 +1,14 @@
 import axios from 'axios'
 
+const Loading = () => { return { type : "LOADING-REQ" } }
+
+const Success = () => { return { type : "REQ-SUCCESS" } }
+
+const Failure = () => { return { type : "REQ-FAILURE" } }
+
+
+// edit merchant 
+
 const EditMerchant = (data) => {
     return {
         type : "EDIT MERCHANT" , 
@@ -17,14 +26,38 @@ const EditMerchant = (data) => {
     }
 }
 
-const DeleteMerchant = () => {
-    return () => {
-        axios.get('https://jsonplaceholder.typicode.com/users')
-        .then( result => console.log(result.data))
-        .catch( err => console.log(err.message))
+//delete merchant
+
+const DeleteMerchant = (data) => {
+    let Data = []
+    
+    data.forEach( item => {
+        Data.push({ merchant_username : item })
+    })
+    
+    return (dispatch) => {
+        dispatch(Loading)
+
+        axios.post('https://dev.bill-indonesia.com/api/merchant/delete/' , Data)
+                .then( () => {
+                    dispatch(Success())
+
+                    setTimeout( () => {
+                        dispatch({ type : "RESET-REQ"})
+                    } , 3000)
+                })
+                .catch( () => {
+                    dispatch(Failure())
+
+                    setTimeout( () => {
+                        dispatch({ type : "RESET-REQ"})
+                    } , 3000)
+                })
     }
 }
 
+
+//get merchant list
 
 const saveDataMerchants = (data) => {
     return {
@@ -43,4 +76,32 @@ const GetMerchants = () => {
     } 
 }
 
-export {EditMerchant , DeleteMerchant , GetMerchants}
+//create merchant
+
+const RequestMerchant = (data) => {
+    return (dispatch) => {
+        dispatch( Loading() )
+
+        axios.post('https://dev.bill-indonesia.com/api/merchant/register/' , data)
+                .then( () => {
+                    dispatch( Success() )
+
+                    setTimeout( () => {
+                        dispatch({type : "RESET-REQ"})
+
+                    } , 3000)
+                    
+                })
+                
+                .catch( () => {
+                    dispatch(Failure())
+                    
+                    setTimeout( () => {
+                        dispatch({ type : "RESET-REQ"})
+                    } , 3000)
+
+                })
+    }
+}
+
+export {EditMerchant , DeleteMerchant , GetMerchants , RequestMerchant}

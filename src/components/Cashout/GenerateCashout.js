@@ -1,9 +1,11 @@
 import React , {useState} from 'react'
 import {Modal } from 'react-bootstrap'
-import {TextField , MenuItem} from '@material-ui/core'
+import {TextField , MenuItem , Snackbar } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert';
 import {useFormik} from 'formik'
+import {useSelector , useDispatch} from 'react-redux'
+import {Cashout} from '../../Redux/Cashout/Action'
 import * as Yup from 'yup'
-import axios from 'axios'
 import './cashout.css'
 
 const validationSchema = Yup.object().shape({
@@ -23,21 +25,15 @@ const initialValue = {
 
 function GenerateVoucher(props) {
 
+    const dispatch = useDispatch()
+    const Data = useSelector(state => state.Confirmation )
 
     const formik = useFormik({
         initialValues : initialValue ,
         validationSchema : validationSchema ,
         onSubmit : (values , action ) => {
-            console.log(values)
-            axios.post('https://dev.bill-indonesia.com/api/cashout/request-cashout/' , values)
-                    .then( result => {
-                        console.log(result.data)
-                        setShow(true)
-                    })
-                    .catch( err => {
-                        console.log(err)
-                    })
-
+            
+            dispatch(Cashout(values))
             action.resetForm()
             props.handleProcess()
         }
@@ -56,6 +52,22 @@ function GenerateVoucher(props) {
                 <Modal.Title>Cashout</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    { 
+                            Data.success ? 
+                            <Snackbar open={Data.success} autoHideDuration={3000}>
+                                <Alert severity="success">
+                                    Cashout Berhasil
+                                </Alert>
+                             </Snackbar> : 
+                             
+                             Data.failure ? 
+                             <Snackbar open={Data.failure} autoHideDuration={3000}>
+                             <Alert severity="error">
+                                 Cashout Gagal
+                             </Alert>
+                          </Snackbar> : null
+                    }
+                            
                     <diV>
                         <form onSubmit={formik.handleSubmit}>
 
@@ -122,6 +134,7 @@ function GenerateVoucher(props) {
                             
                         </form>
                     </diV>
+                
 
                 </Modal.Body>
                 <Modal.Footer>

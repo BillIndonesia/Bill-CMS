@@ -1,30 +1,56 @@
 const initialValue = {
-    data : []
+    loading : false ,
+    data : [] ,
+    failure : false 
+}
+
+const List = (data) => {
+    let Data = [] 
+
+    console.log(Data)
+    data.forEach( (item , index ) => {
+
+        let date = new Date(item.create_date)
+       
+        Data.push({
+            id     : index , 
+            date   : `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` ,
+            ammount : item.cashout_amount ,
+            pic    : item.cashout_by.staff_name ,
+            destination : item.merchants.merchant_name ,
+            
+        })
+    } ) 
+    
+
+    
+
+    return Data
 }
 
 const Reducer = ( state = initialValue , action ) => {
-    let Data = []
+    
 
     switch(action.type){
         case "CASHOUT_HISTORY" :
-            let data = action.payload.data
-            data.forEach( (item , index ) => {
-
-                let date = new Date(item.create_date)
-        
-                Data.push({
-                    id     : index , 
-                    date   : `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` ,
-                    ammount : item.cashout_amount ,
-                    pic    : item.cashout_by.staff_name ,
-                    destination : item.merchants.merchant_name ,
-                    
-                })
-            } ) 
-            
             return {
-                data : Data
+                loading : false ,
+                data : List(action.payload.data) ,
+               
             }
+
+        case "LoadingCashout" :
+            return {
+                loading : true ,
+                data : []
+            }
+
+        case "RESET-CASHOUT" : 
+            return {
+                loading : true ,
+                data : []
+            }
+
 
         default :
             return state 

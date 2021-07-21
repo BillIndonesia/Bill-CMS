@@ -1,11 +1,11 @@
 import React from 'react'
 import {Modal , Button ,} from 'react-bootstrap'
-import {TextField} from '@material-ui/core'
+import {TextField , Snackbar} from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert';
+import {useDispatch , useSelector} from 'react-redux'
+import {VoucherRequest} from '../../Redux/Voucher/Action'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
-
-
 
 const validationSchema = Yup.object().shape({
     voucher_nominal : Yup.string().required('Should Not Empty') ,
@@ -13,9 +13,11 @@ const validationSchema = Yup.object().shape({
 })
 
 
-
 function GenerateVoucher(props) {
     const name = localStorage.getItem('name')
+
+    const dispatch = useDispatch()
+    const Data = useSelector(state => state.Confirmation)
 
     const formik = useFormik({
         initialValues :  {
@@ -28,13 +30,10 @@ function GenerateVoucher(props) {
 
         onSubmit : (values , action ) => {
 
-            axios.post('https://dev.bill-indonesia.com/api/voucher/generate-vouchers/' , values)
-                    .then( result => console.log(result.data))
-                    .catch( err => {
-                        console.log(err)
-                    })
+            dispatch( VoucherRequest(values) )
 
             action.resetForm()
+            
         }
     })
 
@@ -49,6 +48,22 @@ function GenerateVoucher(props) {
                 <Modal.Title>Generate Voucher</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                { 
+                            Data.success ? 
+                            <Snackbar open={Data.success} autoHideDuration={3000}>
+                                <Alert severity="success">
+                                    Create Success
+                                </Alert>
+                             </Snackbar> : 
+                             
+                             Data.failure ? 
+                             <Snackbar open={Data.failure} autoHideDuration={3000}>
+                             <Alert severity="error">
+                                 Create Failure
+                             </Alert>
+                          </Snackbar> : null
+                    }
+
                     <diV>
                         <form onSubmit={formik.handleSubmit}>
                             

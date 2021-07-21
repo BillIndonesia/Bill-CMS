@@ -1,8 +1,9 @@
 import React from 'react'
 import {TextField , MenuItem} from '@material-ui/core'
 import {useFormik} from 'formik'
+import {useDispatch} from 'react-redux'
+import {ReqStaff} from '../../../Redux/Staff/Action'
 import * as Yup from 'yup'
-import axios from 'axios'
 
 const validationSchema = Yup.object().shape({
   
@@ -23,24 +24,20 @@ const initialValue = {
     staff_level : ''
     
 }
+
 function StaffForm(props) {
+    const dispatch = useDispatch()
+
     const formik = useFormik({
         initialValues : initialValue ,
         validationSchema : validationSchema ,
         onSubmit : (values , action ) => {
-            axios.post('https://dev.bill-indonesia.com/api/employee/register/', values)
-            .then( result => {
-                if(result.status === 201) {
-                    console.log(result.data)
-                }
-            })
-            .catch( err => {
-                console.log(err.message)
-            })
-
+            
+            dispatch(ReqStaff(values))
             action.resetForm()
         }
     })
+    
     return (
         <>
         <form>

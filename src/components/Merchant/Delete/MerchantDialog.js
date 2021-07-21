@@ -1,35 +1,39 @@
 import React from 'react'
-import { Button , Dialog , DialogActions , DialogContent , DialogTitle } from '@material-ui/core'
-import {useDispatch} from 'react-redux'
-import axios from 'axios';
-
-
-const deleteData = (data) => {
-  let Data = [] ;
-
-  data.forEach( (item , index ) => {
-    Data.push({
-      merchant_username : item
-    })
-  })
-
-  axios.post('https://dev.bill-indonesia.com/api/merchant/delete/' , Data)
-        .then(result => console.log(result.status))
-
-}
+import { Button , Dialog , DialogActions , DialogContent , DialogTitle , Snackbar , LinearProgress} from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
+import {useDispatch , useSelector} from 'react-redux'
+import {DeleteMerchant} from '../../../Redux/Merchant/Action'
 
 function MerchantDialogUpdate(props) {
       const dispatch = useDispatch()
+      const Data = useSelector(state => state.Confirmation )
       
-
-
-
     return (
         <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" >
         <DialogTitle id="form-dialog-title" style={{color:'rgb(85, 85, 207)'}}>Delete Data ?</DialogTitle>
             <DialogContent>
-                <h4>Apakah anda yakin ingin menghapus data ini </h4>
-                
+                      { 
+                            Data.loading ? 
+                              <LinearProgress /> :
+
+                            Data.success ? 
+                            <Snackbar open={Data.success} autoHideDuration={3000}>
+                                <Alert severity="success">
+                                    Create Berhasil
+                                </Alert>
+                             </Snackbar> : 
+                             
+                             Data.failure ? 
+                             <Snackbar open={Data.failure} autoHideDuration={3000}>
+                             <Alert severity="error">
+                                 Create Gagal
+                             </Alert>
+                          </Snackbar> :
+                    
+               
+                         <h4>Apakah anda yakin ingin menghapus data ? </h4>
+                       }
+
             </DialogContent>
 
         <DialogActions>
@@ -37,10 +41,14 @@ function MerchantDialogUpdate(props) {
             Cancel
           </Button>
 
-          <Button variant="contained" onClick={() => {
-            deleteData(props.data)
-            
-          }} color="primary">
+          <Button 
+            variant="contained" 
+            onClick={() => {
+              dispatch(DeleteMerchant(props.data))
+              props.change([])
+            }} 
+            color="primary"
+          >
             Ok
           </Button>
           

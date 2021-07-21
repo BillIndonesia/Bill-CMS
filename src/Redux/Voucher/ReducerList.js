@@ -1,4 +1,5 @@
 const initialState = {
+    loading : false ,
     data : []
 }
 
@@ -25,7 +26,14 @@ const Reducer = (state = initialState , action ) => {
     switch( action.type ){
         case "SAVE VOUCHER" :
             return{
+                loading : false ,
                 data : List(action.payload.data)
+            }
+            
+        case "LOADING VOUCHER" :
+            return {
+                loading : true ,
+                data : []
             }
 
         default :

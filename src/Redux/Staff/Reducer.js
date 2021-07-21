@@ -12,6 +12,7 @@ const Reducer = (state = initialValues , action) => {
     switch(action.type){
         case "EDIT STAFF" :
             const data = action.payload
+            
             return {
                 id : data.id ,
                 username : data.username ,

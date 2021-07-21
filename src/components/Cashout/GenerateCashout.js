@@ -1,3 +1,4 @@
+
 import React , {useState} from 'react'
 import {Modal } from 'react-bootstrap'
 import {TextField , MenuItem , Snackbar } from '@material-ui/core'
@@ -9,17 +10,17 @@ import * as Yup from 'yup'
 import './cashout.css'
 
 const validationSchema = Yup.object().shape({
-    cashout_amount : Yup.string().required('Should Not Empty') , 
-    merchants : Yup.string().required('Should Not Empty') ,
-    create_by : Yup.string().required('Should Not Empty') ,
-    cashout_by : Yup.string().required('Should Not Empty')
+    cashout_amount: Yup.string().required('Should Not Empty'),
+    merchants: Yup.string().required('Should Not Empty'),
+    // create_by: Yup.string().required('Should Not Empty'),
+    cashout_by: Yup.string().required('Should Not Empty')
 })
-
+const name = localStorage.getItem('name')
 const initialValue = {
-    cashout_amount : '' ,
-    merchants : '' ,
-    create_by : '' ,
-    cashout_by : ''
+    cashout_amount: '',
+    merchants: '',
+    create_by: name,
+    cashout_by: ''
 
 }
 
@@ -34,21 +35,22 @@ function GenerateVoucher(props) {
         onSubmit : (values , action ) => {
             
             dispatch(Cashout(values))
+
             action.resetForm()
             props.handleProcess()
         }
     })
 
-    const [show , setShow] = useState(true)
+    const [show, setShow] = useState(true)
 
     return (
         <Modal
             show={props.show}
             onHide={props.handleClose}
-            
-            >
-                
-                <Modal.Header closeButton>
+
+        >
+
+            <Modal.Header closeButton>
                 <Modal.Title>Cashout</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -138,11 +140,12 @@ function GenerateVoucher(props) {
 
                 </Modal.Body>
                 <Modal.Footer>
+
                 <button onClick={() => props.handleClose()} className="cashout-cancel"> Cancel </button>
                 <button onClick={() => formik.handleSubmit()} type="submit" className="cashout-submit"> Submit </button>
-             
-                </Modal.Footer>
-                </Modal>
+
+            </Modal.Footer>
+        </Modal>
     )
 }
 

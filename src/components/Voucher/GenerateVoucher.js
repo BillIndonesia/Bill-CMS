@@ -29,7 +29,6 @@ function GenerateVoucher(props) {
         validationSchema : validationSchema ,
 
         onSubmit : (values , action ) => {
-
             dispatch( VoucherRequest(values) )
 
             action.resetForm()

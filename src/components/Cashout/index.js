@@ -64,7 +64,7 @@ function Index() {
               variant="contained"
               startIcon={<Payment />}
               >
-              Creare Cashout
+              Create Cashout
             </Button>
 
             
@@ -80,6 +80,7 @@ function Index() {
               /> 
 
             
+
         </div>
     )
 }

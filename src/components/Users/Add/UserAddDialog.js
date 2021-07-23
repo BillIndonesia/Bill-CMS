@@ -4,7 +4,7 @@ import UserDialogAdd from './UserAddForm'
 function merchantDialog(props) {
     return (
         <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" fullWidth={600}>
-        <DialogTitle id="form-dialog-title" style={{color:'rgb(85, 85, 207)'}}>Data Staff</DialogTitle>
+        <DialogTitle id="form-dialog-title" style={{color:'rgb(85, 85, 207)'}}>Add Customer</DialogTitle>
             <DialogContent>
                 <UserDialogAdd />
             </DialogContent>

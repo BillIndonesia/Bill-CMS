@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 import './cashout.css'
 
 const validationSchema = Yup.object().shape({
-    cashout_amount: Yup.string().required('Should Not Empty'),
+    cashout_amount: Yup.number().required('Should Not Empty').positive(),
     merchants: Yup.string().required('Should Not Empty'),
     // create_by: Yup.string().required('Should Not Empty'),
     cashout_by: Yup.string().required('Should Not Empty')
@@ -76,7 +76,6 @@ function GenerateVoucher(props) {
                         <TextField 
                                 variant="outlined"
                                 label="PIC"
-                                select
                                 style={{marginBottom : 15 , width : '100%'}}
                                 name="create_by"
                                 value={formik.values.create_by}
@@ -85,11 +84,7 @@ function GenerateVoucher(props) {
                                 error={formik.touched.create_by && Boolean(formik.errors.create_by)}
                                 helperText={formik.touched.create_by  && formik.errors.create_by }
 
-                            >
-                                <MenuItem value="Admin 1">Admin 1</MenuItem>
-                                <MenuItem value="Admin 2">Admin 2</MenuItem>
-                                <MenuItem value="Admin 3">Admin 3</MenuItem>
-                            </TextField>
+                            />
 
                             <TextField 
                                 variant="outlined"
@@ -122,6 +117,7 @@ function GenerateVoucher(props) {
                                 variant="outlined"
                                 label="Nominal"
                                 type="number"
+                                inputProps={{inputProps : {min : "0" , max : "10" , step : 2 }}}
                                 style={{marginBottom : 15 , width : '100%'}}
                                 name="cashout_amount"
                                 value={formik.values.cashout_amount}

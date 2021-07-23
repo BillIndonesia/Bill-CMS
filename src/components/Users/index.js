@@ -156,10 +156,6 @@ function Index() {
                     /> 
                 
             </div>
-            <h3>{selectionModel.length}</h3>
-           
-
-            
         </div>
     )
 }

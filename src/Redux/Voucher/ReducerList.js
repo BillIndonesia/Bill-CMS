@@ -12,7 +12,7 @@ const List = ( data ) => {
         Data.push({
             id : item.voucher_code ,
             by : item.create_by ,
-            date : `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` ,
+            date : `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` ,
             nominal : item.voucher_nominal
         })
     })

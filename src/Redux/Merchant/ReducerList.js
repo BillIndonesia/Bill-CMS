@@ -13,8 +13,8 @@ const List = (data) => {
                     password : '11asa' ,
                     email : item.merchant_email ,
                     phone : item.phone_number ,
-                    level : item.merchant_level_id.merchant_level_id ,
-                    status : item.merchant_status_id.merchant_status_id ,
+                    level : item.merchant_level.merchant_level_id ,
+                    status : item.merchant_status.merchant_status_id ,
                     saldo : item.balance
                 })
             })

@@ -202,10 +202,10 @@ function Index() {
                       
                       </ListGroup.Item>
 
-                      <ListGroup.Item> 
+                      {/* <ListGroup.Item> 
                         <Form.Check onChange={handleOption} name="test" type="radio" label="Saldo" value="Saldo"/>
                       
-                      </ListGroup.Item>
+                      </ListGroup.Item> */}
 
                       
                       <ListGroup.Item >

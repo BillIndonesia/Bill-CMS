@@ -27,9 +27,9 @@ const validationSchema = Yup.object().shape({
     merchant_username: Yup.string().required('Field Username Should be Not Empty'),
     //email tidak boleh sama
     merchant_email: Yup.string().required('Field Email Should be Not Empty').email('Must Valid Email'),
-    merchant_password: Yup.string().required('Field Password Should be Not Empty'),
+    merchant_password: Yup.string().required('Field Pin Should be Not Empty').length(6,"Maximum PIN 6 Digit"),
     //phone number tidak boleh sama
-    phone_number: Yup.string().required('Field Phone Should be Not Empty'),
+    phone_number: Yup.string().required('Field Phone Should be Not Empty').matches([0][0-9] ,"First number should be 0").max(15, "maximum 15 digit"),
     merchant_level: Yup.string().required('Please Chosee Level '),
     merchant_status: Yup.string().required('Please Chosee Status'),
     merchant_address: Yup.string().required('Should Not Empty'),
@@ -73,7 +73,7 @@ function MerchantForm(props) {
                         >
 
                             <MenuItem value="Kwk">Kwk</MenuItem>
-                            <MenuItem value="Merchant">Merchant</MenuItem>
+                            <MenuItem value="Warung">Warung</MenuItem>
                         </TextField>
 
                         <TextField
@@ -129,11 +129,11 @@ function MerchantForm(props) {
                         />
 
                         <TextField
-                            id="Password"
+                            id="PIN"
                             name="merchant_password"
                             type="password"
                             variant="outlined"
-                            label="Password"
+                            label="PIN"
                             style={{ marginBottom: 18 }}
                             value={formik.values.merchant_password}
                             onChange={formik.handleChange}
@@ -149,6 +149,7 @@ function MerchantForm(props) {
                             name="phone_number"
                             variant="outlined"
                             label="Phone"
+                            placeholder="0895338210507"
                             style={{ marginBottom: 18 }}
                             value={formik.values.phone_number}
                             onChange={formik.handleChange}
@@ -204,8 +205,11 @@ function MerchantForm(props) {
                             helperText={formik.touched.merchant_status && formik.errors.merchant_status}
                         >
 
-                            <MenuItem value="Not Verified">Not Verified</MenuItem>
-                            <MenuItem value="Verified">Verified</MenuItem>
+                            <MenuItem value="Active">Active</MenuItem>
+                            <MenuItem value="Non Active">Non Active</MenuItem>
+                            <MenuItem value="Suspend 1">Suspend 1</MenuItem>
+                            <MenuItem value="Suspend 2">Suspend 2</MenuItem>
+
                         </TextField>
 
                         {/* <TextField

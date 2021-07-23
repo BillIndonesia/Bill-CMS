@@ -17,14 +17,14 @@ function MerchantDialog(props) {
                             Data.success ? 
                             <Snackbar open={Data.success} autoHideDuration={3000}>
                                 <Alert severity="success">
-                                    Merchant Berhasil
+                                   Add Merchant Berhasil
                                 </Alert>
                              </Snackbar> : 
                              
                              Data.failure ? 
                              <Snackbar open={Data.failure} autoHideDuration={3000}>
                              <Alert severity="error">
-                                 Merchant Gagal
+                                Add Merchant Gagal
                              </Alert>
                           </Snackbar> : null
                     }

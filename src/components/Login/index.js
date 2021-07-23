@@ -9,6 +9,11 @@ const validationSchema = Yup.object().shape({
     staff_password: Yup.string().required("Please Input Your Pin")
 })
 
+
+const sendData = () => {
+    
+}
+
 const initialValues = { staff_username: '', staff_password: '' }
 
 function Index(props) {
@@ -42,7 +47,7 @@ function Index(props) {
         <div className={'login-container'}>
 
             <div className={'login-body'}>
-                <h4>Silahkan Login Menggunakan Akun Vendor</h4>
+                <h4>Silahkan Login Menggunakan Akun Staff</h4>
                 <div className={'login-main'}>
                     <Formik
                         initialValues={initialValues}
@@ -58,10 +63,7 @@ function Index(props) {
                                     className={"login-field " + (err ? 'errors' : null)}
                                     placeholder="Username"
                                 />
-
-                                <ErrorMessage name="staff_username" className={'login-err'}>
-                                    {msg => <span className={'err'}>{msg}</span>}
-                                </ErrorMessage>
+                                
                             </div>
 
                             <div className={'gap'}>
@@ -73,9 +75,8 @@ function Index(props) {
                                     placeholder="Password"
                                 />
 
-                                <ErrorMessage name="staff_password" className={'login-err'}>
-                                    {msg => <span className={'err'}>{msg}</span>}
-                                </ErrorMessage>
+                                { err ? <span className={'err'}>Username / Password Incorrect</span> : null }
+                                
                             </div>
 
 

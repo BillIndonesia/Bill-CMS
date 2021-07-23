@@ -14,14 +14,14 @@ function StaffDialog(props) {
                             Data.success ? 
                             <Snackbar open={Data.success} autoHideDuration={3000}>
                                 <Alert severity="success">
-                                    Create Berhasil
+                                    Create Staff Berhasil
                                 </Alert>
                              </Snackbar> : 
                              
                              Data.failure ? 
                              <Snackbar open={Data.failure} autoHideDuration={3000}>
                              <Alert severity="error">
-                                 Create Gagal
+                                 Create Staff Gagal
                              </Alert>
                           </Snackbar> : null
                     }

@@ -1,13 +1,15 @@
 
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import {Modal } from 'react-bootstrap'
-import {TextField , MenuItem , Snackbar } from '@material-ui/core'
+import {TextField , Snackbar , LinearProgress} from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Alert from '@material-ui/lab/Alert';
 import {useFormik} from 'formik'
 import {useSelector , useDispatch} from 'react-redux'
 import {Cashout} from '../../Redux/Cashout/Action'
 import * as Yup from 'yup'
 import './cashout.css'
+import axios from 'axios';
 
 const validationSchema = Yup.object().shape({
     cashout_amount: Yup.number().required('Should Not Empty').positive(),
@@ -16,6 +18,7 @@ const validationSchema = Yup.object().shape({
     cashout_by: Yup.string().required('Should Not Empty')
 })
 const name = localStorage.getItem('name')
+
 const initialValue = {
     cashout_amount: '',
     merchants: '',
@@ -24,11 +27,15 @@ const initialValue = {
 
 }
 
+const getMerchants = () => {
+    return axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-list/')
+}
+
 function GenerateVoucher(props) {
 
     const dispatch = useDispatch()
     const Data = useSelector(state => state.Confirmation )
-
+    const [ Merchant , setMerchant ] = useState(null)
     const formik = useFormik({
         initialValues : initialValue ,
         validationSchema : validationSchema ,
@@ -42,6 +49,10 @@ function GenerateVoucher(props) {
     })
 
     const [show, setShow] = useState(true)
+
+    useEffect( () => {
+        getMerchants().then( result => setMerchant(result.data))
+    } , [])
 
     return (
         <Modal
@@ -70,7 +81,9 @@ function GenerateVoucher(props) {
                           </Snackbar> : null
                     }
                             
-                    <diV>
+                   { Merchant === null  ? <LinearProgress /> :
+                   
+                   <diV>
                         <form onSubmit={formik.handleSubmit}>
 
                         <TextField 
@@ -99,19 +112,24 @@ function GenerateVoucher(props) {
 
                             />
 
-                            <input onBlur={e =>
-                                { formik.values.merchants = e.target.value
-                                  setShow(false)
-                                }} name="merchants" list="browsers" className="list-merchant" placeholder="Merchants" />
-                           
-                            <datalist style={{width : 400}} id="browsers">
-                                <option value="Edge" />
-                                <option value="Firefox" />
-                                <option value="Chrome" />
-                                <option value="Opera" />
-                                <option value="Safari" />
-                            </datalist>
-                            
+                            <Autocomplete 
+                                id="combo-box"
+                                options={Merchant}
+                                getOptionLabel={ option => `${option?.merchant_username}` }
+                                style={{width : '100%' , marginBottom : 12}}
+                                onChange={(e , value) => { 
+                                    formik.values.merchants = value.merchant_username ;
+                                     
+                                }}
+                                onBlur={() => setShow(false)}
+                                renderInput={ params => 
+                                <TextField {...params} 
+                                    error={formik.touched.merchants  && Boolean(formik.errors.merchants)}
+                                    helperText={formik.touched.merchants  && formik.errors.merchants } 
+                                    label="Merchant" 
+                                    name="merchants" 
+                                    variant="outlined"/> }
+                            />
                            
                            <TextField 
                                 variant="outlined"
@@ -131,7 +149,8 @@ function GenerateVoucher(props) {
                            
                             
                         </form>
-                    </diV>
+                    </diV> 
+                    }
                 
 
                 </Modal.Body>

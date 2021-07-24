@@ -14,7 +14,7 @@ const List = (data) => {
        
         Data.push({
             id     : index , 
-            date   : `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` ,
+            date   : `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}` ,
             ammount : item.cashout_amount ,
             pic    : item.cashout_by.staff_name ,
             destination : item.merchants.merchant_name ,

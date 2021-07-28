@@ -34,8 +34,7 @@ function Index(props) {
             <div className={'navbar-bodyy'}>
                 
                 <ul className={'navbar-listt'}>
-                    <li className={'navbar-itemm'}><Link to="/home/vendor" className={'navlinkk'}>Vendors</Link></li>
-                    <li className={'navbar-itemm'}><Link to="/home/parent-vendor" className={'navlinkk'}>All Parent Vendors</Link></li>
+                    <li className={'navbar-itemm'}><Link to="/home/dashboard" className={'navlinkk'}>Home</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/users" className={'navlinkk'}>Users</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/admin-menu" className={'navlinkk'}>Data Merchant</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/voucher" className={'navlinkk'}>Bill Voucher</Link></li>

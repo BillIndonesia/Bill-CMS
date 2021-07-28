@@ -1,13 +1,7 @@
 import axios from "axios"
-
+import {Loading , Success , Failure , ResetReq} from '../Confirmation/Action'
 
 //cashout request
-
-const Loading = () => { return { type : "REQ-CASHOUT" } }
-
-const Success = () => { return { type : "REQ-SUCCESS"} }
-
-const Failure = () => { return { type : "REQ-FAILURE" } }
 
 const Cashout = (data) => {
     return (dispatch) => {
@@ -17,8 +11,10 @@ const Cashout = (data) => {
         .then( () => {
             dispatch(Success())
 
+            dispatch(getHistoryCashout())
+
             setTimeout(() => {
-                dispatch({type : "RESET-REQ"})
+                dispatch(ResetReq())
             } , 3000)
             
         })
@@ -26,7 +22,7 @@ const Cashout = (data) => {
             dispatch(Failure())
 
             setTimeout( () => {
-                dispatch({ type : "RESET-REQ"})
+                dispatch(ResetReq())
             } , 3000 )
         })
     }
@@ -52,7 +48,7 @@ const LoadingCashoutData = () => {
 
 const getHistoryCashout = () => {
     return (dispatch) => {
-        dispatch(LoadingCashoutData())
+        
         
         axios.get('https://dev.bill-indonesia.com/api/cashout/cashout-history/?page=1')
                 .then( result => dispatch( SaveDataHistory( result.data )) )

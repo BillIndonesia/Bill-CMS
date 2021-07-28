@@ -3,9 +3,8 @@ import {BrowserRouter as Router , Redirect, Route , Switch} from 'react-router-d
 import {
         Merchant ,
         Header, 
-        parentVendor , 
+        MainPage ,
         Users , 
-        Vendors , 
         Voucher , 
         Staff ,
         Cashout ,
@@ -24,13 +23,14 @@ function Index(props) {
             <div className={'main-body'}>
                 <Switch>
                     <Route path="/home" exact>
-                        <Redirect to="/home/admin-menu"/>
+                        <Redirect to="/home/dashboard"/>
                     </Route>
-                    <Route path="/home/parent-vendor" component={parentVendor} />
+                  
+                    <Route path="/home/dashboard" component={MainPage}  />
                     <Route path="/home/users" component={Users}  />
                     <Route path="/home/admin-menu" component={Merchant}  />
                     <Route path="/home/voucher" component={Voucher}  />
-                    <Route path="/home/vendor" component={Vendors}  />
+               
                     <Route path="/home/staff" component={Staff}  />
                     <Route path="/home/cashout" component={Cashout}  />
                     <Route path="/home/request" component={Request}  />

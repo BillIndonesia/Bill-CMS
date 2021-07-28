@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {Loading , Success , Failure ,ResetReq } from '../Confirmation/Action'
 
 //get voucher list
 const SaveVoucher = (data) => {
@@ -22,12 +22,6 @@ const GetVoucher = () => {
 
 //voucher request
 
-const Loading = () => { return { type : "LOADING-REQ" } }
-
-const Success = () => { return { type : "REQ-SUCCESS" } }
-
-const Failure = () => { return { type : "REQ-FAILURE" } }
-
 const VoucherRequest = (data) => {
     return (dispatch) => {
         dispatch( Loading() )
@@ -36,8 +30,10 @@ const VoucherRequest = (data) => {
                 .then( () => {
                     dispatch( Success() )
 
+                    dispatch(GetVoucher())
+
                     setTimeout( () => {
-                        dispatch({type : "RESET-REQ"})
+                        dispatch(ResetReq())
 
                     } , 3000)
                     

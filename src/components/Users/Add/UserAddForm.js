@@ -1,35 +1,103 @@
-import React from 'react'
-import {TextField , MenuItem} from '@material-ui/core'
+import React , {useState} from 'react'
+import {TextField } from '@material-ui/core'
 import {MuiPickersUtilsProvider , KeyboardDatePicker} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import * as Yup from 'yup'
-import {Formik} from 'formik'
+import {useFormik} from 'formik'
+import { useDispatch} from 'react-redux'
+import {sendUser} from '../../../Redux/Users/Action'
 import '../users.css'
 
 const initialValue = {
-    name : '' ,
-    email : '' ,
-    pin : '' ,
-    ttl : '' ,
-
+    customer_name : '' ,
+    customer_borndate : new Date() ,
+    customer_password : '' ,
+    phone_number : '' ,
+    customer_bornplace : '' ,
+    firebase_token : "ceSmwxzjQgmUKAp0A8oNG9:APA91bGXU9fENJQxwKVJd-gbKAGbP18XadsD_2C77KUmoGwBsWl7nExJN3dgywzMFrmerD1AXDyEGu5SbVL0LTHtGgYEiDF6uFWyQ-TkKyPdQcpx_eaHyH0kDWkVd-bqEomsC_AGPCr"
 }
 
+const validationSchema = Yup.object().shape({
+    customer_name : Yup.string().required('This Field is required') ,
+    customer_borndate : Yup.date() ,
+    customer_password : Yup.string().required('This Field is required') ,
+    phone_number : Yup.string().required('This Field is Required').matches(/089/g, "3 digit first should 089 ") ,
+    customer_bornplace : Yup.string().required('This Field is Required') ,
+    
+
+})
 
 
-function UserAddForm() {
+
+function UserAddForm(props) {
+
+    const [ date , setDate ] = useState( new Date())
+    const dispatch = useDispatch()
+
+    const formik = useFormik({
+        initialValues : initialValue ,
+        validationSchema : validationSchema ,
+        onSubmit : (values , action) => {
+            dispatch( sendUser(values))
+
+            action.resetForm()
+        }
+    }) 
     
     return (
+        <>
+        <form onSubmit={formik.handleSubmit}>
         <div className={'users-main'}>
+                
                  <div className={'users-form'}>
-                     <TextField id="name" variant="outlined" label="Name" style={{marginBottom : 18}}/>
-                     <TextField id="Email" variant="outlined" label="Email" style={{marginBottom : 18}}/>
-                     <TextField id="PIN" type="password" variant="outlined" label="PIN" style={{marginBottom : 18}}/>
-                     <TextField id="Tempat Lahir" variant="outlined" label="Tempat Lahir" style={{marginBottom : 18}}/>
+                     <TextField 
+                        id="name" 
+                        variant="outlined" 
+                        label="Name" 
+                        style={{marginBottom : 18}}
+                        value={formik.values.customer_name}
+                        name="customer_name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.customer_name && Boolean(formik.errors.customer_name)}
+                        helperText={formik.touched.customer_name && formik.errors.customer_name}
+                        />
+                     
+                     
+                     <TextField 
+                        id="Tempat Lahir" 
+                        variant="outlined" 
+                        label="Tempat Lahir" 
+                        style={{marginBottom : 18}}
+                        value={formik.values.customer_bornplace}
+                        name="customer_bornplace"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.customer_bornplace && Boolean(formik.errors.bornplace)}
+                        helperText={formik.touched.customer_bornplace && formik.errors.customer_bornplace}
+
+                    />
+
+                     <TextField 
+                        id="Password" 
+                        variant="outlined" 
+                        type="password"
+                        label="Password" 
+                        style={{marginBottom : 18}}
+                        name="customer_password"
+                        value={formik.values.customer_password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.customer_password && Boolean(formik.errors.customer_password)}
+                        helperText={formik.touched.customer_password&& formik.errors.customer_password}
+
+                    />
                  </div>
 
                  <div className={'users-form'}>
                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
                      <KeyboardDatePicker 
+                        value={date}
                         variant="inline" 
                         format="dd/MM/yyy"
                         id="Tanggal Lahir"
@@ -37,23 +105,48 @@ function UserAddForm() {
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
-                          style={{marginBottom : 18}}
+                        style={{marginBottom : 20}}
+                        name="customer_borndate"
+                        onChange={ e => 
+                            {formik.values.customer_borndate = `${e.getFullYear()}/${e.getMonth()}/${e.getDate()}`
+                                setDate(e)
+                        }}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.customer_borndate && Boolean(formik.errors.customer_borndate)}
+                        helperText={formik.touched.customer_borndate && formik.errors.customer_borndate}
+                        
+                        
                       />
-                      </MuiPickersUtilsProvider>
-                     <TextField id="Level" select variant="outlined" label="Level" style={{marginBottom : 18}}>
-                         <MenuItem value="1">1</MenuItem>
-                         <MenuItem value="2">2</MenuItem>
-                         <MenuItem value="3">3</MenuItem>
-                     </TextField>
 
-                     <TextField select id="Status" label="Status" variant="outlined" style={{marginBottom : 18}}>
-                         <MenuItem value="Not Verified">Not Verified</MenuItem>
-                         <MenuItem value="Verified">Verified</MenuItem>
-                     </TextField>
+                      </MuiPickersUtilsProvider>
+                     
+
+                      <TextField 
+                        id="Phone Number" 
+                        variant="outlined" 
+                        label="Phone Number" 
+                        style={{marginBottom : 18}}
+                        value={formik.values.phone_number}
+                        name="phone_number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
+                        helperText={formik.touched.phone_number && formik.errors.phone_number}
+
+                    />
                                       
                 </div>
+                
+
+                
              </div>  
+             
+             </form>
+           
+             <button onClick={() => props.handleClose()} className="merchant-cancel"> Cancel </button>
+             <button type="submit" onClick={() => formik.handleSubmit()} className="merchant-submit">Submit</button>
+             </>
     )
 }
 
-export default UserAddForm
+export default React.memo(UserAddForm)

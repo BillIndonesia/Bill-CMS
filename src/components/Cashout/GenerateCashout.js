@@ -21,14 +21,14 @@ const name = localStorage.getItem('name')
 
 const initialValue = {
     cashout_amount: '',
-    merchants: '',
+    merchants: ' ',
     create_by: name,
     cashout_by: ''
 
 }
 
 const getMerchants = () => {
-    return axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-list/')
+    return axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-name-list/')
 }
 
 function GenerateVoucher(props) {
@@ -37,15 +37,14 @@ function GenerateVoucher(props) {
     const Data = useSelector(state => state.Confirmation )
     const [ Merchant , setMerchant ] = useState(null)
     const formik = useFormik({
-        initialValues : initialValue ,
-        validationSchema : validationSchema ,
-        onSubmit : (values , action ) => {
-            
-            dispatch(Cashout(values))
-
-            action.resetForm()
-            props.handleProcess()
-        }
+            initialValues : initialValue ,
+            validationSchema : validationSchema ,
+            onSubmit : (values , action ) => {
+                
+                dispatch(Cashout(values))
+             
+                props.handleProcess()
+            }
     })
 
     const [show, setShow] = useState(true)
@@ -91,6 +90,7 @@ function GenerateVoucher(props) {
                                 label="PIC"
                                 style={{marginBottom : 15 , width : '100%'}}
                                 name="create_by"
+                                disabled
                                 value={formik.values.create_by}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -115,10 +115,11 @@ function GenerateVoucher(props) {
                             <Autocomplete 
                                 id="combo-box"
                                 options={Merchant}
-                                getOptionLabel={ option => `${option?.merchant_username}` }
+                                
+                                getOptionLabel={ option => option.merchant_name }
                                 style={{width : '100%' , marginBottom : 12}}
                                 onChange={(e , value) => { 
-                                    formik.values.merchants = value.merchant_username ;
+                                    formik.values.merchants = value.merchant_name ;
                                      
                                 }}
                                 onBlur={() => setShow(false)}

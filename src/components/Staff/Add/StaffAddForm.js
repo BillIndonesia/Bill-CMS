@@ -11,7 +11,7 @@ const validationSchema = Yup.object().shape({
     staff_username : Yup.string().required('Should Not be Empty') ,
     staff_password : Yup.string().required('Should Not be Empty') ,
     staff_email : Yup.string().required('Should Not be Empty').email('Please Input Valid Email'),
-    staff_phone : Yup.string().required('Should Not be Empty') ,
+    staff_phone : Yup.string().required('Should Not be Empty').matches(/089/g, "3 digit first should 089 ") ,
     staff_level : Yup.string().required('Should Not be Empty') ,
 })
 
@@ -48,7 +48,7 @@ function StaffForm(props) {
                         variant="outlined" 
                         label="Name"
                         style={{marginBottom : 18}}
-                        value={formik.values.name}
+                        value={formik.values.staff_name}
                         name="staff_name" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -61,7 +61,7 @@ function StaffForm(props) {
                         variant="outlined" 
                         label="Username" 
                         style={{marginBottom : 18}}
-                        value={formik.values.name}
+                        value={formik.values.staff_username}
                         name="staff_username" 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

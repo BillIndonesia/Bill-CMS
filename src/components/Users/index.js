@@ -1,11 +1,24 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import {DataGrid} from '@material-ui/data-grid'
 import {Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
 import {Person ,Delete , Check , List } from '@material-ui/icons'
 import PopUpAdd from './Add/UserAddDialog'
 import PopUpDelete from './Delete/DeleteUserDialog'
 import PopUpVerification from './Verifikasi'
+import {useSelector , useDispatch} from 'react-redux'
+import {getUser} from '../../Redux/Users/Action'
 import './users.css'
+
+const columns = [
+    {field : 'id' , headerName : 'ID' , flex : 1 } ,
+    {field : 'name' , headerName : 'Name' , flex : 1 } ,
+    {field : 'email' , headerName : 'Email' , flex : 1 } ,
+    {field : 'tempatlahir' , headerName : 'Tempat Lahir' , flex : 1 } ,
+    {field : 'tangalahir' , headerName : 'TanggalLahir' , flex : 1 } ,
+    {field : 'level' , headerName : 'Level' , flex : 1 } ,
+    {field : 'status' , headerName : 'Status' , flex : 1 } ,
+    {field : 'balance' , headerName : 'Balance' , flex : 1 , type : 'number' } ,
+]
 
 function Index() {
      
@@ -13,8 +26,10 @@ function Index() {
     const [openDelete , setOpenDelete ] = useState(false)
     const [openVerification , setVerification] = useState(false)
     const [ anchorEl , setAnchor ] = useState(null)
-    const [sizePage , setSizePage] = useState(5)
     const [selectionModel, setSelectionModel] = React.useState([]);
+
+    const Data = useSelector( state => state.User )
+    const dispatch = useDispatch()
 
       const handleMenu = (event) => setAnchor(event.currentTarget)
       
@@ -36,37 +51,11 @@ function Index() {
       
       const handleCloseDelete = () =>  setOpenDelete(false)
     
-      const sizeChange = (params) => setSizePage(params.pageSize)
-      
 
-
-      
-
-    const columns = [
-        {field : 'id' , headerName : 'ID' , flex : 1 } ,
-        {field : 'name' , headerName : 'Name' , flex : 1 } ,
-        {field : 'email' , headerName : 'Email' , flex : 1 } ,
-        {field : 'tempatlahir' , headerName : 'Tempat Lahir' , flex : 1 } ,
-        {field : 'tangalahir' , headerName : 'TanggalLahir' , flex : 1 } ,
-        {field : 'level' , headerName : 'Level' , flex : 1 } ,
-        {field : 'status' , headerName : 'Status' , flex : 1 } ,
-        {field : 'saldo' , headerName : 'Saldo' , flex : 1 , type : 'number' } ,
-    ]
-
-
-    const rows = [
-        {id : 1 , name : 'sasa' , email : 'admiggn@gmail.com' , tempatlahir : 'tangerang2' , tangalahir : '22/03/2017', level : 'User' , status : 'verified' , saldo : 90000 } ,
-        {id : 2 , name : 'sasasasa' , email : 'adminaa@gmail.com' , tempatlahir : 'tangerang1' , tangalahir : '21/05/2017' , level : 'User' , status : 'verified' , saldo : 23000 } ,
-        {id : 3 , name : 'sasasfgfv' , email : 'admindas@gmail.com' , tempatlahir : 'tangerangg' , tangalahir : '22/03/2019' , level : 'User' , status : 'Not verified' , saldo : 90200 } ,
-        {id : 4 , name : 'sasatefda' , email : 'admasin@gmail.com' , tempatlahir : 'tangerangm' , tangalahir : '20/03/2017', level : 'User' , status : 'verified' , saldo : 91000 } ,
-        { id: 7, username: 'Mesaslisandre', name: 'Denish', email: 'admin@gmail.com' ,  tempatlahir : 'tang222erangg' , tangalahir : '22/03/2011' ,  level : '1' , status : 'verified' , saldo : 96000},
-        { id: 8, username: 'Targaryen', name: 'Daenerys', email: 'admin@gmail.com' ,  tempatlahir : 'tange11rangg' , tangalahir : '22/08/2017' , level : '1' , status : 'Not verified' , saldo : 95000},
-        { id: 9, username: 'Maaaelisandre', name: 'Denish', email: 'admin@gmail.com' ,  tempatlahir : 'tangessrangg' , tangalahir : '22/03/2012' , level : '1' , status : 'verified' , saldo : 90020},
-        { id: 10, username: 'Meliaaaasandre', name: 'Denish', email: 'admin@gmail.com' , tempatlahir : 'taaasngerangg' , tangalahir : '22/01/2017' , level : '1' , status : 'verified' ,  saldo : 92000},
-      
         
-    ]
-
+    useEffect( () => {
+        dispatch( getUser() )
+    } , [])
     return (
         <div>
             {open && <PopUpAdd open={open} handleClose={handleClose} /> }
@@ -141,17 +130,19 @@ function Index() {
             <div style={{height : 400 , marginTop : 20}}>
                 
                     <DataGrid 
-                        pageSize={sizePage} 
-                        pagination
+                        pageSize={10} 
                         rowsPerPageOptions={[5 , 10 ,25]} 
-                        rows={rows}
+                        rows={Data.data}
+                        rowCount={1000}
                         columns={columns}
                         onSelectionModelChange={item => {
                             setSelectionModel(item.selectionModel)
                         }}
+                        loading={Data.loading}
+                        paginationMode="server"
                         selectionModel={selectionModel}
-                        checkboxSelection
-                        onPageSizeChange={sizeChange}
+                        onPageChange={() => console.log('ok')}
+                        
                         
                     /> 
                 

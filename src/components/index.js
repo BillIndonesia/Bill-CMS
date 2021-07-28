@@ -1,9 +1,8 @@
 import Header from './Header'
 import Home from './Home'
+import MainPage from './MainPage'
 import Login from './Login'
-import parentVendor from './parentVendor'
 import Users from './Users'
-import Vendors from './Vendors'
 import Voucher from './Voucher'
 import Merchant from './Merchant'
 import Main from './Main'
@@ -16,9 +15,8 @@ export {
     Header , 
     Home , 
     Login ,
-    parentVendor , 
-    Users , 
-    Vendors , 
+    MainPage ,
+    Users ,
     Voucher , 
     Merchant , 
     Main , 

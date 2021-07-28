@@ -13,6 +13,7 @@ const columns = [
     { field: 'id', headerName: 'Voucher Code', flex : 1 },
     { field: 'date', headerName: 'Create Date', flex : 1 , type : 'date'},
     { field: 'by', headerName: 'CreateBy', flex : 1 },
+    { field: 'status', headerName: 'Status', flex : 1 },
     { field: 'nominal', headerName: 'Nominal', flex : 1  , type : 'number'},
 ]
 

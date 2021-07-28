@@ -1,10 +1,5 @@
 import axios from 'axios'
-
-const Loading = () => { return { type : "LOADING-REQ" } }
-
-const Success = () => { return { type : "REQ-SUCCESS" } }
-
-const Failure = () => { return { type : "REQ-FAILURE" } }
+import {Loading , Success , Failure} from '../Confirmation/Action'
 
 
 // edit merchant 

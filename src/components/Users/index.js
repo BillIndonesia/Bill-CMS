@@ -61,7 +61,7 @@ function Index() {
             {open && <PopUpAdd open={open} handleClose={handleClose} /> }
             {openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} /> }
             {openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} data={selectionModel[0]}/> }
-            <h2 className={'usertitle'}>Data Users</h2>
+            <h2 className={'usertitle'}>Data Customers</h2>
             <div className={'user-action'}>
 
                 <div>

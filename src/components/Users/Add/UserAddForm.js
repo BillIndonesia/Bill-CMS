@@ -21,8 +21,8 @@ const validationSchema = Yup.object().shape({
     customer_name : Yup.string().required('This Field is required') ,
     customer_borndate : Yup.date() ,
     customer_password : Yup.string().required('This Field is required') ,
-    phone_number : Yup.string().required('This Field is Required').matches(/089/g, "3 digit first should 089 ") ,
-    customer_bornplace : Yup.string().required('This Field is Required') ,
+    phone_number : Yup.string().required('This Field is Required').matches(/08/g, "2 digit first should contain 08") ,
+    customer_bornplace : '',
     
 
 })
@@ -38,7 +38,7 @@ function UserAddForm(props) {
         initialValues : initialValue ,
         validationSchema : validationSchema ,
         onSubmit : (values , action) => {
-            dispatch( sendUser(values))
+            dispatch(sendUser(values))
 
             action.resetForm()
         }
@@ -73,7 +73,7 @@ function UserAddForm(props) {
                         name="customer_bornplace"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.customer_bornplace && Boolean(formik.errors.bornplace)}
+                        error={formik.touched.customer_bornplace && Boolean(formik.errors.customers_bornplace)}
                         helperText={formik.touched.customer_bornplace && formik.errors.customer_bornplace}
 
                     />
@@ -99,7 +99,7 @@ function UserAddForm(props) {
                      <KeyboardDatePicker 
                         value={date}
                         variant="inline" 
-                        format="dd/MM/yyy"
+                        format="yyyy-MM-dd"
                         id="Tanggal Lahir"
                         label="Tanggal Lahir"
                         KeyboardButtonProps={{
@@ -108,7 +108,7 @@ function UserAddForm(props) {
                         style={{marginBottom : 20}}
                         name="customer_borndate"
                         onChange={ e => 
-                            {formik.values.customer_borndate = `${e.getFullYear()}/${e.getMonth()}/${e.getDate()}`
+                            {formik.values.customer_borndate = `${e.getFullYear()}-${e.getMonth()}-${e.getDate()}`
                                 setDate(e)
                         }}
                         onBlur={formik.handleBlur}

@@ -1,7 +1,7 @@
 
 import React , {useState , useEffect} from 'react'
 import {Modal } from 'react-bootstrap'
-import {TextField , Snackbar , LinearProgress} from '@material-ui/core'
+import {TextField , Snackbar , LinearProgress , MenuItem} from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Alert from '@material-ui/lab/Alert';
 import {useFormik} from 'formik'
@@ -35,7 +35,9 @@ function GenerateVoucher(props) {
 
     const dispatch = useDispatch()
     const Data = useSelector(state => state.Confirmation )
+    
     const [ Merchant , setMerchant ] = useState(null)
+    const [ Staff , setStaff ] = useState(null)
     const formik = useFormik({
             initialValues : initialValue ,
             validationSchema : validationSchema ,
@@ -50,7 +52,13 @@ function GenerateVoucher(props) {
     const [show, setShow] = useState(true)
 
     useEffect( () => {
-        getMerchants().then( result => setMerchant(result.data))
+        axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
+            .then( result => setStaff(result.data))
+
+        setTimeout( () => {
+            getMerchants().then( result => setMerchant(result.data))
+        } , 3000)
+        
     } , [])
 
     return (
@@ -80,7 +88,7 @@ function GenerateVoucher(props) {
                           </Snackbar> : null
                     }
                             
-                   { Merchant === null  ? <LinearProgress /> :
+                   { Merchant === null && Staff === null ? <LinearProgress /> :
                    
                    <diV>
                         <form onSubmit={formik.handleSubmit}>
@@ -104,13 +112,17 @@ function GenerateVoucher(props) {
                                 label="Cashout By"
                                 style={{marginBottom : 15 , width : '100%'}}
                                 name="cashout_by"
+                                select
                                 value={formik.values.cashout_by}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.cashout_by && Boolean(formik.errors.cashout_by)}
                                 helperText={formik.touched.cashout_by  && formik.errors.cashout_by }
+                            >
+                                
+                                {Staff.map(item => <MenuItem value={item.staff_name}>{item.staff_name}</MenuItem>)}
 
-                            />
+                                </TextField>
 
                             <Autocomplete 
                                 id="combo-box"

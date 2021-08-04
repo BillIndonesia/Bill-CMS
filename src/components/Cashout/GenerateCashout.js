@@ -139,7 +139,7 @@ function GenerateVoucher(props) {
                                 <TextField {...params} 
                                     error={formik.touched.merchants  && Boolean(formik.errors.merchants)}
                                     helperText={formik.touched.merchants  && formik.errors.merchants } 
-                                    label="Merchant" 
+                                    label="Merchant Username" 
                                     name="merchants" 
                                     variant="outlined"/> }
                             />

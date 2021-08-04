@@ -13,7 +13,7 @@ const List = ( data ) => {
             id : item.voucher_code ,
             by : item.create_by ,
             date : `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` ,
-            status : item.voucherStatus ? "Active" : "Non Active" ,
+            status : item.voucherStatus == 1 ? "Active" : "Non Active" ,
             nominal : item.voucher_nominal
         })
     })

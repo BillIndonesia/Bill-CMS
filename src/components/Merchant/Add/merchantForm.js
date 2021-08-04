@@ -29,7 +29,7 @@ const validationSchema = Yup.object().shape({
     merchant_email: Yup.string().required('Field Email Should be Not Empty').email('Must Valid Email'),
     merchant_password: Yup.string().required('Field Pin Should be Not Empty').length(6,"Maximum PIN 6 Digit"),
     //phone number tidak boleh sama
-    phone_number: Yup.string().required('Field Phone Should be Not Empty').matches(/08/g, "3 digit first should 08 ").max(15, "maximum 15 digit"),
+    phone_number: Yup.string().required('Field Phone Should be Not Empty').matches(/08/g, "2 digit first should 08 ").max(15, "maximum 15 digit"),
     merchant_level: Yup.string().required('Please Chosee Level '),
     merchant_status: Yup.string().required('Please Chosee Status'),
     merchant_address: Yup.string().required('Should Not Empty'),

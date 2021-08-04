@@ -11,7 +11,7 @@ const validationSchema = Yup.object().shape({
     staff_username : Yup.string().required('Should Not be Empty') ,
     staff_password : Yup.string().required('Should Not be Empty') ,
     staff_email : Yup.string().required('Should Not be Empty').email('Please Input Valid Email'),
-    staff_phone : Yup.string().required('Should Not be Empty').matches(/08/g, "3 digit first should 08 ") ,
+    staff_phone : Yup.string().required('Should Not be Empty').matches(/08/g, "2 digit first should 08 ") ,
     staff_level : Yup.string().required('Should Not be Empty') ,
 })
 
@@ -110,6 +110,7 @@ function StaffForm(props) {
                         error={formik.touched.staff_phone && Boolean(formik.errors.staff_phone)}
                         helperText={formik.touched.staff_phone && formik.errors.staff_phone}
                         />
+                        
                      <TextField 
                         id="Level" 
                         select 

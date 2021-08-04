@@ -27,11 +27,15 @@ const validationSchema = Yup.object().shape({
 
 })
 
+const Time = new Date()
+
+
 
 
 function UserAddForm(props) {
+    
 
-    const [ date , setDate ] = useState( new Date())
+    const [ date , setDate ] = useState(new Date())
     const dispatch = useDispatch()
 
     const formik = useFormik({
@@ -97,9 +101,10 @@ function UserAddForm(props) {
                  <div className={'users-form'}>
                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
                      <KeyboardDatePicker 
+                       
                         value={date}
                         variant="inline" 
-                        format="yyyy-MM-dd"
+                        format="yyyy-dd-MM"
                         id="Tanggal Lahir"
                         label="Tanggal Lahir"
                         KeyboardButtonProps={{

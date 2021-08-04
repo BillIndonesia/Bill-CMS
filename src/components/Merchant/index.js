@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './merchant.css'
 
 const columns = [
-  { field: 'id', headerName: 'ID', flex : 1 , hide : true },
+  { field: 'id', headerName: 'ID', flex : 1  },
   { field: 'username', headerName: 'Username', flex : 1 },
   { field: 'name', headerName: 'Name', flex : 1  },
   { field: 'password' , headerName : 'Password' , flex : 1 , hide : true} ,

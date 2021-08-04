@@ -1,8 +1,8 @@
 import axios from 'axios'
-import {Loading , Success , Failure} from '../Confirmation/Action'
+import {Loading , Success , Failure, ResetReq} from '../Confirmation/Action'
 
 
-// edit merchant 
+// edit data 
 
 const EditMerchant = (data) => {
     return {
@@ -18,6 +18,34 @@ const EditMerchant = (data) => {
             status : data.status ,
             saldo : data.saldo
         }
+    }
+}
+
+// send request Edit
+
+const RequestEdit = (data) => {
+    return (dispatch) => {
+        axios.put(`https://dev.bill-indonesia.com/api/merchant/update_profile/${data.id}/` , data)
+            .then( result => {
+                dispatch( Success() )
+
+                dispatch(GetMerchants())
+
+                    setTimeout( () => {
+                        dispatch(ResetReq())
+
+                    } , 3000)
+            })
+
+            .catch( () => {
+                dispatch(Failure())
+                
+                setTimeout( () => {
+                    dispatch(ResetReq())
+                } , 3000)
+
+            })
+
     }
 }
 
@@ -38,14 +66,14 @@ const DeleteMerchant = (data) => {
                     dispatch(Success())
 
                     setTimeout( () => {
-                        dispatch({ type : "RESET-REQ"})
+                        dispatch(ResetReq())
                     } , 3000)
                 })
                 .catch( () => {
                     dispatch(Failure())
 
                     setTimeout( () => {
-                        dispatch({ type : "RESET-REQ"})
+                        dispatch(ResetReq())
                     } , 3000)
                 })
     }
@@ -99,4 +127,4 @@ const RequestMerchant = (data) => {
     }
 }
 
-export {EditMerchant , DeleteMerchant , GetMerchants , RequestMerchant}
+export {EditMerchant , DeleteMerchant , GetMerchants , RequestMerchant , RequestEdit}

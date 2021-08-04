@@ -13,8 +13,9 @@ import '../merchant.css'
         merchant_username : Yup.string().required('Field Username Should be Not Empty') ,
         merchant_email    : Yup.string().required('Field Email Should be Not Empty').email('Must Valid Email') ,
         phone_number      : Yup.string().required('Field Phone Should be Not Empty') ,
-        merchant_level_id : Yup.string().required('Please Chosee Level ') ,
-        merchant_status_id : Yup.string().required('Please Chosee Status') ,
+        merchant_level : Yup.string().required('Please Chosee Level ') ,
+        merchant_status : Yup.string().required('Please Chosee Status') ,
+        merchant_image : ""
     })
 
 function MerchantFormUpdate(props) {
@@ -29,16 +30,16 @@ function MerchantFormUpdate(props) {
             merchant_username : Data.username ,
             merchant_email : Data.email ,
             phone_number : Data.phone ,
-            merchant_level_id : Data.level ,
-            merchant_status_id : Data.status === 'active' ? '1' : '0' ,
-           
+            merchant_level : Data.level ,
+            merchant_status : Data.status === 'active' ? '1' : '0' ,
+            merchant_image : ""
         } ,
 
         validationSchema : validationSchema ,
 
         onSubmit : (values , action) => {
+            console.log(values);
              dispatch( RequestEdit(values))
-
             action.resetForm()
 
         }
@@ -117,13 +118,13 @@ function MerchantFormUpdate(props) {
                         select 
                         variant="outlined" 
                         label="Level" 
-                        name="merchant_level_id"
+                        name="merchant_level"
                         style={{marginBottom : 18}}
-                        value={formik.values.merchant_level_id}
+                        value={formik.values.merchant_level}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.merchant_level_id && Boolean(formik.errors.merchant_level_id)}
-                        helperText={formik.touched.merchant_level_id && formik.errors.merchant_level_id}
+                        error={formik.touched.merchant_level && Boolean(formik.errors.merchant_level)}
+                        helperText={formik.touched.merchant_level && formik.errors.merchant_level}
                         >
                          <MenuItem value="1">1</MenuItem>
                          <MenuItem value="2">2</MenuItem>
@@ -134,14 +135,14 @@ function MerchantFormUpdate(props) {
                         select 
                         id="Status" 
                         label="Status" 
-                        name="merchant_status_id"
+                        name="merchant_status"
                         variant="outlined" 
                         style={{marginBottom : 18}}
-                        value={formik.values.merchant_status_id}
+                        value={formik.values.merchant_status}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.merchant_status_id && Boolean(formik.errors. merchant_status_id)}
-                        helperText={formik.touched.merchant_status_id && formik.errors. merchant_status_id}
+                        error={formik.touched.merchant_status && Boolean(formik.errors. merchant_status)}
+                        helperText={formik.touched.merchant_status && formik.errors. merchant_status}
                         >
                          <MenuItem value="0">0</MenuItem>
                          <MenuItem value="1">1</MenuItem>

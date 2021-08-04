@@ -27,9 +27,6 @@ const validationSchema = Yup.object().shape({
 
 })
 
-const Time = new Date()
-
-
 
 
 function UserAddForm(props) {

@@ -10,7 +10,7 @@ const List = (data) => {
         Data.push({
             id : item.customer_id , 
             name : item.customer_name ,
-            email : item.customer_id ,
+            email : item.customer_email ,
             tempatlahir : item.customer_bornplace ,
             tangalahir : item.customer_borndate ,
             level : item.customer_level.customer_level_id ,

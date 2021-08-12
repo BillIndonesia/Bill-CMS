@@ -79,7 +79,7 @@ function Index() {
 
     useEffect( () => {
       dispatch(GetMerchants())
-    })
+    } , [])
 
     
 

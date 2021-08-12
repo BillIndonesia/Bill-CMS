@@ -131,7 +131,7 @@ function GenerateVoucher(props) {
                                 getOptionLabel={ option => option.merchant_name }
                                 style={{width : '100%' , marginBottom : 12}}
                                 onChange={(e , value) => { 
-                                    formik.values.merchants = value.merchant_name ;
+                                    formik.values.merchants = value.merchant_username ;
                                      
                                 }}
                                 onBlur={() => setShow(false)}

@@ -16,7 +16,7 @@ const EditMerchant = (data) => {
             level: data.level,
             phone: data.phone,
             status: data.status,
-            saldo: data.saldo
+            
         }
     }
 }
@@ -25,7 +25,7 @@ const EditMerchant = (data) => {
 
 const RequestEdit = (data) => {
     return (dispatch) => {
-        axios.put(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
+        axios.patch(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
             .then(result => {
                 dispatch(Success())
 

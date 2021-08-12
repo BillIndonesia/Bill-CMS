@@ -10,7 +10,7 @@ const List = (data) => {
             id: item.merchant_id,
             username: item.merchant_username,
             name: item.merchant_name,
-            password: '11asa',
+            password: '',
             email: item.merchant_email,
             phone: item.phone_number,
             level: item.merchant_level.merchant_level,

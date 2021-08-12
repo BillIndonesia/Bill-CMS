@@ -11,8 +11,9 @@ import '../merchant.css'
         id                : Yup.string() ,
         merchant_name     : Yup.string().required('Field Name Should be Not Empty') ,
         merchant_username : Yup.string().required('Field Username Should be Not Empty') ,
-        merchant_email    : Yup.string().required('Field Email Should be Not Empty').email('Must Valid Email') ,
-        phone_number      : Yup.string().required('Field Phone Should be Not Empty') ,
+        merchant_password : Yup.string() ,
+        merchant_email    : "" ,
+        phone_number      : Yup.string() ,
         merchant_level : Yup.string().required('Please Chosee Level ') ,
         merchant_status : Yup.string().required('Please Chosee Status') ,
         merchant_image : ""
@@ -29,8 +30,9 @@ function MerchantFormUpdate(props) {
             merchant_name : Data.name ,
             merchant_username : Data.username ,
             merchant_email : Data.email ,
+            merchant_password : '' ,
             phone_number : Data.phone ,
-            merchant_level : Data.level ,
+            merchant_level : '1' ,
             merchant_status : Data.status === 'active' ? '1' : '0' ,
             merchant_image : ""
         } ,
@@ -38,8 +40,8 @@ function MerchantFormUpdate(props) {
         validationSchema : validationSchema ,
 
         onSubmit : (values , action) => {
-            console.log(values);
-             dispatch( RequestEdit(values))
+            dispatch(RequestEdit(values));
+             
             action.resetForm()
 
         }
@@ -72,6 +74,7 @@ function MerchantFormUpdate(props) {
                         error={formik.touched.merchant_name && Boolean(formik.errors.merchant_name)}
                         helperText={formik.touched.merchant_name && formik.errors.merchant_name}
                         />
+
                      <TextField 
                         id="Username" 
                         disabled 
@@ -96,6 +99,19 @@ function MerchantFormUpdate(props) {
                         error={formik.touched.merchant_email && Boolean(formik.errors.merchant_email)}
                         helperText={formik.touched.merchant_email && formik.errors.merchant_email}
                         />
+
+                    <TextField 
+                        id="password" 
+                        value={formik.values.merchant_password} 
+                        variant="outlined" 
+                        label="Password" 
+                        style={{marginBottom : 18}}
+                        name="merchant_password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    
+                    />
+
                      
                  </div>
 

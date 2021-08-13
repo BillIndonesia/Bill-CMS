@@ -2,27 +2,27 @@ import axios from "axios"
 
 //global confirmation 
 
-const Loading = () => { return { type : "LOADING-REQ" } }
+const Loading = () => { return { type: "LOADING-REQ" } }
 
-const Success = () => { return { type : "REQ-SUCCESS" } }
+const Success = () => { return { type: "REQ-SUCCESS" } }
 
-const Failure = () => { return { type : "REQ-FAILURE" } }
+const Failure = () => { return { type: "REQ-FAILURE" } }
 
 
 //edit staff
 
 const EditStaff = (data) => {
     return {
-        type : "EDIT STAFF" ,
-        payload : {
-            id : data.id ,
-            name : data.name ,
-            password : data.password ,
-            username : data.username ,
-            phone : data.phone ,
-            email : data.email ,
-            level : data.level ,
-            
+        type: "EDIT STAFF",
+        payload: {
+            id: data.id,
+            name: data.name,
+            password: data.password,
+            username: data.username,
+            phone: data.phone,
+            email: data.email,
+            level: data.level,
+
         }
     }
 }
@@ -30,7 +30,7 @@ const EditStaff = (data) => {
 const DeleteStaff = (data) => {
     console.log(data)
     return {
-        type : 'iseng'
+        type: 'iseng'
     }
 }
 
@@ -39,41 +39,40 @@ const DeleteStaff = (data) => {
 const SaveDataStaff = (data) => {
 
     return {
-        type : "SAVE STAFF" ,
-        payload : {
-            data : data
+        type: "SAVE STAFF",
+        payload: {
+            data: data
         }
     }
 }
 
 const GetStaff = () => {
-   return (dispatch) => {
-    axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
-    .then( result => dispatch( SaveDataStaff(result.data) ) )
-    .catch( err => console.error(err.message ))
+    return (dispatch) => {
+        axios.get('https://bill-indonesia.com/api/employee/staff-list/')
+            .then(result => dispatch(SaveDataStaff(result.data)))
+            .catch(err => console.error(err.message))
     }
-   }
+}
 
 
 //create staff 
 
 const ReqStaff = (data) => {
-    return(dispatch) => {
-        dispatch( Loading() )
+    return (dispatch) => {
+        dispatch(Loading())
 
-        axios.post('https://dev.bill-indonesia.com/api/employee/register/' , data)
-                .then( () => 
-                {
-                    dispatch( Success() )
+        axios.post('https://bill-indonesia.com/api/employee/register/', data)
+            .then(() => {
+                dispatch(Success())
 
-                    setTimeout( () => {
-                        dispatch({ type : "RESET-REQ" })
-                        dispatch(GetStaff())
-                    } , 3000)
-                })
-                
-                .catch( () => dispatch( Failure() ))
+                setTimeout(() => {
+                    dispatch({ type: "RESET-REQ" })
+                    dispatch(GetStaff())
+                }, 3000)
+            })
+
+        .catch(() => dispatch(Failure()))
     }
 }
 
-export {EditStaff , DeleteStaff , GetStaff , ReqStaff}
+export { EditStaff, DeleteStaff, GetStaff, ReqStaff }

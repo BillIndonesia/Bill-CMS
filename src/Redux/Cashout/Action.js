@@ -1,5 +1,5 @@
 import axios from "axios"
-import {Loading , Success , Failure , ResetReq} from '../Confirmation/Action'
+import { Loading, Success, Failure, ResetReq } from '../Confirmation/Action'
 
 //cashout request
 
@@ -7,24 +7,24 @@ const Cashout = (data) => {
     return (dispatch) => {
         dispatch(Loading())
 
-        axios.post('https://dev.bill-indonesia.com/api/cashout/request-cashout/' , data)
-        .then( () => {
-            dispatch(Success())
+        axios.post('https://bill-indonesia.com/api/cashout/request-cashout/', data)
+            .then(() => {
+                dispatch(Success())
 
-            dispatch(getHistoryCashout())
+                dispatch(getHistoryCashout())
 
-            setTimeout(() => {
-                dispatch(ResetReq())
-            } , 3000)
-            
-        })
-        .catch( err => {
-            dispatch(Failure())
+                setTimeout(() => {
+                    dispatch(ResetReq())
+                }, 3000)
 
-            setTimeout( () => {
-                dispatch(ResetReq())
-            } , 3000 )
-        })
+            })
+            .catch(err => {
+                dispatch(Failure())
+
+                setTimeout(() => {
+                    dispatch(ResetReq())
+                }, 3000)
+            })
     }
 }
 
@@ -32,28 +32,28 @@ const Cashout = (data) => {
 //get data history
 
 const SaveDataHistory = (data) => {
-    return{
-        type : "CASHOUT_HISTORY" ,
-        payload : {
-            data : data 
+    return {
+        type: "CASHOUT_HISTORY",
+        payload: {
+            data: data
         }
     }
 }
 
 const LoadingCashoutData = () => {
     return {
-        type : 'LoadingCashout' 
+        type: 'LoadingCashout'
     }
 }
 
 const getHistoryCashout = () => {
     return (dispatch) => {
-        
-        
-        axios.get('https://dev.bill-indonesia.com/api/cashout/cashout-history/?page=1')
-                .then( result => dispatch( SaveDataHistory( result.data )) )
-                .catch( err => console.log(err))
-        
+
+
+        axios.get('https://bill-indonesia.com/api/cashout/cashout-history/?page=1')
+            .then(result => dispatch(SaveDataHistory(result.data)))
+            .catch(err => console.log(err))
+
     }
 }
 
@@ -62,15 +62,15 @@ const getHistoryCashout = () => {
 
 const getNextHistori = (params) => {
     return (dispatch) => {
-    dispatch(LoadingCashoutData())
-        
-        axios.get(`https://dev.bill-indonesia.com/api/cashout/cashout-history/?page=${params}`)
-                .then( result => {
-                        dispatch( SaveDataHistory( result.data ))
-                      
-                } )
-                .catch( err => console.log(err))
-          }
+        dispatch(LoadingCashoutData())
+
+        axios.get(`https://bill-indonesia.com/api/cashout/cashout-history/?page=${params}`)
+            .then(result => {
+                dispatch(SaveDataHistory(result.data))
+
+            })
+            .catch(err => console.log(err))
+    }
 
 }
-export {Cashout , getHistoryCashout , getNextHistori}
+export { Cashout, getHistoryCashout, getNextHistori }

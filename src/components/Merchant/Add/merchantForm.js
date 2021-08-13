@@ -1,8 +1,8 @@
 import React from 'react'
-import {TextField , MenuItem} from '@material-ui/core'
-import {useFormik} from 'formik'
+import { TextField, MenuItem } from '@material-ui/core'
+import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
-import {RequestMerchant} from '../../../Redux/Merchant/Action'
+import { RequestMerchant } from '../../../Redux/Merchant/Action'
 
 import * as Yup from 'yup'
 import '../merchant.css'
@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
     merchant_username: Yup.string().required('Field Username Should be Not Empty'),
     //email tidak boleh sama
     merchant_email: Yup.string().required('Field Email Should be Not Empty').email('Must Valid Email'),
-    merchant_password: Yup.string().required('Field Pin Should be Not Empty').length(6,"Maximum PIN 6 Digit"),
+    merchant_password: Yup.string().required('Field Pin Should be Not Empty').length(6, "Maximum PIN 6 Digit"),
     //phone number tidak boleh sama
     phone_number: Yup.string().required('Field Phone Should be Not Empty').matches(/08/g, "2 digit first should 08 ").max(15, "maximum 15 digit"),
     merchant_level: Yup.string().required('Please Chosee Level '),
@@ -42,12 +42,14 @@ function MerchantForm(props) {
     const dispatch = useDispatch()
 
     const formik = useFormik({
-        initialValues : initialValue ,
-        validationSchema : validationSchema ,
-        onSubmit : (values , action) => {
-            dispatch( RequestMerchant(values))
+        initialValues: initialValue,
+        validationSchema: validationSchema,
+        onSubmit: (values, action) => {
+            if (values.merchant_type == 'KwK') { formik.values.merchant_type = 1 }
+            else { formik.values.merchant_type = 2 }
+            console.log(values);
+            dispatch(RequestMerchant(values))
             action.resetForm()
-
         }
     })
 

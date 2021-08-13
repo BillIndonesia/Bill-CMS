@@ -16,7 +16,7 @@ const EditMerchant = (data) => {
             level: data.level,
             phone: data.phone,
             status: data.status,
-            
+
         }
     }
 }

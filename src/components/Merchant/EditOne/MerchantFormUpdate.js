@@ -6,6 +6,7 @@ import { RequestEdit } from '../../../Redux/Merchant/Action'
 import * as Yup from 'yup'
 import '../merchant.css'
 
+<<<<<<< HEAD
 
 const validationSchema = Yup.object().shape({
     id: Yup.string(),
@@ -19,6 +20,20 @@ const validationSchema = Yup.object().shape({
     merchant_status_id: Yup.string().required('Please Chosee Status'),
     merchant_image: ""
 })
+=======
+    
+    const validationSchema = Yup.object().shape({
+        id                : Yup.string() ,
+        merchant_name     : Yup.string().required('Field Name Should be Not Empty') ,
+        merchant_username : Yup.string().required('Field Username Should be Not Empty') ,
+        merchant_password : Yup.string() ,
+        merchant_email    : "" ,
+        phone_number      : Yup.string() ,
+        merchant_level : Yup.string().required('Please Chosee Level ') ,
+        merchant_status : Yup.string().required('Please Chosee Status') ,
+        merchant_image : ""
+    })
+>>>>>>> c776ca39054dd42135b9fb0c00b75d46ec32118a
 
 function MerchantFormUpdate(props) {
 
@@ -26,6 +41,7 @@ function MerchantFormUpdate(props) {
     const dispatch = useDispatch()
 
     const formik = useFormik({
+<<<<<<< HEAD
         initialValues: {
             id: Data.id,
             merchant_name: Data.name,
@@ -47,6 +63,25 @@ function MerchantFormUpdate(props) {
             else { formik.values.merchant_type = 2 }
             console.log(values.merchant_type);
             dispatch(RequestEdit(values))
+=======
+        initialValues : {
+            id : Data.id , 
+            merchant_name : Data.name ,
+            merchant_username : Data.username ,
+            merchant_email : Data.email ,
+            merchant_password : '' ,
+            phone_number : Data.phone ,
+            merchant_level : '1' ,
+            merchant_status : Data.status === 'active' ? '1' : '0' ,
+            merchant_image : ""
+        } ,
+
+        validationSchema : validationSchema ,
+
+        onSubmit : (values , action) => {
+            dispatch(RequestEdit( values ))
+             
+>>>>>>> c776ca39054dd42135b9fb0c00b75d46ec32118a
             action.resetForm()
 
         }
@@ -121,6 +156,7 @@ function MerchantFormUpdate(props) {
                             error={formik.touched.merchant_email && Boolean(formik.errors.merchant_email)}
                             helperText={formik.touched.merchant_email && formik.errors.merchant_email}
                         />
+<<<<<<< HEAD
                     </div>
 
                     <div className={'merchant-form'}>
@@ -167,6 +203,69 @@ function MerchantFormUpdate(props) {
                             onBlur={formik.handleBlur}
                             error={formik.touched.merchant_status_id && Boolean(formik.errors.merchant_status_id)}
                             helperText={formik.touched.merchant_status_id && formik.errors.merchant_status_id}
+=======
+
+                    <TextField 
+                        id="password" 
+                        value={formik.values.merchant_password} 
+                        type="password"
+                        variant="outlined" 
+                        label="Password" 
+                        style={{marginBottom : 18}}
+                        name="merchant_password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    
+                    />
+
+                     
+                 </div>
+
+                 <div className={'merchant-form'}>
+                     <TextField 
+                        id="Phone" 
+                        variant="outlined" 
+                        label="Phone" 
+                        name="phone_number"
+                        style={{marginBottom : 18}}
+                        value={formik.values.phone_number}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
+                        helperText={formik.touched.phone_number && formik.errors.phone_number}
+                        />
+
+                     <TextField 
+                        id="Level" 
+                        select 
+                        variant="outlined" 
+                        label="Level" 
+                        name="merchant_level"
+                        style={{marginBottom : 18}}
+                        value={formik.values.merchant_level}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.merchant_level && Boolean(formik.errors.merchant_level)}
+                        helperText={formik.touched.merchant_level && formik.errors.merchant_level}
+                        >
+                         <MenuItem value="1">1</MenuItem>
+                         <MenuItem value="2">2</MenuItem>
+                         <MenuItem value="3">3</MenuItem>
+                     </TextField>
+
+                     <TextField 
+                        select 
+                        id="Status" 
+                        label="Status" 
+                        name="merchant_status"
+                        variant="outlined" 
+                        style={{marginBottom : 18}}
+                        value={formik.values.merchant_status}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.merchant_status && Boolean(formik.errors. merchant_status)}
+                        helperText={formik.touched.merchant_status && formik.errors. merchant_status}
+>>>>>>> c776ca39054dd42135b9fb0c00b75d46ec32118a
                         >
                             <MenuItem value="0">0</MenuItem>
                             <MenuItem value="1">1</MenuItem>

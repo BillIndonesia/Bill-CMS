@@ -24,7 +24,7 @@ const EditMerchant = (data) => {
 // send request Edit
 
 const RequestEdit = (data) => {
-    console.log(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`)
+    
     return (dispatch) => {
         axios.patch(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
             .then(result => {

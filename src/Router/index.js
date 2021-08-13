@@ -5,7 +5,7 @@ function Index() {
     return (
         <Router>
             <Route component={Login} path="/login" exact/>
-            <Route component={Home} path="/" />
+            <Route component={Home} path="/home" />
         </Router>
     )
 }

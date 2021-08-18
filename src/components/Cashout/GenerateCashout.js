@@ -27,7 +27,7 @@ const initialValue = {
 }
 
 const getMerchants = () => {
-    return axios.get('https://bill-indonesia.com/api/merchant/merchant-name-list/')
+    return axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-name-list/')
 }
 
 function GenerateVoucher(props) {
@@ -51,7 +51,7 @@ function GenerateVoucher(props) {
     const [show, setShow] = useState(true)
 
     useEffect(() => {
-        axios.get('https://bill-indonesia.com/api/employee/staff-list/')
+        axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
             .then(result => setStaff(result.data))
 
         setTimeout(() => {
@@ -60,49 +60,39 @@ function GenerateVoucher(props) {
 
     }, [])
 
-    return ( <
-            Modal show = { props.show }
-            onHide = { props.handleClose }
+    return ( 
+        
+            <Modal 
+            show = { props.show }
+            onHide = { props.handleClose } >
 
-            >
-
-            <
-            Modal.Header closeButton >
-            <
-            Modal.Title > Cashout < /Modal.Title> <
-            /Modal.Header> <
-            Modal.Body > {
-                Data.success ?
-                <
-                Snackbar open = { Data.success }
+            <Modal.Header closeButton >
+            <Modal.Title > Cashout </Modal.Title> 
+            </Modal.Header> 
+            <Modal.Body > 
+                { Data.success ?
+                < Snackbar 
+                open = { Data.success }
                 autoHideDuration = { 3000 } >
-                <
-                Alert severity = "success" >
-                Cashout Berhasil <
-                /Alert> <
-                /Snackbar> : 
+                <Alert severity = "success" >
+                Cashout Berhasil </Alert> 
+                </Snackbar> : 
 
                 Data.failure ?
-                <
-                Snackbar open = { Data.failure }
+                <Snackbar open = { Data.failure }
                 autoHideDuration = { 3000 } >
-                <
-                Alert severity = "error" >
-                Cashout Gagal <
-                /Alert> <
-                /Snackbar> : null
+                <Alert severity = "error" >
+                Cashout Gagal 
+                </Alert> </Snackbar> : null
             }
 
             {
                 Merchant === null && Staff === null ? < LinearProgress / > :
 
-                    <
-                    diV >
-                    <
-                    form onSubmit = { formik.handleSubmit } >
+                    <diV >
+                    <form onSubmit = { formik.handleSubmit } >
 
-                    <
-                    TextField
+                <TextField
                 variant = "outlined"
                 label = "PIC"
                 style = {
@@ -117,8 +107,8 @@ function GenerateVoucher(props) {
 
                 />
 
-                <
-                TextField
+                
+                <TextField
                 variant = "outlined"
                 label = "Cashout By"
                 style = {
@@ -132,13 +122,12 @@ function GenerateVoucher(props) {
                 helperText = { formik.touched.cashout_by && formik.errors.cashout_by } >
 
                     {
-                        Staff.map(item => < MenuItem value = { item.staff_name } > { item.staff_name } < /MenuItem>)}
+                        Staff.map(item => < MenuItem value = { item.staff_name } > { item.staff_name } </MenuItem>)}
 
-                            <
-                            /TextField>
+                            
+                            </TextField>
 
-                            <
-                            Autocomplete id = "combo-box"
+                            <Autocomplete id = "combo-box"
                             options = { Merchant }
 
                             getOptionLabel = { option => option.merchant_name }
@@ -164,8 +153,7 @@ function GenerateVoucher(props) {
                             }
                             />
 
-                            <
-                            TextField variant = "outlined"
+                            <TextField variant = "outlined"
                             label = "Nominal"
                             type = "number"
                             inputProps = {
@@ -183,28 +171,23 @@ function GenerateVoucher(props) {
                             />
 
 
-                            <
-                            /form> <
-                            /diV> 
+                            </form> 
+                            </diV> 
                         }
 
 
-                        <
-                        /Modal.Body> <
-                        Modal.Footer >
+                        </Modal.Body> 
+                        <Modal.Footer >
 
-                        <
-                        button onClick = {
-                            () => props.handleClose() }
-                        className = "cashout-cancel" > Cancel < /button> <
-                        button onClick = {
+                        <button onClick = { () => props.handleClose() }
+                        className = "cashout-cancel" > Cancel </button> 
+                        <button onClick = {
                             () => formik.handleSubmit() }
                         type = "submit"
-                        className = "cashout-submit" > Submit < /button>
+                        className = "cashout-submit" > Submit </button>
 
-                        <
-                        /Modal.Footer> <
-                        /Modal>
+                        </Modal.Footer> 
+                        </Modal>
                     )
             }
 

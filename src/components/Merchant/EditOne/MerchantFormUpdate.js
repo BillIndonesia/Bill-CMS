@@ -14,7 +14,6 @@ const validationSchema = Yup.object().shape({
     merchant_password: Yup.string(),
     merchant_email: "",
     phone_number: Yup.string(),
-    merchant_type: Yup.string().required('Field Name Should be Not Empty'),
     merchant_level_id: Yup.string().required('Please Chosee Level '),
     merchant_status_id: Yup.string().required('Please Chosee Status'),
     merchant_image: ""
@@ -42,10 +41,10 @@ function MerchantFormUpdate(props) {
         validationSchema: validationSchema,
         
         onSubmit: (values, action) => {
-            console.log(values.merchant_type);
+           
             if (values.merchant_type == 'kwk') { formik.values.merchant_type = 1 }
             else { formik.values.merchant_type = 2 }
-            console.log(values.merchant_type);
+            
             dispatch(RequestEdit(values))
             action.resetForm()
 
@@ -57,23 +56,7 @@ function MerchantFormUpdate(props) {
             <form onSubmit={formik.handleSubmit}>
                 <div className={'merchant-main'}>
                     <div className={'merchant-form'}>
-                        <TextField
-                            select
-                            id="merchant_type"
-                            name="merchant_type"
-                            label="Type"
-                            variant="outlined"
-                            style={{ marginBottom: 18 }}
-                            value={formik.values.merchant_type}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.merchant_type && Boolean(formik.errors.merchant_type)}
-                            helperText={formik.touched.merchant_type && formik.errors.merchant_type}
-                        >
-
-                            <MenuItem value="kwk">kwk</MenuItem>
-                            <MenuItem value="Warung">Warung</MenuItem>
-                        </TextField>
+                        
                         <TextField
                             id="id"
                             name="id"
@@ -120,6 +103,18 @@ function MerchantFormUpdate(props) {
                             onBlur={formik.handleBlur}
                             error={formik.touched.merchant_email && Boolean(formik.errors.merchant_email)}
                             helperText={formik.touched.merchant_email && formik.errors.merchant_email}
+                        />
+
+                        <TextField
+                            id="password"
+                            value={formik.values.merchant_password}
+                            variant="outlined"
+                            label="Password"
+                            style={{ marginBottom: 18 }}
+                            name="merchant_password"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+
                         />
                     </div>
 
@@ -171,17 +166,7 @@ function MerchantFormUpdate(props) {
                             <MenuItem value="0">0</MenuItem>
                             <MenuItem value="1">1</MenuItem>
                         </TextField>
-                        <TextField
-                            id="password"
-                            value={formik.values.merchant_password}
-                            variant="outlined"
-                            label="Password"
-                            style={{ marginBottom: 18 }}
-                            name="merchant_password"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-
-                        />
+                        
                         {/* <TextField 
                         id="saldo" 
                         label="Saldo" 

@@ -26,9 +26,7 @@ const initialValue = {
 
 }
 
-const getMerchants = () => {
-    return axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-name-list/')
-}
+
 
 function GenerateVoucher(props) {
 
@@ -37,6 +35,8 @@ function GenerateVoucher(props) {
 
     const [Merchant, setMerchant] = useState(null)
     const [Staff, setStaff] = useState(null)
+    const [Success , setSuccess ] = useState(false)
+
     const formik = useFormik({
         initialValues: initialValue,
         validationSchema: validationSchema,
@@ -50,13 +50,15 @@ function GenerateVoucher(props) {
 
     const [show, setShow] = useState(true)
 
-    useEffect(() => {
-        axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
-            .then(result => setStaff(result.data))
+    useEffect( async () => {
+       const staff = await axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
+            setStaff(staff.data) ;
 
-        setTimeout(() => {
-            getMerchants().then(result => setMerchant(result.data))
-        }, 3000)
+       const merchant = await axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-name-list/')
+
+            setMerchant(merchant.data)
+            
+            setSuccess(true)
 
     }, [])
 
@@ -86,8 +88,8 @@ function GenerateVoucher(props) {
                 </Alert> </Snackbar> : null
             }
 
-            {
-                Merchant === null && Staff === null ? < LinearProgress / > :
+            { Success === false && Staff === null && Merchant === null ?
+                < LinearProgress /> :
 
                     <diV >
                     <form onSubmit = { formik.handleSubmit } >

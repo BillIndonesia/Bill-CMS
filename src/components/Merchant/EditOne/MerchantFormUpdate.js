@@ -12,6 +12,7 @@ const validationSchema = Yup.object().shape({
     merchant_name: Yup.string().required('Field Name Should be Not Empty'),
     merchant_username: Yup.string().required('Field Username Should be Not Empty'),
     merchant_password: Yup.string(),
+    merchant_type : Yup.string(),
     merchant_email: "",
     phone_number: Yup.string(),
     merchant_level_id: Yup.string().required('Please Chosee Level '),
@@ -65,6 +66,19 @@ function MerchantFormUpdate(props) {
                             label="id"
                             style={{ marginBottom: 18 }}
                             value={formik.values.id}
+                        />
+
+                        <TextField
+                            id="name"
+                            value={formik.values.merchant_type}
+                            variant="outlined"
+                            label="Type"
+                            style={{ marginBottom: 18 }}
+                            name="merchant_type"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.merchant_type && Boolean(formik.errors.merchant_type)}
+                            helperText={formik.touched.merchant_type && formik.errors.merchant_type}
                         />
 
                         <TextField

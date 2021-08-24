@@ -24,7 +24,10 @@ const EditMerchant = (data) => {
 // send request Edit
 
 const RequestEdit = (data) => {
-
+    if (data.merchant_password == '') {
+        delete data.merchant_password;
+    }
+    console.log(data)
     return (dispatch) => {
         axios.patch(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
             .then(result => {
@@ -38,14 +41,14 @@ const RequestEdit = (data) => {
                 }, 3000)
             })
 
-        .catch(() => {
-            dispatch(Failure())
+            .catch(() => {
+                dispatch(Failure())
 
-            setTimeout(() => {
-                dispatch(ResetReq())
-            }, 3000)
+                setTimeout(() => {
+                    dispatch(ResetReq())
+                }, 3000)
 
-        })
+            })
 
     }
 }
@@ -117,14 +120,14 @@ const RequestMerchant = (data) => {
 
             })
 
-        .catch(() => {
-            dispatch(Failure())
+            .catch(() => {
+                dispatch(Failure())
 
-            setTimeout(() => {
-                dispatch({ type: "RESET-REQ" })
-            }, 3000)
+                setTimeout(() => {
+                    dispatch({ type: "RESET-REQ" })
+                }, 3000)
 
-        })
+            })
     }
 }
 

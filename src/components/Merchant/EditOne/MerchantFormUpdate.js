@@ -12,7 +12,7 @@ const validationSchema = Yup.object().shape({
     merchant_name: Yup.string().required('Field Name Should be Not Empty'),
     merchant_username: Yup.string().required('Field Username Should be Not Empty'),
     merchant_password: Yup.string(),
-    merchant_type : Yup.string(),
+    merchant_type: Yup.string(),
     merchant_email: "",
     phone_number: Yup.string(),
     merchant_level_id: Yup.string().required('Please Chosee Level '),
@@ -40,12 +40,8 @@ function MerchantFormUpdate(props) {
         },
 
         validationSchema: validationSchema,
-        
+
         onSubmit: (values, action) => {
-           
-            if (values.merchant_type == 'kwk') { formik.values.merchant_type = 1 }
-            else { formik.values.merchant_type = 2 }
-            
             dispatch(RequestEdit(values))
             action.resetForm()
 
@@ -57,7 +53,7 @@ function MerchantFormUpdate(props) {
             <form onSubmit={formik.handleSubmit}>
                 <div className={'merchant-main'}>
                     <div className={'merchant-form'}>
-                        
+
                         <TextField
                             id="id"
                             name="id"
@@ -69,7 +65,8 @@ function MerchantFormUpdate(props) {
                         />
 
                         <TextField
-                            id="name"
+                            select
+                            id="type"
                             value={formik.values.merchant_type}
                             variant="outlined"
                             label="Type"
@@ -79,7 +76,11 @@ function MerchantFormUpdate(props) {
                             onBlur={formik.handleBlur}
                             error={formik.touched.merchant_type && Boolean(formik.errors.merchant_type)}
                             helperText={formik.touched.merchant_type && formik.errors.merchant_type}
-                        />
+
+                        >
+                            <MenuItem value="1">kwk</MenuItem>
+                            <MenuItem value="2">warung</MenuItem>
+                        </TextField>
 
                         <TextField
                             id="name"
@@ -180,7 +181,7 @@ function MerchantFormUpdate(props) {
                             <MenuItem value="0">0</MenuItem>
                             <MenuItem value="1">1</MenuItem>
                         </TextField>
-                        
+
                         {/* <TextField 
                         id="saldo" 
                         label="Saldo" 

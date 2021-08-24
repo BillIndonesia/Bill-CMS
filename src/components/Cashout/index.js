@@ -18,13 +18,6 @@ const columns = [
   
 ];
 
-// const row = [
-//   { id: 1, date : new Date("2021-07-08T20:51:59.976795+07:00").getFullYear() , destination : 'Vikral 1', pic : 'Yola3' , ammount : 50000 },
-//   { id: 2, date : '14/01/2021',  destination : 'Vikral 2', pic : 'Yola2' ,  ammount : 26000 },
-//   { id: 3, date : '09/09/2011',  destination : 'Vikral 5', pic : 'Yola1' , ammount : 100000 },
-//   { id: 4, date : '12/05/2021' ,  destination : 'Vikral 6', pic : 'Yola6' ,  ammount : 50200 },
-// ]
-
 function Index() {
   const [change, setChange] = useState(false)
   const [show , setShow] = useState(false)
@@ -46,13 +39,13 @@ function Index() {
         <div style={{ height : 600}}>
            
 
-           {show &&  
+          
             <PopUpCashout 
                 show={show} 
                 handleDialog={handleDialog} 
                 handleClose={handleClose} 
                 handleProcess={handleProces}/> 
-           }
+
             
             <h2 className="cashout-title">Cashout History</h2>
             
@@ -84,4 +77,4 @@ function Index() {
     )
 }
 
-export default Index
+export default React.memo( Index )

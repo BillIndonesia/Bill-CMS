@@ -72,21 +72,20 @@ function GenerateVoucher(props) {
             <Modal.Title > Cashout </Modal.Title> 
             </Modal.Header> 
             <Modal.Body > 
-                { Data.success ?
-                < Snackbar 
-                open = { Data.success }
-                autoHideDuration = { 3000 } >
-                <Alert severity = "success" >
-                Cashout Berhasil </Alert> 
-                </Snackbar> : 
-
-                Data.failure ?
-                <Snackbar open = { Data.failure }
-                autoHideDuration = { 3000 } >
-                <Alert severity = "error" >
-                Cashout Gagal 
-                </Alert> </Snackbar> : null
-            }
+                
+                <Snackbar open={Data.success} autoHideDuration={3000}>
+                    <Alert severity="success">
+                        Cashout Success
+                    </Alert>
+                 </Snackbar> 
+                 
+                 
+                 <Snackbar open={Data.failure} autoHideDuration={3000}>
+                 <Alert severity="error">
+                     Cashout Gagal
+                 </Alert>
+              </Snackbar>
+            
 
             { Success === false && Staff === null && Merchant === null ?
                 < LinearProgress /> :

@@ -22,7 +22,7 @@ function Index(props) {
 
     const onSubmit = (values, action) => {
         console.log(values)
-        axios.post('https://dev.bill-indonesia.com/api/employee/login/', values)
+        axios.post('https://bill-indonesia.com/api/employee/login/', values)
             .then(result => {
                 
                 if (result.status === 200) {

@@ -14,7 +14,7 @@ const SaveVoucher = (data) => {
 const GetVoucher = () => {
 
     return (dispatch) => {
-        axios.get('https://bill-indonesia.com/api/voucher/vouchers-list/')
+        axios.get('https://dev.bill-indonesia.com/api/voucher/vouchers-list/')
             .then(result => dispatch(SaveVoucher(result.data.results)))
     }
 }
@@ -26,7 +26,7 @@ const VoucherRequest = (data) => {
     return (dispatch) => {
         dispatch(Loading())
 
-        axios.post('https://bill-indonesia.com/api/voucher/generate-vouchers/', data)
+        axios.post('https://dev.bill-indonesia.com/api/voucher/generate-vouchers/', data)
             .then(() => {
                 dispatch(Success())
 
@@ -47,7 +47,7 @@ const getNextData = (params) => {
     return (dispatch) => {
         dispatch({ type: "LOADING VOUCHER" })
 
-        axios.get(`https://bill-indonesia.com/api/voucher/vouchers-list/?page=${params}`)
+        axios.get(`https://dev.bill-indonesia.com/api/voucher/vouchers-list/?page=${params}`)
             .then(result => {
                 dispatch(SaveVoucher(result.data.results))
             })

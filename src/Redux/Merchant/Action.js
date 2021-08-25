@@ -29,7 +29,7 @@ const RequestEdit = (data) => {
     }
     console.log(data)
     return (dispatch) => {
-        axios.patch(`https://bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
+        axios.patch(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
             .then(result => {
                 dispatch(Success())
 
@@ -65,7 +65,7 @@ const DeleteMerchant = (data) => {
     return (dispatch) => {
         dispatch(Loading)
 
-        axios.post('https://bill-indonesia.com/api/merchant/delete/', Data)
+        axios.post('https://dev.bill-indonesia.com/api/merchant/delete/', Data)
             .then(() => {
                 dispatch(Success())
 
@@ -97,7 +97,7 @@ const saveDataMerchants = (data) => {
 
 const GetMerchants = () => {
     return (dispatch) => {
-        axios.get('https://bill-indonesia.com/api/merchant/merchant-list/').then(
+        axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-list/').then(
             result => dispatch(saveDataMerchants(result.data))
         )
     }
@@ -109,7 +109,7 @@ const RequestMerchant = (data) => {
     return (dispatch) => {
         dispatch(Loading())
 
-        axios.post('https://bill-indonesia.com/api/merchant/register/', data)
+        axios.post('https://dev.bill-indonesia.com/api/merchant/register/', data)
             .then(() => {
                 dispatch(Success())
 

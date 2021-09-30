@@ -7,7 +7,7 @@ const Cashout = (data) => {
     return (dispatch) => {
         dispatch(Loading())
 
-        axios.post('https://dev.bill-indonesia.com/api/cashout/request-cashout/', data)
+        axios.post('https://bill-indonesia.com/api/cashout/request-cashout/', data)
             .then(() => {
                 dispatch(Success())
 
@@ -50,7 +50,7 @@ const getHistoryCashout = () => {
     return (dispatch) => {
 
 
-        axios.get('https://dev.bill-indonesia.com/api/cashout/cashout-history/?page=1')
+        axios.get('https://bill-indonesia.com/api/cashout/cashout-history/?page=1')
             .then(result => dispatch(SaveDataHistory(result.data)))
             .catch(err => console.log(err))
 
@@ -64,7 +64,7 @@ const getNextHistori = (params) => {
     return (dispatch) => {
         dispatch(LoadingCashoutData())
 
-        axios.get(`https://dev.bill-indonesia.com/api/cashout/cashout-history/?page=${params}`)
+        axios.get(`https://bill-indonesia.com/api/cashout/cashout-history/?page=${params}`)
             .then(result => {
                 dispatch(SaveDataHistory(result.data))
 

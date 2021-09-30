@@ -50,10 +50,10 @@ function GenerateVoucher(props) {
     const [show, setShow] = useState(true)
 
     useEffect( async () => {
-       const staff = await axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
+       const staff = await axios.get('https://bill-indonesia.com/api/employee/staff-list/')
             setStaff(staff.data) ;
 
-       const merchant = await axios.get('https://dev.bill-indonesia.com/api/merchant/merchant-name-list/')
+       const merchant = await axios.get('https://bill-indonesia.com/api/merchant/merchant-name-list/')
 
             setMerchant(merchant.data)
             

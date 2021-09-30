@@ -48,7 +48,7 @@ const SaveDataStaff = (data) => {
 
 const GetStaff = () => {
     return (dispatch) => {
-        axios.get('https://dev.bill-indonesia.com/api/employee/staff-list/')
+        axios.get('https://bill-indonesia.com/api/employee/staff-list/')
             .then(result => dispatch(SaveDataStaff(result.data)))
             .catch(err => console.error(err.message))
     }
@@ -61,7 +61,7 @@ const ReqStaff = (data) => {
     return (dispatch) => {
         dispatch(Loading())
 
-        axios.post('https://dev.bill-indonesia.com/api/employee/register/', data)
+        axios.post('https://bill-indonesia.com/api/employee/register/', data)
             .then(() => {
                 dispatch(Success())
 

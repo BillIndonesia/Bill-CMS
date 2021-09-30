@@ -41,6 +41,7 @@ function Index(props) {
                     <li className={'navbar-itemm'}><Link to="/home/Staff" className={'navlinkk'}>Staff</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/cashout" className={'navlinkk'}>Cashout</Link></li>
                     <li className={'navbar-itemm'}><Link to="/home/request" className={'navlinkk'}>Request</Link></li>
+                    <li className={'navbar-itemm'}><Link to="/home/transaction" className={'navlinkk'}>Transaction</Link></li>
                     { users === "verif" && level === "3" ? 
                     <li className={'navbar-itemm navlinkk'}>Verification
                         <ul className={'nav-dropdown'}>

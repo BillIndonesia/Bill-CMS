@@ -7,6 +7,7 @@ import ReducerStaffList from './Staff/ReducerList'
 import ReducerCashoutHistory from './Cashout/ReducerHistory'
 import ReducerVoucherList from './Voucher/ReducerList'
 import ReducerConfirm from './Confirmation/Reducer'
+import ReducerTransaction from './Transaction/reducer'
 import thunk from 'redux-thunk'
 
 const Root = combineReducers({
@@ -17,7 +18,8 @@ const Root = combineReducers({
     StaffList : ReducerStaffList ,
     CashoutH : ReducerCashoutHistory ,
     VoucherList : ReducerVoucherList ,
-    Confirmation : ReducerConfirm
+    Confirmation : ReducerConfirm ,
+    Transaction : ReducerTransaction
 })
 
 const Store = createStore(Root, applyMiddleware(thunk))

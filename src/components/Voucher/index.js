@@ -1,9 +1,9 @@
-import React , {useState , useEffect} from 'react'
-import {Button } from 'react-bootstrap'
+import React , {useState , useEffect, useRef ,} from 'react'
 import Modal from './GenerateVoucher'
 import { DataGrid } from '@material-ui/data-grid';
-import { Menu , MenuItem , ListItemIcon , Typography } from '@material-ui/core';
-import {Person , Delete , Check , Payment} from '@material-ui/icons'
+import { Button} from '@material-ui/core'
+import {InputGroup , FormControl} from 'react-bootstrap'
+import {Payment , Search} from '@material-ui/icons'
 import {useDispatch , useSelector} from 'react-redux'
 import {GetVoucher , getNextData} from '../../Redux/Voucher/Action'
 import './voucher.css'
@@ -18,6 +18,7 @@ const columns = [
 ]
 
 function Index() { 
+  const input = useRef(null)
   const [show, setShow] = useState(false);
   const [ anchorEl , setAnchor ] = useState(null)
   const Data = useSelector( state => state.VoucherList) 
@@ -35,55 +36,34 @@ function Index() {
 
     return (
         <div className={'voucher'}>
-            {show && <Modal show={show} handleClose={handleClose}/> }
+            <Modal show={show} handleClose={handleClose}/> 
             
-            <div>
                 <h2 className="voucher-title">Voucher</h2>
-                
-                <div className={'voucher-action'}>
-                    <div>
-                        <Button style={{marginLeft : 8 , backgroundColor : 'rgb(85, 85, 207)'}} size="sm" onClick={handleShow}> <Payment /> Generate Voucher</Button>
-                        <Menu
-                            id="admin-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}    
-                        >
+                    <div className="voucher-data">
+                        <div className="data">
+                            <div className="main-search">
+                                <Button variant="contained" color="primary" onClick={handleShow}> <Payment /> 
+                                    Generate Voucher
+                                </Button>
+                            
+                                <div className="search">
+                                    <InputGroup>
+                                        <FormControl
+                                            placeholder="search"
+                                            aria-label="Recipient's username"
+                                            ref={input}
+                                            aria-describedby="basic-addon2"
+                                        />
 
-                    <MenuItem >
-                        <ListItemIcon>
-                            <Person fontSize="small" />
-                        </ListItemIcon>
-                        <Typography variant="inherit">  
-                            Add Merchant
-                        </Typography>
-                    </MenuItem>
-
-                      <MenuItem>
-                        <ListItemIcon>
-                            <Delete fontSize="small" />
-                        </ListItemIcon>
-                        <Typography variant="inherit">  
-                            Delete
-                        </Typography>
-                    </MenuItem>
-
-                    <MenuItem >
-                        <ListItemIcon>
-                            <Check fontSize="small" />
-                        </ListItemIcon>
-                        <Typography variant="inherit">  
-                            Verify
-                        </Typography>
-                    </MenuItem>
-                    </Menu>
-                    </div>
-                </div>
-            </div>
-
-
-            <div className={'voucher-data'}>
-                
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => console.log('ok')}
+                                            endIcon={<Search />}
+                                        />
+                                
+                                    </InputGroup>
+                                </div>
+                            </div>
                             <DataGrid 
                                 rows={Data.data}
                                 columns={columns}
@@ -95,8 +75,11 @@ function Index() {
                                 onPageChange={params => dispatch(getNextData(params.page + 1))}
 
                             />
+                        </div>
+                    </div>
+                     
+                     
 
-            </div>
         </div>
     )
 }

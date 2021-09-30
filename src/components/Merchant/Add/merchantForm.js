@@ -45,7 +45,7 @@ function MerchantForm(props) {
         initialValues: initialValue,
         validationSchema: validationSchema,
         onSubmit: (values, action) => {
-            if (values.merchant_type == 'KwK') { formik.values.merchant_type = 1 }
+            if (values.merchant_type === 'KwK') { formik.values.merchant_type = 1 }
             else { formik.values.merchant_type = 2 }
             console.log(values);
             dispatch(RequestMerchant(values))

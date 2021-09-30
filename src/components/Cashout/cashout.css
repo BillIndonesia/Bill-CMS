@@ -1,9 +1,37 @@
-.cashout-title{
+
+
+.cashout .cashout-title{
     font-weight: 600 ;
     font-size: 34px;
     color: rgb(85, 85, 207);
     text-align: center;
     margin: 25px 0;
+}
+
+.cashout .cashout-data{
+    width: 100%;
+    margin-top: 40px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cashout .cashout-data .data{
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.cashout .cashout-data .data .main-search{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.cashout .cashout-data .data .main-search .search{
+    width: 30%;
 }
 
 .list-merchant{

@@ -58,4 +58,19 @@ const sendUser = (data) => {
     }
 }
 
-export { DeleteUsers, getUser, sendUser }
+const searchData = (data = '') => {
+    return (dispatch) => {
+        dispatch(Loading())
+
+        axios.get("https://jsonplaceholder.typicode.com/users/1/a")
+                 .then( response => setTimeout(() => dispatch(ResetReq()) , 3000))
+
+                 .catch( err => {
+                     dispatch(Failure())
+
+                     setTimeout(() => dispatch(ResetReq()) , 3000)
+                 } )
+    }
+}
+
+export { DeleteUsers, getUser, sendUser , searchData}

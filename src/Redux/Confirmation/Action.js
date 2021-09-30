@@ -1,4 +1,4 @@
-const Loading = () => { return { type : "REQ-CASHOUT" } }
+const Loading = () => { return { type : "LOADING-REQ" } }
 
 const Success = () => { return { type : "REQ-SUCCESS"} }
 
@@ -6,4 +6,7 @@ const Failure = () => { return { type : "REQ-FAILURE" } }
 
 const ResetReq = () => { return { type : "RESET-REQ" } }
 
-export {Loading , Success , Failure , ResetReq}
+const FinishReq = () => { return { type : "FINISH-REQ" } }
+
+
+export {Loading , Success , Failure , ResetReq , FinishReq} 

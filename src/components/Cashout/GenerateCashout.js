@@ -13,7 +13,6 @@ import axios from 'axios';
 const validationSchema = Yup.object().shape({
     cashout_amount: Yup.number().required('Should Not Empty').positive(),
     merchants: Yup.string().required('Should Not Empty'),
-    // create_by: Yup.string().required('Should Not Empty'),
     cashout_by: Yup.string().required('Should Not Empty')
 })
 const name = localStorage.getItem('name')

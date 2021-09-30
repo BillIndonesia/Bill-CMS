@@ -7,7 +7,6 @@ const initialValue = {
 const List = (data) => {
     let Data = [] 
 
-    console.log(Data)
     data.forEach( (item , index ) => {
 
         let date = new Date(item.create_date)
@@ -21,9 +20,6 @@ const List = (data) => {
             
         })
     } ) 
-    
-
-    
 
     return Data
 }

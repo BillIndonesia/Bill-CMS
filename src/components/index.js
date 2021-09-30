@@ -10,6 +10,7 @@ import Staff from './Staff'
 import Cashout from './Cashout'
 import Request from './Request'
 import PageNotFound from './PageNotFound'
+import Transaction from './Transaction'
 import {VoucherRequest , MerchantRequest , CashoutRequest} from './Verification'
 export {
     Header , 
@@ -26,5 +27,6 @@ export {
     CashoutRequest , 
     MerchantRequest , 
     VoucherRequest ,
-    PageNotFound
+    PageNotFound ,
+    Transaction
 }

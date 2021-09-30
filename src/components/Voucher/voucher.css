@@ -1,4 +1,4 @@
-.voucher-title{
+.voucher .voucher-title{
     text-align: center;
     font-weight: 600;
     font-size: 34px;
@@ -6,8 +6,35 @@
     margin: 20px 0;
 }
 
-.voucher-data{
+.voucher .voucher-data{
     width: 100%;
     margin-top: 40px;
     height: 500px;
+}
+
+
+.voucher .voucher-data{
+    width: 100%;
+    margin-top: 40px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.voucher .voucher-data .data{
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.voucher .voucher-data .data .main-search{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.voucher .voucher-data .data .main-search .search{
+    width: 30%;
 }

@@ -12,7 +12,8 @@ import {
         MerchantRequest , 
         CashoutRequest  , 
         Request ,
-        PageNotFound
+        PageNotFound , 
+        Transaction
 
     } from '../index'
 function Index(props) {
@@ -33,11 +34,12 @@ function Index(props) {
                
                     <Route path="/home/staff" component={Staff}  />
                     <Route path="/home/cashout" component={Cashout}  />
+                    <Route path="/home/transaction" component={Transaction}  />
                     <Route path="/home/request" component={Request}  />
                     <Route path="/home/voucher-request" component={VoucherRequest}  />
                     <Route path="/home/merchant-request" component={MerchantRequest}  />
                     <Route path="/home/cashout-request" component={CashoutRequest}  />
-                    <Route path="*" component={PageNotFound} />
+                    <Route path="**" component={PageNotFound} />
                 </Switch>
                 </div>
             </Router>   

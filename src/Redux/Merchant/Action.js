@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Loading, Success, Failure, ResetReq } from '../Confirmation/Action'
+import { Loading, Success, Failure, ResetReq , FinishReq} from '../Confirmation/Action'
 
 
 // edit data 
@@ -27,7 +27,6 @@ const RequestEdit = (data) => {
     if (data.merchant_password == '') {
         delete data.merchant_password;
     }
-    console.log(data)
     return (dispatch) => {
         axios.patch(`https://dev.bill-indonesia.com/api/merchant/update_profile_cms/${data.id}/`, data)
             .then(result => {
@@ -114,7 +113,7 @@ const RequestMerchant = (data) => {
                 dispatch(Success())
 
                 setTimeout(() => {
-                    dispatch({ type: "RESET-REQ" })
+                    dispatch(ResetReq())
 
                 }, 3000)
 
@@ -131,4 +130,22 @@ const RequestMerchant = (data) => {
     }
 }
 
-export { EditMerchant, DeleteMerchant, GetMerchants, RequestMerchant, RequestEdit }
+
+const SearchData = (data = '') => {
+    return (dispatch) => {
+        dispatch(Loading())
+
+        axios.get("https://jsonplaceholder.typicode.com/users/1/a")
+                .then( response => {
+                    setTimeout(() => dispatch(ResetReq()), 2000)
+                })
+
+                .catch( err => {
+                    dispatch(Failure())
+
+                    setTimeout(() => dispatch(ResetReq()), 2000)
+                })        
+    }
+}
+
+export { EditMerchant, DeleteMerchant, GetMerchants, RequestMerchant, RequestEdit , SearchData}

@@ -1,43 +1,43 @@
-.merchant{
+.transaction{
     width: 100%;
     height: 100vh;
     box-sizing: border-box;
 }
 
-.merchant-title{
+.transaction-title{
     font-weight: 600 ;
     font-size: 34px;
     color: rgb(85, 85, 207);
     text-align: center;
     margin: 17px 0;
 }
-.merchant-action{
+.transaction-action{
     display: flex;
     flex-direction: row;
 
 }
 
-.merchant-action {
+.transaction-action {
     display: flex;
     flex-direction: row;
     justify-content: start;
 }
 
-.merchant .error-popup{
+.transaction .error-popup{
     width: 300px;
     height: 300px;
     background-color: white;
 }
 
 
-.merchant-data{
+.transaction-data{
     width: 100%;
     margin-top: 40px;
     display: flex;
     flex-direction: column;
 }
 
-.merchant-data .data{
+.transaction-data .data{
     height: 500px;
     display: flex;
     flex-direction: column;
@@ -45,18 +45,23 @@
 
 }
 
-.merchant-data .main-search {
+.transaction-data .main-search {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 20px 0;
     
 }
-.merchant-data .data .search{
+
+.transaction-data .transaction-menu{
+    padding: 0 20px;
+}
+
+.transaction-data .data .search{
     width: 30%;
 }
 
-.merchant-body{
+.transaction-body{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,7 +70,7 @@
     height: 100vh;
 }
 
-.merchant-main{
+.transaction-main{
     
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -74,24 +79,24 @@
     
 }
 
-.modal-merchant{
+.modal-transaction{
     display : 'flex' ; 
     align-items : 'center' ;
     justify-content : 'center'
 }
 
-.merchant-form{
+.transaction-form{
     display: flex;
     flex-direction: column;
     height: 100%;
 
 }
 
-.merchant-input{
+.transaction-input{
     margin-bottom: 20px;
 }
 
-.merchant-submit{
+.transaction-submit{
     background-color: #3f51b5;
     padding: 10px;
     border: transparent;
@@ -102,7 +107,7 @@
     float: right;
 }
 
-.merchant-cancel{
+.transaction-cancel{
     background-color: transparent;
     padding: 10px;
     border: transparent;
@@ -114,6 +119,6 @@
     margin-right: 8px;
 }
 
-.merchant-cancel:hover{
+.transaction-cancel:hover{
     background-color: #f3f3f3;
 }

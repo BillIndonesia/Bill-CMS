@@ -8,7 +8,9 @@ const Reducer = (state = initialValue , action) => {
     switch(action.type){
         case "REQ-SUCCESS" :
             return { 
-                   success : true          
+                    ...state , 
+                   success : true ,
+                   loading : false          
             }
             
         case "LOADING-REQ" :
@@ -20,6 +22,7 @@ const Reducer = (state = initialValue , action) => {
         case "REQ-FAILURE" :
             return {
                 ...state ,
+                loading : false ,
                 failure : true 
             }
             

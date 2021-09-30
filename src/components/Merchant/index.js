@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect , useRef} from 'react'
 import { Button, Menu, MenuItem, ListItemIcon, Typography, LinearProgress } from '@material-ui/core'
 import { DataGrid } from '@material-ui/data-grid'
-import { Person, Create, List, Delete } from '@material-ui/icons'
+import { Person, Create, List, Delete , Search } from '@material-ui/icons'
 import PopUp from './Add/merchantDialog'
-import { ListGroup, Form } from 'react-bootstrap'
+import { ListGroup, Form , InputGroup , FormControl } from 'react-bootstrap'
 import PopUpUpdate from './EditOne/MerchantDialog'
 import PopUpUpdateMany from './EditMany/MerchantDialog'
 import PopUpDelete from './Delete/MerchantDialog'
+import ModalError from '../../utilities/ErrorPopUp'
 import { useDispatch, useSelector } from 'react-redux'
-import { EditMerchant, GetMerchants } from '../../Redux/Merchant/Action'
+import { EditMerchant, GetMerchants , SearchData } from '../../Redux/Merchant/Action'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './merchant.css'
+
+
 
 const columns = [
   { field: 'id', headerName: 'ID', flex: 1 },
@@ -29,7 +32,11 @@ const columns = [
 
 function Index() {
   const dispatch = useDispatch()
+
   const Data = useSelector(state => state.MerchantList.data)
+  
+
+  const input = useRef(null)
   const [openAdd, setOpenAdd] = useState(false)
   const [openUpdateOne, setOpenUpdateOne] = useState(false)
   const [openUpdateMany, setOpenUpdateMany] = useState(false)
@@ -38,7 +45,7 @@ function Index() {
   const [anchorEl, setAnchor] = useState(null)
   const [selectionModel, setSelectionModel] = React.useState([]);
   const [sizePage, setSizePage] = useState(5)
-
+  const [Err , setErr] = useState(false)
 
 
   const [Option, setOption] = useState(null)
@@ -56,24 +63,15 @@ function Index() {
   const handleOpenAdd = () => setOpenAdd(true)
 
   const handleOpenUpdateOne = () => {
-    handleLogout()
+    setAnchor(null)
     setOpenUpdateOne(true)
   }
 
   const handleOpenDelete = () => setOpenDelete(true)
 
-  const handleMenu = (event) => setAnchor(event.currentTarget)
-
-  const handleLogout = () => setAnchor(null)
-
-  const sizeChange = (params) => setSizePage(params.pageSize)
-
   const editMerchant = (data) => dispatch(EditMerchant(data))
 
-  const handleOption = e => {
-    const { value } = e.target
-    setOption(value)
-  }
+  const handleOption = e => setOption(e.target.value)
 
   const Reset = () => setSelectionModel([])
 
@@ -82,157 +80,183 @@ function Index() {
     dispatch(GetMerchants())
   }, [])
 
-
-
-
-
   return (
     <div className={'merchant'}>
-      {openAdd &&
+      
         <PopUp
           open={openAdd}
           handleClose={handleCloseAdd}
-          handleOpen={handleOpenAdd} />}
+          handleOpen={handleOpenAdd} />
 
-      {openUpdateOne &&
+      
         <PopUpUpdate
           open={openUpdateOne}
-          handleClose={handleCloseUpdateOne} />}
+          handleClose={handleCloseUpdateOne} />
 
-      {openUpdateMany &&
         <PopUpUpdateMany
           open={openUpdateMany}
           handleClose={handleCloseUpdateMany}
           item={Option}
-          data={selectionModel} />}
+          data={selectionModel} />
 
-      {openDelete &&
+      
         <PopUpDelete
           open={openDelete}
           handleClose={handleCloseDelete}
           data={selectionModel}
           change={Reset}
-        />}
+        />
 
-      <div>
+        <ModalError />
+
         <h2 className={'merchant-title'}>Data Merchant</h2>
-        <div className={'merchant-action'}>
 
-          <div>
-            <Button
-              variant="contained"
-              style={{ marginLeft: 10 }}
-              aria-controls="admin-menu"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              endIcon={<List />}
-            >
-              Action
-            </Button>
+      <div className={'merchant-data'}>
 
-            <Menu
-              id="admin-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleLogout}
+        {Data.length === 0 ?
+          <LinearProgress /> :
+          <div className="data">
+            <div className="main-search">
+              <div>
+                <Button
+                  variant="contained"
+                  style={{ marginLeft: 10 }}
+                  aria-controls="admin-menu"
+                  aria-haspopup="true"
+                  onClick={ event => setAnchor(event.currentTarget) }
+                  endIcon={<List />}
+                >
+                  Action
+                </Button>
 
-            >
+                <Menu
+                  id="admin-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={() => setAnchor(null)}
+                >
 
-              <MenuItem onClick={() => {
-                handleLogout()
-                handleOpenAdd()
-              }} >
-                <ListItemIcon>
-                  <Person fontSize="small" />
-                </ListItemIcon>
-                <Typography variant="inherit">
-                  Add Merchant
-                </Typography>
-              </MenuItem>
+                <MenuItem onClick={() => {
+                  setAnchor(null)
+                  handleOpenAdd()
+                }} >
 
-              {selectionModel.length > 0 ?
-                <MenuItem onClick={handleOpenDelete} >
                   <ListItemIcon>
-                    <Delete fontSize="small" />
+                    <Person fontSize="small" />
                   </ListItemIcon>
                   <Typography variant="inherit">
-                    Delete
+                    Add Merchant
                   </Typography>
-                </MenuItem> : null
-              }
+                </MenuItem>
 
-              {selectionModel.length === 0 ? null :
-                selectionModel.length > 1 ? null :
-                  <MenuItem onClick={handleOpenUpdateOne} >
+                {selectionModel.length > 0 ?
+                  <MenuItem onClick={handleOpenDelete} >
+                    <ListItemIcon>
+                      <Delete fontSize="small" />
+                    </ListItemIcon>
+                    <Typography variant="inherit">
+                      Delete
+                    </Typography>
+                  </MenuItem> : null
+                }
+
+                {selectionModel.length === 0 ? null :
+                  selectionModel.length > 1 ? null :
+                    <MenuItem onClick={handleOpenUpdateOne} >
+                      <ListItemIcon>
+                        <Create fontSize="small" />
+                      </ListItemIcon>
+                      <Typography variant="inherit">
+                        Edit
+                      </Typography>
+                    </MenuItem>
+                }
+
+                {selectionModel.length > 1 ?
+                  <MenuItem onClick={() => setDropdown(!dropdown)} >
                     <ListItemIcon>
                       <Create fontSize="small" />
                     </ListItemIcon>
                     <Typography variant="inherit">
                       Edit
                     </Typography>
-                  </MenuItem>
-              }
+                  </MenuItem> : null
 
-              {selectionModel.length > 1 ?
-                <MenuItem onClick={() => setDropdown(!dropdown)} >
-                  <ListItemIcon>
-                    <Create fontSize="small" />
-                  </ListItemIcon>
-                  <Typography variant="inherit">
-                    Edit
-                  </Typography>
-                </MenuItem> : null
-
-              }
+                }
 
 
-              {dropdown && <ListGroup>
+                {dropdown && <ListGroup>
 
-                <ListGroup.Item>
-                  <Form.Check onChange={handleOption} name="test" type="radio" label="Name" value="Name" />
+                  <ListGroup.Item>
+                    <Form.Check 
+                      onChange={handleOption} 
+                      name="test" 
+                      type="radio" 
+                      label="Name" 
+                      value="Name" 
+                    />
+                  </ListGroup.Item>
 
-                </ListGroup.Item>
+                  <ListGroup.Item >
+                    <Form.Check 
+                      onChange={handleOption} 
+                      name="test" 
+                      type="radio" 
+                      label="Email" 
+                      value="Email" 
+                    />
 
-                <ListGroup.Item >
-                  <Form.Check onChange={handleOption} name="test" type="radio" label="Email" value="Email" />
+                  </ListGroup.Item>
+                  
+                  <ListGroup.Item>
+                    <Form.Check 
+                      onChange={handleOption} 
+                      name="test" 
+                      type="radio" 
+                      label="Phone" 
+                      value="Phone"
+                    />
 
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Form.Check onChange={handleOption} name="test" type="radio" label="Phone" value="Phone" />
+                  </ListGroup.Item>
 
-                </ListGroup.Item>
+                  <ListGroup.Item >
+                    <Button 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={() => {
+                        setDropdown(!dropdown)
+                        setAnchor(null)
+                        setOpenUpdateMany(!openUpdateMany)
+                    }}>
+                      Ok
+                    </Button>
+                  </ListGroup.Item>
 
-                {/* <ListGroup.Item> 
-                        <Form.Check onChange={handleOption} name="test" type="radio" label="Saldo" value="Saldo"/>
-                      
-                      </ListGroup.Item> */}
+                </ListGroup>
+                }
+              </Menu>
 
-
-                <ListGroup.Item >
-                  <Button variant="contained" color="primary" onClick={() => {
-                    setDropdown(!dropdown)
-                    handleLogout()
-                    setOpenUpdateMany(!openUpdateMany)
-                  }}>
-                    Ok
-                  </Button>
-                </ListGroup.Item>
-
-              </ListGroup>
-              }
-            </Menu>
-
-          </div>
-
-
-        </div>
-      </div>
-
-      <div className={'merchant-data'}>
-
-        {Data.length === 0 ?
-          <LinearProgress /> :
+            </div>
+          
+              <div className="search">
+                <InputGroup>
+                  <FormControl
+                    placeholder="search"
+                    ref={input}
+                  />
+                  
+                  <Button
+                  variant="contained"
+                  onClick={() => dispatch(SearchData(input.current.value))}
+                  endIcon={<Search />}
+              
+                  />
+              
+                </InputGroup>
+              </div>
+            </div>
+           
           <DataGrid
             rows={Data}
             columns={columns}
@@ -242,7 +266,7 @@ function Index() {
             }}
             selectionModel={selectionModel}
             pageSize={sizePage}
-            onPageSizeChange={sizeChange}
+            onPageSizeChange={(params) => setSizePage(params.pageSize)}
             rowsPerPageOptions={[5, 7, 10, 25]}
             onRowSelected={item => {
 
@@ -251,6 +275,7 @@ function Index() {
             }}
 
           />
+          </div>
         }
       </div>
     </div>
@@ -260,4 +285,4 @@ function Index() {
 
 }
 
-export default Index
+export default React.memo( Index )

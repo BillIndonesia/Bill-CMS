@@ -6,7 +6,31 @@
     height: 90vh;
 }
 
+.staff .staff-data{
+    width: 100%;
+    margin-top: 40px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
 
+.staff .staff-data .data{
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.staff .staff-data .data .main-search{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.staff .staff-data .data .main-search .search{
+    width: 30%;
+}
 
 .staff-main{
     

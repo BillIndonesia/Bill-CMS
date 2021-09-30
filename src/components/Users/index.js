@@ -1,13 +1,16 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useRef} from 'react'
 import {DataGrid} from '@material-ui/data-grid'
-import {Button , Menu , MenuItem , ListItemIcon , Typography} from '@material-ui/core'
-import {Person ,Delete , Check , List } from '@material-ui/icons'
+import {Button , Menu , MenuItem , ListItemIcon , Typography , LinearProgress } from '@material-ui/core'
+import {InputGroup , FormControl} from 'react-bootstrap'
+import {Person ,Delete , Check , List , Search } from '@material-ui/icons'
 import PopUpAdd from './Add/UserAddDialog'
 import PopUpDelete from './Delete/DeleteUserDialog'
 import PopUpVerification from './Verifikasi'
+import ModalError from '../../utilities/ErrorPopUp'
 import {useSelector , useDispatch} from 'react-redux'
-import {getUser} from '../../Redux/Users/Action'
+import {getUser , searchData} from '../../Redux/Users/Action'
 import './users.css'
+
 
 const columns = [
     {field : 'id' , headerName : 'ID' , flex : 1 } ,
@@ -21,30 +24,25 @@ const columns = [
 ]
 
 function Index() {
+
+    const Data = useSelector( state => state.User )
+    const Err = useSelector(state => state.Confirmation.failure)
+
+    const dispatch = useDispatch()
      
+    const input = useRef(null)
     const [open , setOpen ] = useState(false)
     const [openDelete , setOpenDelete ] = useState(false)
     const [openVerification , setVerification] = useState(false)
     const [ anchorEl , setAnchor ] = useState(null)
     const [selectionModel, setSelectionModel] = React.useState([]);
-
-    const Data = useSelector( state => state.User )
-    const dispatch = useDispatch()
-
-      const handleMenu = (event) => setAnchor(event.currentTarget)
       
-
       const handleClose = () =>  setOpen(false)
       
-
-      const handleOpen = () => setOpen(true)
-      
-
       const handleVerif = () => setVerification(true)
 
       const handleOpenDelete = () => setOpenDelete(true)
       
-  
       const handleCloseVerif = () => setVerification(false)
 
       const handleLogout = () =>  setAnchor(null)
@@ -56,79 +54,112 @@ function Index() {
     useEffect( () => {
         dispatch( getUser() )
     } , [])
+
     return (
-        <div>
-            {open && <PopUpAdd open={open} handleClose={handleClose} /> }
-            {openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} /> }
-            {openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} data={selectionModel[0]}/> }
+        <div className="users">
+            <PopUpAdd 
+                open={open} 
+                handleClose={handleClose} /> 
+            
+            <PopUpDelete 
+                open={openDelete} 
+                handleClose={handleCloseDelete} 
+                data={selectionModel} />
+
+            <PopUpVerification 
+                show={openVerification} 
+                handleClose={handleCloseVerif} 
+                data={selectionModel[0]} /> 
+
+            <ModalError 
+            />
+
             <h2 className={'usertitle'}>Data Customers</h2>
-            <div className={'user-action'}>
 
-                <div>
-                    <Button
-                        variant="contained"
-                        style={{marginLeft : 10}}
-                        aria-controls="admin-menu" 
-                        aria-haspopup="true"
-                        onClick={handleMenu}
-                        endIcon={<List />}
-                    >
-                    
-                        Action  
-                    </Button>
+            <div className="users-data">
+                { Data.data.length === 0 ? 
+                    <LinearProgress /> : 
+                    <div className="data">
+                        <div className="main-search">
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    style={{marginLeft : 10}}
+                                    aria-controls="admin-menu" 
+                                    aria-haspopup="true"
+                                    onClick={event =>  setAnchor(event.currentTarget)}
+                                    endIcon={<List />}
+                                >
+                                
+                                    Action  
+                                </Button>
 
-                    <Menu
-                        id="admin-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleLogout}
-                    >
+                                <Menu
+                                    id="admin-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleLogout}
+                                >
 
-                    <MenuItem onClick={() => {
-                        handleOpen()
-                        handleLogout()
-                    }}>
-                        <ListItemIcon>
-                            <Person fontSize="small" />
-                        </ListItemIcon>
-                        <Typography variant="inherit">  
-                            Add User
-                        </Typography>
-                    </MenuItem>
-                    
-                    {selectionModel.length > 0 ? 
-                    <MenuItem onClick={() => {
-                        handleOpenDelete()
-                    }}>
-                        <ListItemIcon>
-                            <Delete fontSize="small" />
-                        </ListItemIcon>
-                        <Typography variant="inherit">  
-                            Delete
-                        </Typography>
-                    </MenuItem> : null 
-                    }
+                                <MenuItem onClick={() => {
+                                    setOpen(true)
+                                    setAnchor(null)
+                                }}>
+                                    <ListItemIcon>
+                                        <Person fontSize="small" />
+                                    </ListItemIcon>
+                                    <Typography variant="inherit">  
+                                        Add User
+                                    </Typography>
+                                </MenuItem>
+                                
+                                {selectionModel.length > 0 ? 
+                                <MenuItem onClick={() => handleOpenDelete() }>
+                                    <ListItemIcon>
+                                        <Delete fontSize="small" />
+                                    </ListItemIcon>
+                                    <Typography variant="inherit">  
+                                        Delete
+                                    </Typography>
+                                </MenuItem> : null 
+                                }
 
-                    {selectionModel.length === 1 ? 
-                    <MenuItem onClick={() => {
-                        handleLogout()
-                        handleVerif()
-                    }}>
-                        <ListItemIcon>
-                            <Check fontSize="small" />
-                        </ListItemIcon>
-                        <Typography variant="inherit">  
-                            Verify
-                        </Typography>
-                    </MenuItem> : null 
-                        }
-    
-                    </Menu>
-                </div>
-            </div>
-            <div style={{height : 400 , marginTop : 20}}>
+                                {selectionModel.length === 1 ? 
+                                <MenuItem 
+                                    onClick={() => {
+                                        setAnchor(null)
+                                        handleVerif()
+                                }}>
+                                    <ListItemIcon>
+                                        <Check fontSize="small" />
+                                    </ListItemIcon>
+                                    <Typography variant="inherit">  
+                                        Verify
+                                    </Typography>
+                                </MenuItem> : null 
+                                    }
                 
+                                </Menu>
+                            </div>
+                
+                            <div className="search">
+                                <InputGroup>
+                                    <FormControl
+                                        placeholder="search"
+                                        ref={input}
+                                    />
+
+                                    <Button
+                                        variant="contained"
+                                        endIcon={<Search />} 
+                                        onClick={() => dispatch(searchData())}
+                                    />
+                
+                                </InputGroup>
+                            </div>
+                        </div>
+                    
                     <DataGrid 
                         pageSize={10} 
                         rowsPerPageOptions={[5 , 10 ,25]} 
@@ -141,11 +172,9 @@ function Index() {
                         loading={Data.loading}
                         paginationMode="server"
                         selectionModel={selectionModel}
-                        onPageChange={() => console.log('ok')}
-                        
-                        
+                        onPageChange={() => console.log('ok')}   
                     /> 
-                
+                    </div> }
             </div>
         </div>
     )

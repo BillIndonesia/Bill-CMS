@@ -1,15 +1,16 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useRef} from 'react'
 import PopUpUpdate from './EditOne/StaffDialog'
 import PopUpUpdateMany from './EditMany/StaffDialog'
 import PopUpDelete from './Delete/DeleteDialog'
 import PopUpVerification from './Verifikasi'
-import { Button , Menu , MenuItem , ListItemIcon , Typography , LinearProgress} from '@material-ui/core'
+import { Button , Menu , MenuItem , ListItemIcon , Typography , LinearProgress } from '@material-ui/core'
 import {DataGrid } from '@material-ui/data-grid'
-import {Person, Create , List , Delete , Check} from '@material-ui/icons'
+import {Person, Create , List , Delete , Check , Search } from '@material-ui/icons'
 import {useDispatch ,useSelector} from 'react-redux'
 import PopUp from './Add/StaffAddDialog'
-import  { ListGroup , Form} from 'react-bootstrap'
-import {EditStaff , GetStaff} from '../../Redux/Staff/Action'
+import ModalError from '../../utilities/ErrorPopUp'
+import  { ListGroup , Form , InputGroup , FormControl } from 'react-bootstrap'
+import {EditStaff , GetStaff , SearchData} from '../../Redux/Staff/Action'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './staff.css'
 
@@ -27,8 +28,15 @@ const columns = [
 
 function Index() {
    
+    const input = useRef(null)
+    const dispatch = useDispatch()
+
+    const Data = useSelector(state => state.StaffList.data)
+    const Err = useSelector( state => state.Confirmation.failure)
+    
    
     const [openAdd , setOpenAdd ] = useState(false)
+    const [err , setErr] = useState(true)
     const [openUpdateOne , setOpenUpdateOne ] = useState(false)
     const [openUpdateMany , setOpenUpdateMany ] = useState(false)
     const [openDelete , setOpenDelete ] = useState(false)
@@ -52,29 +60,20 @@ function Index() {
     const handleOpenAdd = () => setOpenAdd(true)
     
     const handleOpenUpdateOne = () => {
-      handleLogout()
+      setAnchor(null)
       setOpenUpdateOne(true)
     }
 
-    const handleOpenDelete = () => setOpenDelete(true)
-
     const handleCloseVerif = () => setVerif(false)
-
-    const handleMenu = (event) => setAnchor(event.currentTarget)
-
-    const handleLogout = () => setAnchor(null)
 
     const sizeChange = (params) => setSizePage(params.pageSize)
     
-    const handleOption = e => {
-      const {value } = e.target 
-      setOption(value)  
+    const handleOption = e => { 
+      setOption(e.target.value)  
     }
 
     const editStaff = (data) => dispatch(EditStaff(data))
 
-    const Data = useSelector(state => state.StaffList.data)
-    const dispatch = useDispatch()
 
     useEffect( () => {
       dispatch(GetStaff())
@@ -82,22 +81,52 @@ function Index() {
 
 
     return(
-      <div className={'merchant'}>
-        {openAdd && <PopUp open={openAdd} handleClose={handleCloseAdd} handleOpen={handleOpenAdd} /> }
-        {openUpdateOne && <PopUpUpdate open={openUpdateOne} handleClose={handleCloseUpdateOne} /> }
-        {openUpdateMany && <PopUpUpdateMany open={openUpdateMany} handleClose={handleCloseUpdateMany} item={Option} data={selectionModel} /> }
-        {openDelete && <PopUpDelete open={openDelete} handleClose={handleCloseDelete} data={selectionModel} /> }
-        {openVerification && <PopUpVerification show={openVerification} handleClose={handleCloseVerif} data={selectionModel[0]} />}
-        <div>
-          <h2 className={'merchant-title'}>Data Staff</h2>
-          <div className={'merchant-action'}>
-            <div>
+      <div className={'staff'}>
+        <PopUp 
+          open={openAdd} 
+          handleClose={handleCloseAdd} 
+          handleOpen={handleOpenAdd} />
+
+        <PopUpUpdate 
+          open={openUpdateOne} 
+          handleClose={handleCloseUpdateOne} />
+
+        <PopUpUpdateMany 
+          open={openUpdateMany} 
+          handleClose={handleCloseUpdateMany} 
+          item={Option} 
+          data={selectionModel} />
+
+        <PopUpDelete 
+          open={openDelete} 
+          handleClose={handleCloseDelete} 
+          data={selectionModel} />
+
+        <PopUpVerification 
+          show={openVerification} 
+          handleClose={handleCloseVerif} 
+          data={selectionModel[0]} />
+
+        <ModalError 
+          open={Err}
+        />
+
+        <h2 className={'merchant-title'}>Data Staff</h2>
+        
+
+        <div className={'staff-data'}>
+          
+          { Data.length === 0 ? 
+             <LinearProgress /> :
+             <div className="data">
+             <div className="main-search">
+             <div>
                 <Button
                   variant="contained" 
                   style={{marginLeft : 10 }}
                   aria-controls="admin-menu" 
                   aria-haspopup="true"
-                  onClick={handleMenu}
+                  onClick={ event => setAnchor(event.currentTarget)}
                   size="sm"
                   endIcon={<List />}
                  >
@@ -109,12 +138,12 @@ function Index() {
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
-                    onClose={handleLogout}
+                    onClose={() => setAnchor(null)}
                       
                 >
 
                     <MenuItem onClick={() => {
-                      handleLogout()
+                      setAnchor(null)
                       handleOpenAdd() 
                     }} >
                         <ListItemIcon>
@@ -126,7 +155,7 @@ function Index() {
                     </MenuItem>
 
                     {selectionModel.length > 0 ? 
-                      <MenuItem onClick={handleOpenDelete} >
+                      <MenuItem onClick={() => setOpenDelete(true)} >
                         <ListItemIcon>
                             <Delete fontSize="small" />
                         </ListItemIcon>
@@ -138,7 +167,7 @@ function Index() {
                     
                     {selectionModel.length === 1 ? 
                     <MenuItem onClick={() => {
-                      handleLogout()
+                      setAnchor(null)
                       setVerif(true)
                     }} >
                         <ListItemIcon>
@@ -174,66 +203,63 @@ function Index() {
 
                   }
 
-                  {/* { selectionModel.length === 0 || selectionModel.length < 2 ? null : <DropdownButton show={dropdown} style={{width : 210}} variant="default" onClick={() => setDropdown(!dropdown)} >
-                        <Dropdown.Item onClick={() => console.log('ok3')}><Form.Check label="Action"/></Dropdown.Item>
-                        <Dropdown.Item ><Form.Check onch label="Action2"/></Dropdown.Item>
-                        <Dropdown.Item ><Form.Check label="Action3"/></Dropdown.Item>
-                      </DropdownButton>  } */}
                     { dropdown && <ListGroup>
                      
                       <ListGroup.Item> 
                         <Form.Check onChange={handleOption} name="test" type="radio" label="Name" value="Name"/>
-                      
                       </ListGroup.Item>
 
                       <ListGroup.Item> 
                         <Form.Check onChange={handleOption} name="test" type="radio" label="Level" value="Level"/>
-                      
                       </ListGroup.Item>
 
                       <ListGroup.Item > 
                         <Form.Check onChange={handleOption} name="test" type="radio" label="Email" value="Email" />
-                          
                       </ListGroup.Item>
+
                       <ListGroup.Item> 
                         <Form.Check onChange={handleOption} name="test" type="radio" label="Phone" value="Phone" />
-                      
                       </ListGroup.Item>
 
                       <ListGroup.Item> 
                         <Form.Check onChange={handleOption} name="test" type="radio" label="Password" value="Password"/>
-                      
                       </ListGroup.Item>
 
-                      
                       <ListGroup.Item >
                           <Button variant="contained" color="primary" onClick={() => {
                             setDropdown(!dropdown)
-                            handleLogout()
+                            setAnchor(null)
                             setOpenUpdateMany(!openUpdateMany)
                           }}>
                           Ok
                           </Button>
                         </ListGroup.Item>
-                      
                     </ListGroup> 
                     } 
                 </Menu>
             
             </div>
-           
-          
-          </div>
-        </div>
 
-        <div className={'merchant-data'}>
-          
-          { Data.length === 0 ? 
-             <LinearProgress /> :
+              <div className="search">
+                <InputGroup className="mb-3">
+                  <FormControl
+                    placeholder="search"
+                    ref={input}
+                  />
+                  
+                  <Button
+                    variant="contained"
+                    onClick={() => dispatch(SearchData(input.current.value))}
+                    endIcon={<Search />}
+                  />
+              
+                </InputGroup>
+              </div>
+            </div>
                 <DataGrid 
                   rows={Data} 
                   columns={columns}  
-                  checkboxSelection ={true}
+                  checkboxSelection={true}
                   onSelectionModelChange={(newSelection) => {
                     setSelectionModel(newSelection.selectionModel)
                   }}
@@ -246,6 +272,7 @@ function Index() {
                   rowsPerPageOptions={[5 , 7 , 10 , 25]} 
                   
                 /> 
+                </div>
             }
         </div>
       </div>

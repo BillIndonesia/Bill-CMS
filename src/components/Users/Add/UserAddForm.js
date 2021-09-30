@@ -39,7 +39,7 @@ function UserAddForm(props) {
         initialValues: initialValue,
         validationSchema: validationSchema,
         onSubmit: (values, action) => {
-            if (values.customer_borndate.format != 'yyyy-dd-mm') {
+            if (values.customer_borndate.format !== 'yyyy-dd-mm') {
                 var today = new Date();
                 var dateToday = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
                 formik.values.customer_borndate = dateToday

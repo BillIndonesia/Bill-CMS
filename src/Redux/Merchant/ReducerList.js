@@ -14,8 +14,8 @@ const List = (data) => {
             email: item.merchant_email,
             phone: item.phone_number,
             type: item.merchant_type.merchant_type_name,
-            level: item.merchant_level.merchant_level_id == 1 ? "unverified" : "verified",
-            status: item.merchant_status.merchant_status_id == 1 ? "Active" : "Not Active",
+            level: item.merchant_level.merchant_level_id === 1 ? "unverified" : "verified",
+            status: item.merchant_status.merchant_status_id === 1 ? "Active" : "Not Active",
             saldo: item.balance
         })
     })

@@ -1,4 +1,5 @@
 import axios from "axios"
+import { ResetReq } from "../Confirmation/Action"
 
 //global confirmation 
 
@@ -28,7 +29,6 @@ const EditStaff = (data) => {
 }
 
 const DeleteStaff = (data) => {
-    console.log(data)
     return {
         type: 'iseng'
     }
@@ -66,7 +66,8 @@ const ReqStaff = (data) => {
                 dispatch(Success())
 
                 setTimeout(() => {
-                    dispatch({ type: "RESET-REQ" })
+                    dispatch(ResetReq())
+                    
                     dispatch(GetStaff())
                 }, 3000)
             })
@@ -75,4 +76,18 @@ const ReqStaff = (data) => {
     }
 }
 
-export { EditStaff, DeleteStaff, GetStaff, ReqStaff }
+const SearchData = (data = '') => {
+    return (dispatch) => {
+        dispatch(Loading())
+
+        axios.get("https://jsonplaceholder.typicode.com/users/1/a")
+                .then( response => setTimeout( () => dispatch(ResetReq()) , 3000))
+                .catch( err => {
+                    dispatch(Failure())
+
+                    setTimeout(() => dispatch(ResetReq()) , 3000)
+                })
+    }
+}
+
+export { EditStaff, DeleteStaff, GetStaff, ReqStaff , SearchData }
